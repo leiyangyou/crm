@@ -12,6 +12,14 @@ gem 'responds_to_parent', :git => "https://github.com/LessonPlanet/responds_to_p
 
 gem 'mysql2'
 gem 'canard'
+gem "surveyor"
+gem 'pdfkit'
+
+if RUBY_PLATFORM =~ /darwin/
+  gem 'wkhtmltopdf-binary'
+else
+  gem 'wkhtmltopdf'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
