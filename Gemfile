@@ -12,6 +12,7 @@ gem 'responds_to_parent', :git => "https://github.com/LessonPlanet/responds_to_p
 
 gem 'mysql2'
 gem 'canard'
+gem 'authlogic', '=3.1.0'
 gem "surveyor"
 gem 'pdfkit'
 
