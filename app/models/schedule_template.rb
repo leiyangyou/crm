@@ -9,8 +9,8 @@ class ScheduleTemplate < ActiveRecord::Base
 
   class << self
     def has_attribute(attributes)
-      self.select do |schedule|
-        schedule.valid_for_attributes( attributes)
+      self.all.select do |schedule|
+        schedule.valid_for_attributes?( attributes)
       end
     end
 
@@ -33,7 +33,7 @@ class ScheduleTemplate < ActiveRecord::Base
     schedules = []
     ScheduleTemplate::Template::DAYNAMES.each do |day_name|
       day_of_week = any_day_of_the_week.send(:day_name.downcase)
-      schedule = user.schedule.for_date( day_of_week)
+      schedule = user.schedules.for_date( day_of_week)
       schedule = Schedule.new(:user => user, :date => day_of_week) unless schedule
       schedules << schedule
       self.inherit_template.schedule.fetch(day_name, []).each do |slots|

@@ -10,6 +10,8 @@ User.class_eval do
   acts_as_user :roles => ROLES
   attr_protected :roles
 
+  has_many :schedules
+
   scope :manageable_by, (lambda do |user|
     where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
   end)
