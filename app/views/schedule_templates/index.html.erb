@@ -1,0 +1,27 @@
+<h1>Listing schedule_templates</h1>
+
+<table>
+  <tr>
+    <th>Template</th>
+    <th>Attributes</th>
+    <th>Parent</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @schedule_templates.each do |schedule_template| %>
+  <tr>
+    <td><%= schedule_template.template %></td>
+    <td><%= schedule_template.attributes %></td>
+    <td><%= schedule_template.parent %></td>
+    <td><%= link_to 'Show', schedule_template %></td>
+    <td><%= link_to 'Edit', edit_schedule_template_path(schedule_template) %></td>
+    <td><%= link_to 'Destroy', schedule_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Schedule template', new_schedule_template_path %>

@@ -1,4 +1,8 @@
 Til5::Application.routes.draw do
+  resources :schedule_templates
+
+  resources :schedules, :only => [:index, :create, :update]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,12 +1,13 @@
 User.class_eval do
-  acts_as_user :roles => [:operator,
-                          :operator_manager,
-                          :consultant,
-                          :consultant_manager,
-                          :trainer,
-                          :trainer_manager,
-                          :general_manager,
-                          :admin]
+  ROLES = [:operator,
+           :operator_manager,
+           :consultant,
+           :consultant_manager,
+           :trainer,
+           :trainer_manager,
+           :general_manager,
+           :admin]
+  acts_as_user :roles => ROLES
   attr_protected :roles
 
   scope :manageable_by, (lambda do |user|
@@ -17,6 +18,12 @@ User.class_eval do
     ability = Ability.new(self)
     self.class.valid_roles.select do |role|
       ability.can? :manage, role
+    end
+  end
+
+  class << self
+    def available_for date_time
+      Schedule.for_date(date_time.to_date).select{|schedule| schedule.available?(date_time)}
     end
   end
 end
