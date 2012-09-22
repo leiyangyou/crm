@@ -38,7 +38,7 @@ class ScheduleTemplate < ActiveRecord::Base
       schedules << schedule
       self.inherit_template.schedule.fetch(day_name, []).each do |slots|
         slots.each do |slot|
-          schedule.slots.create(:begin_time => slot.begin_time, :end_time => slot.end_time)
+          schedule.create_slot(:begin_time => slot.begin_time, :end_time => slot.end_time)
         end
       end
     end

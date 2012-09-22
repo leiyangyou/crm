@@ -7,12 +7,31 @@ class SchedulesController < ApplicationController
     (begin_date)
   end
 
+  def show
+    @schedule = Schedule.find(params[:id])
+  end
+
+  def new
+    @schedule = Schedule.new
+  end
+
+  def create
+    @schedule = Schedule.new(params[:schedule])
+    if @schedule.save
+    else
+    end
+  end
+
+  def edit
+    @schedule = Schedule.find(params[:id])
+  end
+
   def update
     @schedule = current_user.schedules.for_date(params[:date])
     if @schedule.update_attributes(params[:schedule])
-
+      #TODO
     else
-
+      #TODO
     end
   end
 
