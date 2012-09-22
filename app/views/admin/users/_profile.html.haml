@@ -22,8 +22,10 @@
         .check_box(style="margin-top:6px")
           -# Sorry, you can't revoke Admin rights from yourself.
           - User.valid_roles.each do |role|
-            = check_box_tag :user_roles, role, @user.is?(role), :name => "user[roles][]", :disabled => edit && @user == @current_user && role == :admin
-            = f.label "user[roles]", role
+            - if can? :manage, role
+              = check_box_tag :user_roles, role, @user.is?(role), :name => "user_roles[]",
+                :disabled => edit &&  @user == @current_user && cannot?(:self_assign, role)
+              = f.label "user_roles[]", t(:"roles.#{role}")
 .subtitle #{t :personal_information}
 .section
   %table

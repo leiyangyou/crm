@@ -22,4 +22,14 @@ Canard::Abilities.for(:operator_manager) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+  can :manage, :something
+  can :manage, :some_user
+  can :manage, :operator
+  cannot :self_assign, :operator_manager
+
+  can :manage, User do |user|
+    user.roles.all? do |role|
+      can? :manage, role
+    end
+  end
 end
