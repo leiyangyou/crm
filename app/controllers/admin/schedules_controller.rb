@@ -1,4 +1,4 @@
-class SchedulesController < ApplicationController
+class Admin::SchedulesController < Admin::ApplicationController
   before_filter :require_user
   def index
     begin_date, end_date = parse_date_params
