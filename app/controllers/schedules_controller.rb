@@ -10,10 +10,13 @@ class SchedulesController < ApplicationController
   def update
     @schedule = current_user.schedules.for_date(params[:date])
     if @schedule.update_attributes(params[:schedule])
+
     else
+
     end
   end
 
+  private
   def parse_date_params
     today = Date.today
     begin_date = params[:begin_date] ? Date.parse(params[:begin_date]) : today.beginning_of_week

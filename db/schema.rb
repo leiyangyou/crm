@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913082149) do
+ActiveRecord::Schema.define(:version => 20120922173054) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -429,6 +429,25 @@ ActiveRecord::Schema.define(:version => 20120913082149) do
 
   add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
 
+  create_table "schedule_templates", :force => true do |t|
+    t.text     "template"
+    t.text     "attributes"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "schedule_templates", ["parent_id"], :name => "index_schedule_templates_on_parent_id"
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "schedules", ["user_id"], :name => "index_schedules_on_user_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -447,6 +466,16 @@ ActiveRecord::Schema.define(:version => 20120913082149) do
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
+
+  create_table "slots", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "slots", ["schedule_id"], :name => "index_slots_on_schedule_id"
 
   create_table "survey_sections", :force => true do |t|
     t.integer  "survey_id"

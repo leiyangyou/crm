@@ -21,6 +21,11 @@ User.class_eval do
     end
   end
 
+  def subordinates(with_self=true)
+    subordinates = User.with_any_role(self.manageable_roles)
+    subordinates.unshift(self) if with_self
+  end
+
   class << self
     def available_for date_time
       Schedule.for_date(date_time.to_date).select{|schedule| schedule.available?(date_time)}
