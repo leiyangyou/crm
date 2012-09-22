@@ -1,0 +1,16 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en-US:
+  tab_staff: "Staff"
+  msg_require_manager: "You must be a manager to access this page"
+  roles:
+    operator: "Operator"
+    operator_manager: "Operator Manager"
+    consultant: "Consultant"
+    consultant_manager: "Consultant Manager"
+    trainer: "Personal Trainer"
+    trainer_manager: "Personal Trainer Manager"
+    general_manager: "General Manager"
+    admin: "Admin"
+
