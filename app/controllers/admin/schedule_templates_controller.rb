@@ -1,4 +1,4 @@
-class ScheduleTemplatesController < ApplicationController
+class ScheduleTemplatesController < Admin::ApplicationController
   # GET /schedule_templates
   # GET /schedule_templates.json
   def index
