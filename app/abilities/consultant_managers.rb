@@ -23,7 +23,6 @@ Canard::Abilities.for(:consultant_manager) do
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
   can :manage, :something
-  can :manage, :some_user
   can :manage, :consultant
   cannot :self_assign, :consultant_manager
 
