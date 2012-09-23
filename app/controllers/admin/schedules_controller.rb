@@ -1,10 +1,18 @@
 class Admin::SchedulesController < Admin::ApplicationController
   before_filter :require_user
   def index
-    begin_date, end_date = parse_date_params
+    beginning_of_week, end_of_week = parse_date_params
     subordinates = current_user.subordinates
     @schedules = {}
-    (begin_date)
+    @dates = (beginning_of_week..end_of_week).to_a
+    out_of_date = Date.today.end_of_week < begin_date
+    subordinates.each do |subordinate|
+      unless out_of_date
+        @dates.reduce([]) do |result, date|
+          subordinate.schedule.for_date(date)
+        end
+      end
+    end
   end
 
   def show
@@ -22,10 +30,6 @@ class Admin::SchedulesController < Admin::ApplicationController
     end
   end
 
-  def edit
-    @schedule = Schedule.find(params[:id])
-  end
-
   def update
     @schedule = current_user.schedules.for_date(params[:date])
     if @schedule.update_attributes(params[:schedule])
@@ -38,9 +42,7 @@ class Admin::SchedulesController < Admin::ApplicationController
   private
   def parse_date_params
     today = Date.today
-    begin_date = params[:begin_date] ? Date.parse(params[:begin_date]) : today.beginning_of_week
-    end_date = params[:end_date] ? Date.parse(params[:end_date]) : today.end_of_week
-    end_date = begin_date.beginning_of_week if end_date < begin_date
-    return begin_date, end_date
+    date = params[:date] ? Date.parse(params[:date]) : today.beginning_of_week
+    return date.beginning_of_week, date.end_of_week
   end
 end
