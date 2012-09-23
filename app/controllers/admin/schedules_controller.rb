@@ -1,5 +1,7 @@
 class Admin::SchedulesController < Admin::ApplicationController
-  before_filter :require_user
+  before_filter "set_current_tab('admin/schedules')", :only => [ :index, :show ]
+  before_filter :require_manager
+
   def index
     beginning_of_week, end_of_week = parse_date_params
     subordinates = current_user.subordinates

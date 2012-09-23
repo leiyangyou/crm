@@ -50,15 +50,6 @@ Admin::UsersController.class_eval do
     respond_with(@user)
   end
 
-  protected
-  def require_manager
-    require_user
-    if @current_user && cannot?(params[:action].to_sym, User)
-      flash[:notice] = t(:msg_require_manager)
-      redirect_to root_path
-    end
-  end
-
   private
   def get_users(options = {})
     self.current_page  = options[:page] if options[:page]
