@@ -1,0 +1,15 @@
+- content_for(:stylesheet_links) do
+  = stylesheet_link_tag "jscal2/jscal2"
+  = stylesheet_link_tag "jscal2/border-radius"
+  = stylesheet_link_tag "jscal2/reduce-spacing"
+  = stylesheet_link_tag "admin/schedules"
+
+- content_for(:javascript_includes) do
+  = javascript_include_tag "jscal2/jscal2"
+  = javascript_include_tag "jscal2/unicode-letter"
+  = javascript_include_tag "jscal2/lang/en"
+  = javascript_include_tag "admin/schedules"
+
+= render :partial => "admin/schedules/schedule", :object => @schedule
+-#.list#schedules= render :partial => "admin/schedules/schedule", :collection => @schedules
+

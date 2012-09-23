@@ -1,7 +1,7 @@
 Til5::Application.routes.draw do
-  resources :schedule_templates
-
-  resources :schedules, :except => [:delete]
+  namespace :admin do
+    resources :schedules, :except => [:delete]
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
