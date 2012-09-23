@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120922173054) do
+ActiveRecord::Schema.define(:version => 20120923050145) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -429,6 +429,16 @@ ActiveRecord::Schema.define(:version => 20120922173054) do
 
   add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
 
+  create_table "schedule_templates", :force => true do |t|
+    t.text     "template"
+    t.text     "attributes"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "schedule_templates", ["parent_id"], :name => "index_schedule_templates_on_parent_id"
+
   create_table "schedules", :force => true do |t|
     t.integer  "user_id"
     t.date     "date"
@@ -463,6 +473,7 @@ ActiveRecord::Schema.define(:version => 20120922173054) do
     t.integer  "end_time"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.date     "date"
   end
 
   add_index "slots", ["schedule_id"], :name => "index_slots_on_schedule_id"
