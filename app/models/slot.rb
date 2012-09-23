@@ -12,6 +12,6 @@ class Slot < ActiveRecord::Base
     (start_time..end_time).include? time.seconds_since_midnight
   end
   def intersects_with? other_slot
-    other_slot.end_time > begin_time && other_slot.begin_time < end_time
+    other_slot.end_time > start_time && other_slot.start_time < end_time
   end
 end

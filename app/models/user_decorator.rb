@@ -6,7 +6,8 @@ User.class_eval do
            :trainer,
            :trainer_manager,
            :general_manager,
-           :admin]
+           :admin] unless defined?(ROLES)
+
   acts_as_user :roles => ROLES
   attr_protected :roles
 
@@ -26,12 +27,12 @@ User.class_eval do
   end
 
   def subordinates
-    User.with_any_role(self.manageable_roles)
+    User.with_any_role(*self.manageable_roles)
   end
 
   def find_or_create_schedule_by_week( date)
-    date = date.jewish_beginning_of_week
-    schedule = schedules.for_date( date).first || self.schedule_template.apply_to(self, date)
+    date = date.beginning_of_week(Schedule::FIRST_DAY_OF_WEEK)
+    schedule = self.schedules.for_date( date).first || self.schedule_template.apply_to(self, date)
     schedule.save!
     schedule
   end

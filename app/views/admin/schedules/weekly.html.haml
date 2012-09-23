@@ -10,6 +10,5 @@
   = javascript_include_tag "jscal2/lang/en"
   = javascript_include_tag "admin/schedules"
 
-= render :partial => "admin/schedules/schedule", :object => @schedule
--#.list#schedules= render :partial => "admin/schedules/schedule", :collection => @schedules
-
+#schedules-container
+  =render :partial => "admin/schedules/schedules"

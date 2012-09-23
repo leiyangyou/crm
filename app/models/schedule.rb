@@ -1,4 +1,6 @@
 class Schedule < ActiveRecord::Base
+  FIRST_DAY_OF_WEEK = :sunday
+
   belongs_to :user
   has_many :slots
   attr_accessible :date
