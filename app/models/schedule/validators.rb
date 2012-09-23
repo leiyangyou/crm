@@ -2,11 +2,9 @@ module Schedule::Validators
   class SlotsConflictValidator < ActiveModel::Validator
     def validate(record)
       record.slots.reduce([]) do |slots, slot|
-        slots.each{|previous|
-        }
-      end
-      unless record.begin_time < record.end_time
-        record.errors.add(:begin_time, :should_before_end_time)
+        slots.each do |previous|
+          record.errors.add(:slots, :conflict_slots, :target => previous.to_s, :source => slot)
+        end
       end
     end
   end

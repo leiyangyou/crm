@@ -1,7 +1,7 @@
 class Slot < ActiveRecord::Base
   belongs_to :schedule
 
-  attr_accessible :end_time, :start_time
+  attr_accessible :date, :end_time, :start_time
 
   validates :start_time, :end_time, :numericality => true, :presence => true, :inclusion => { :in => 0..86400}
 

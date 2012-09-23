@@ -6,7 +6,7 @@ class ScheduleGenerator
     User.find_each do |user|
       if has_schedule?(user)
         template = template_for user
-        template.apply_to(user, date)
+        template.apply_to(user, date).save
       end
     end
   end
