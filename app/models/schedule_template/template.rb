@@ -24,7 +24,7 @@ class ScheduleTemplate::Template
     schedule[day_of_week].each do |slot|
       raise ConflictSlotException if slot.intersects_with? new_slot
     end
-    schedule[day_of_week] << slot
+    schedule[day_of_week] << new_slot
   end
 
   def merge( template)
