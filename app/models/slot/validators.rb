@@ -6,4 +6,14 @@ module Slot::Validators
       end
     end
   end
+
+  class ConflictValidator < ActiveModel::Validator
+    def validate(record)
+      record.schedule.slots.each do |slot|
+        if record != slot && record.intersects_with?( slot)
+          record.errors.add(:base, :conflict_slot, :source)
+        end
+      end
+    end
+  end
 end

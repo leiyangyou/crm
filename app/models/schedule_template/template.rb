@@ -4,7 +4,7 @@ class ScheduleTemplate::Template
   class Slot
     attr_accessor :begin_time, :end_time
 
-    def intersect? other_slot
+    def intersects_with? other_slot
       other_slot.end_time > begin_time && other_slot.begin_time < end_time
     end
   end
@@ -22,7 +22,7 @@ class ScheduleTemplate::Template
   def add_slot(day_of_week, new_slot)
     return unless valid_key?(day_of_week)
     schedule[day_of_week].each do |slot|
-      raise ConflictSlotException if slot.intersect? new_slot
+      raise ConflictSlotException if slot.intersects_with? new_slot
     end
     schedule[day_of_week] << slot
   end

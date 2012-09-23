@@ -5,14 +5,10 @@ class ScheduleGenerator
   def generate( date)
     User.find_each do |user|
       if has_schedule?(user)
-        template = template_for user
+        template = user.schedule_template
         template.apply_to(user, date).save
       end
     end
-  end
-
-  def template_for user
-    ScheduleTemplate.default
   end
 
   def has_schedule?(user)

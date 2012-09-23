@@ -12,6 +12,8 @@ User.class_eval do
 
   has_many :schedules
 
+  has_many :slots, :through => :schedules
+
   scope :manageable_by, (lambda do |user|
     where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
   end)
@@ -23,14 +25,18 @@ User.class_eval do
     end
   end
 
-  def subordinates(with_self=true)
-    subordinates = User.with_any_role(self.manageable_roles)
-    subordinates.unshift(self) if with_self
+  def subordinates
+    User.with_any_role(self.manageable_roles)
   end
 
-  class << self
-    def available_for date_time
-      Schedule.for_date(date_time.to_date).select{|schedule| schedule.available?(date_time)}
-    end
+  def find_or_create_schedule_by_week( date)
+    date = date.jewish_beginning_of_week
+    schedule = schedules.for_date( date).first || self.schedule_template.apply_to(self, date)
+    schedule.save!
+    schedule
+  end
+
+  def schedule_template
+    ScheduleTemplate.default
   end
 end
