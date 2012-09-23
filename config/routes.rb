@@ -1,6 +1,9 @@
 Til5::Application.routes.draw do
   namespace :admin do
-    resources :schedules, :except => [:delete]
+    resources :schedules, :except => [:new, :edit, :update, :create, :delete] do
+      get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
+      resources :slots
+    end
   end
 
   # The priority is based upon order of creation:

@@ -2,10 +2,15 @@ class ScheduleTemplate::Template
   attr_accessor :schedule
 
   class Slot
-    attr_accessor :begin_time, :end_time
+    attr_accessor :start_time, :end_time
+
+    def initialize(options = {})
+      self.start_time= options[:start_time]
+      self.end_time = options[:end_time]
+    end
 
     def intersects_with? other_slot
-      other_slot.end_time > begin_time && other_slot.begin_time < end_time
+      other_slot.end_time > start_time && other_slot.start_time < end_time
     end
   end
 
@@ -24,6 +29,7 @@ class ScheduleTemplate::Template
     schedule[day_of_week].each do |slot|
       raise ConflictSlotException if slot.intersects_with? new_slot
     end
+    schedule[day_of_week] ||= []
     schedule[day_of_week] << new_slot
   end
 
@@ -41,15 +47,12 @@ class ScheduleTemplate::Template
 
   def apply_to(user, any_day_of_the_week)
     any_day_of_the_week = any_day_of_the_week.to_date
-    beginning_of_week = any_day_of_the_week.jewish_beginning_of_week
-    end_of_week = any_day_of_the_week.jewish_end_of_week
-    schedule = user.schedules.for_date( beginning_of_week)
-    schedule = Schedule.new(:user => user, :date => day_of_week) unless schedule
+    beginning_of_week = any_day_of_the_week.beginning_of_week(Schedule::FIRST_DAY_OF_WEEK)
+    end_of_week = any_day_of_the_week.end_of_week(Schedule::FIRST_DAY_OF_WEEK)
+    schedule = user.schedules.find_or_initialize_by_date(beginning_of_week)
     (beginning_of_week..end_of_week).each do |date_of_week|
-      self.schedule.fetch(date_of_week.wday, []).each do |slots|
-        slots.each do |slot|
-          schedule.slots.build(:date => date_of_week, :begin_time => slot.begin_time, :end_time => slot.end_time)
-        end
+      self.schedule.fetch(date_of_week.wday, []).each do |slot|
+        schedule.slots.build(:date => date_of_week, :start_time => slot.start_time, :end_time => slot.end_time)
       end
     end
     schedule

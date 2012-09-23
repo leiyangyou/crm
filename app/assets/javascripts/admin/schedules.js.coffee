@@ -3,20 +3,22 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 MS_IN_A_DAY = 60 * 60 * 24 * 1000
+FIRST_DAY_OF_WEEK = 6
 document.observe("dom:loaded", ()->
   calendar = Calendar.setup({
     cont: 'week-picker'
     weekNumbers: true
-    fdow: 0
+    fdow: (FIRST_DAY_OF_WEEK + 1) % 7
     onSelect: (()->
-      day = Calendar.intToDate(this.selection.getFirstDate())
-      beginning_of_the_week_as_date = new Date(+day - MS_IN_A_DAY * day.getDay())
+      today = Calendar.intToDate(this.selection.getFirstDate())
+      beginning_of_the_week_as_date = new Date(+today - ((today.getDay() - FIRST_DAY_OF_WEEK + 6) % 7) * MS_IN_A_DAY )
       end_of_the_week_as_date = new Date(+beginning_of_the_week_as_date + 6 * MS_IN_A_DAY)
       beginning_of_the_week = Calendar.dateToInt(beginning_of_the_week_as_date)
       end_of_the_week = Calendar.dateToInt(end_of_the_week_as_date)
       if (this.selection.getFirstDate() != beginning_of_the_week ||
           this.selection.getLastDate() != end_of_the_week )
         this.selection.reset([[beginning_of_the_week, end_of_the_week]])
+        new Ajax.Updater("schedules-container", "/admin/schedules/weekly/#{Calendar.printDate(beginning_of_the_week_as_date, '%Y-%m-%d')}", method:'GET')
     )
   })
   calendar.selection.reset(Calendar.dateToInt(new Date))
