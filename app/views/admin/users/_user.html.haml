@@ -13,16 +13,22 @@
 
   .indentfull
     .tools
-      = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
+      - if can?(:edit, user)
+        = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
+      - else
+        = "<font color='silver'>#{t :edit}!</font> | ".html_safe
 
       - if user.suspended?
-        = link_to_reactivate(user) << " | "
-      - elsif user != @current_user
+        - if can?(:reactivate, user)
+          = link_to_reactivate(user) << " | "
+        - else
+          = "<font color='silver'>#{user.awaits_approval? ? t(:approve) : t(:reactivate)}</font> | ".html_safe
+      - elsif user != @current_user && can?(:suspend, user)
         = link_to_suspend(user) << " | "
       - else
         = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
 
-      - if user != @current_user
+      - if user != @current_user && can?(:delete, user)
         = link_to_confirm(user)
       - else
         %span.grayed #{t :delete}?
@@ -38,7 +44,7 @@
         %span.black= "|"
 
       - if user.roles.size > 0
-        = user.roles.map(&:to_s).join(", ")
+        = user.roles.map do |role| t(:"roles.#{role}") end.join(", ")
         %span.black= "|"
 
       - if user.awaits_approval?

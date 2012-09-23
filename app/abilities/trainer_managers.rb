@@ -22,4 +22,13 @@ Canard::Abilities.for(:trainer_manager) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+  can :manage, :something
+  can :manage, :trainer
+  cannot :self_assign, :trainer_manager
+
+  can :manage, User do |user|
+    user.roles.all? do |role|
+      can? :manage, role
+    end
+  end
 end
