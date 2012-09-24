@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  contract_id: MyString
+  contract_type: 
+  contract_template: MyString
+  content: MyText
+  parameters: MyText
+  state: MyString
+  start_at: 2012-09-25 00:28:58
+  end_at: 2012-09-25 00:28:58
+  signed_at: 2012-09-25 00:28:58
+
+two:
+  contract_id: MyString
+  contract_type: 
+  contract_template: MyString
+  content: MyText
+  parameters: MyText
+  state: MyString
+  start_at: 2012-09-25 00:28:58
+  end_at: 2012-09-25 00:28:58
+  signed_at: 2012-09-25 00:28:58

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  contract: 
+  new_contract: 
+
+two:
+  contract: 
+  new_contract: 
