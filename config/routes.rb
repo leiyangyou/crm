@@ -1,4 +1,8 @@
 Til5::Application.routes.draw do
+  resources :contracts
+
+  resources :contract_types
+
   namespace :admin do
     resources :schedules, :except => [:new, :edit, :update, :create, :delete] do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
