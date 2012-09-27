@@ -1,7 +1,6 @@
 class ContractTemplate < ActiveRecord::Base
   belongs_to :contract_type
-  has_one :contract_suspension
-  has_one :contract_transfer
+
   attr_accessible :template
   serialize :parameter, Hash
 
@@ -11,7 +10,7 @@ class ContractTemplate < ActiveRecord::Base
     self.parameters = parameters
   end
 
-  def generate_contract parameters
+  def generate_contract params
 
   end
 end
