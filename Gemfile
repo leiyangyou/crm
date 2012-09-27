@@ -15,6 +15,7 @@ gem 'canard'
 gem 'authlogic', '=3.1.0'
 gem "surveyor"
 gem 'pdfkit'
+gem "markdown", "~> 1.0.0"
 
 if RUBY_PLATFORM =~ /darwin/
   gem 'wkhtmltopdf-binary'
