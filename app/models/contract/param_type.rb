@@ -5,24 +5,26 @@ class Contract::ParamType
   class << self
     attr_accessor :types, :name
     def get_type_by_name name
-      @types[name]
+      types[name.to_s]
     end
 
     def type_names
-      @types.keys
+      types.keys
     end
 
     def valid_type? name
-      !@types[name].nil?
+      !types[name.to_s].nil?
     end
-
-    def inherited base
-      @types = @types || {}
-      @types[base.name] = base
+    @@types = {}
+    def types
+      @@types
     end
 
     def name name=nil
-      @name = name if name
+      if name
+        @name = name.to_s
+        types[@name] = self
+      end
       @name
     end
   end

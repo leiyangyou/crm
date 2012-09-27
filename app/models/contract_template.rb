@@ -5,9 +5,9 @@ class ContractTemplate < ActiveRecord::Base
   attr_accessible :template
   serialize :parameter, Hash
 
-  def template= template
-    write_attribute(:template, template)
-    parameters = Contract::Parser.instance.parse( template, errors)
+  before_validation(:on => :create) do
+    parameters = Contract::Parser.instance.parse( self.template, self.errors)
+    puts "#{parameters}"
     self.parameters = parameters
   end
 

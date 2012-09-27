@@ -11,7 +11,7 @@ class Contract::Parser
       name = matcher['name']
       type = matcher['type'] || "string"
       unless Contract::ParamType.valid_type?(type)
-        errors.add_error("parameters.#{type}", :invalid_type, {:type => type})
+        errors.add(:parameters, :invalid_type, {:type => type, :name => name})
         next
       end
       parameters[name] = type

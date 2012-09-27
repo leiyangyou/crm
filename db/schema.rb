@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923050145) do
+ActiveRecord::Schema.define(:version => 20120924163225) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -196,6 +196,60 @@ ActiveRecord::Schema.define(:version => 20120923050145) do
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
   add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+
+  create_table "contract_suspensions", :force => true do |t|
+    t.integer  "contract_id"
+    t.text     "reason"
+    t.integer  "new_contract_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "contract_suspensions", ["contract_id"], :name => "index_contract_suspensions_on_contract_id"
+  add_index "contract_suspensions", ["new_contract_id"], :name => "index_contract_suspensions_on_new_contract_id"
+
+  create_table "contract_templates", :force => true do |t|
+    t.integer  "contract_type_id"
+    t.text     "template"
+    t.text     "parameters"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "contract_templates", ["contract_type_id"], :name => "index_contract_templates_on_contract_type_id"
+
+  create_table "contract_trasfers", :force => true do |t|
+    t.integer  "contract_id"
+    t.integer  "new_contract_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "contract_trasfers", ["contract_id"], :name => "index_contract_trasfers_on_contract_id"
+  add_index "contract_trasfers", ["new_contract_id"], :name => "index_contract_trasfers_on_new_contract_id"
+
+  create_table "contract_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "contracts", :force => true do |t|
+    t.string   "contract_id"
+    t.integer  "contract_type_id"
+    t.string   "contract_template"
+    t.text     "content"
+    t.text     "parameters"
+    t.string   "state"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "signed_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "contracts", ["contract_type_id"], :name => "index_contracts_on_contract_type_id"
 
   create_table "dependencies", :force => true do |t|
     t.integer  "question_id"
