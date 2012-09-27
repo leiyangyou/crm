@@ -10,7 +10,13 @@ class ContractTemplate < ActiveRecord::Base
     self.parameters = parameters
   end
 
-  def generate_contract params
+  def to_printable
 
+  end
+
+  def generate_contract params
+    contract = Contract.new params
+    contract.template = self
+    contract
   end
 end
