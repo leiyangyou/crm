@@ -6,14 +6,15 @@ class Contract::Parser
     PLACEHOLDER_PATTERN = /\${([^:]*):([^},]*)((?:,[^:]+:[^,}]+)*)}/
     def parse_parameters(contract, errors = nil)
       parameters = {}
-      parse(contract) do |name, type, params|
+      parse(contract) do |name, type, attributes|
         unless Contract::ParamType.valid_type?(type)
           errors.add(:parameters, :invalid_type, {:type => type, :name => name}) if errors
         else
-          parameters[name] = {:type => type, :params => params}
+          parameters[name] = Contract::Param.new :name => name, :type => type, :attributes => attributes
         end
         nil #replace with nothing
       end
+      parameters
     end
 
     def parse( contract)
@@ -29,8 +30,8 @@ class Contract::Parser
         end
         name = matcher[1]
         type = matcher[2] || "string"
-        params = self.parse_params(matcher[3])
-        if replacement = yield(name, type, params)
+        attributes = self.parse_attributes(matcher[3])
+        if replacement = yield(name, type, attributes)
           result << replacement
         else
           result << matcher[0]
@@ -40,7 +41,7 @@ class Contract::Parser
     end
 
     private
-    def parse_params params
+    def parse_attributes attributes
       params.split(",").reduce({}) do |result, section|
         if section.index(":")
           fields = section.split(":")

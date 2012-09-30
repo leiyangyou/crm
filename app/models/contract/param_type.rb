@@ -1,7 +1,12 @@
 class Contract::ParamType
   attr_accessor :name
 
-
+  def extract_params params
+    params.stringify_keys!.reduce({}) do |result, key, value|
+      result[key] = value if params.contains?(key)
+      result
+    end
+  end
   class << self
     attr_accessor :types, :name
     def get_type_by_name name
@@ -25,7 +30,7 @@ class Contract::ParamType
     end
 
     def param name
-      params << name
+      params << name.to_s
     end
 
     def name name=nil
