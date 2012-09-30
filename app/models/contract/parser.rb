@@ -30,7 +30,7 @@ class Contract::Parser
         end
         name = matcher[1]
         type = matcher[2] || "string"
-        attributes = self.parse_attributes(matcher[3])
+        attributes = parse_attributes(matcher[3])
         if replacement = yield(name, type, attributes)
           result << replacement
         else
@@ -42,7 +42,7 @@ class Contract::Parser
 
     private
     def parse_attributes attributes
-      params.split(",").reduce({}) do |result, section|
+      attributes.split(",").reduce({}) do |result, section|
         if section.index(":")
           fields = section.split(":")
           result[fields[0]] = fields[1]

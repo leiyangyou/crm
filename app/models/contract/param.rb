@@ -3,7 +3,7 @@ class Contract::Param
 
   def initialize values={}
     values.each do |k, v|
-      self.send("#{key}=", v) if self.respond_to?(k.to_sym)
+      self.send("#{k}=", v) if self.respond_to?(k.to_sym)
     end
   end
 end
