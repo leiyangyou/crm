@@ -20,6 +20,14 @@ class Contract::ParamType
       @@types
     end
 
+    def params
+      @params ||= []
+    end
+
+    def param name
+      params << name
+    end
+
     def name name=nil
       if name
         @name = name.to_s
