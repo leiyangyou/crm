@@ -1,0 +1,17 @@
+%h1 Listing contract_types
+%table
+  %tr
+    %th Name
+    %th Description
+    %th
+    %th
+    %th
+  - @contract_types.each do |contract_type|
+    %tr
+      %td= contract_type.name
+      %td= contract_type.description
+      %td= link_to 'Show', contract_type
+      %td= link_to 'Edit', edit_contract_type_path(contract_type)
+      %td= link_to 'Destroy', contract_type, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Contract type', new_contract_type_path

@@ -1,0 +1,10 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @contract_type.name
+%p
+  %b Description:
+  = @contract_type.description
+= link_to 'Edit', edit_contract_type_path(@contract_type)
+|
+\#{link_to 'Back', contract_types_path}
