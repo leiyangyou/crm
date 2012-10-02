@@ -18,7 +18,7 @@ class ContractTypesControllerTest < ActionController::TestCase
 
   test "should create contract_type" do
     assert_difference('ContractType.count') do
-      post :create, contract_type: { description: @contract_type.description, id: @contract_type.id, name: @contract_type.name }
+      post :create, contract_type: { description: @contract_type.description, name: @contract_type.name }
     end
 
     assert_redirected_to contract_type_path(assigns(:contract_type))
@@ -35,7 +35,7 @@ class ContractTypesControllerTest < ActionController::TestCase
   end
 
   test "should update contract_type" do
-    put :update, id: @contract_type, contract_type: { description: @contract_type.description, id: @contract_type.id, name: @contract_type.name }
+    put :update, id: @contract_type, contract_type: { description: @contract_type.description, name: @contract_type.name }
     assert_redirected_to contract_type_path(assigns(:contract_type))
   end
 
