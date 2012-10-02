@@ -10,7 +10,7 @@ class Contract::Parser
         unless Contract::ParamType.valid_type?(type)
           errors.add(:parameters, :invalid_type, {:type => type, :name => name}) if errors
         else
-          parameters[name] = Contract::Param.new :name => name, :type => type, :attributes => attributes
+          parameters[name.to_sym] = Contract::Param.new :name => name, :type => type, :attributes => attributes
         end
         nil #replace with nothing
       end
@@ -45,7 +45,7 @@ class Contract::Parser
       attributes.split(",").reduce({}) do |result, section|
         if section.index(":")
           fields = section.split(":")
-          result[fields[0]] = fields[1]
+          result[fields[0].to_sym] = fields[1]
         end
         result
       end

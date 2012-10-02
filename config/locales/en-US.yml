@@ -4,6 +4,7 @@
 en-US:
   tab_staff: "Staff"
   admin_tab_schedules: "Schedules"
+  admin_tab_contract_templates: "Contract Templates"
   msg_require_manager: "You must be a manager to access this page"
   roles:
     operator: "Operator"

@@ -1,12 +1,19 @@
 class Contract::ParamType
   attr_accessor :name
 
+  DEFAULT_LENGTH = 8
+
   def extract_params params
     params.stringify_keys!.reduce({}) do |result, key, value|
       result[key] = value if params.contains?(key)
       result
     end
   end
+
+  def default_length
+    self.class.default_length || DEFAULT_LENGTH
+  end
+
   class << self
     attr_accessor :types, :name
     def get_type_by_name name
@@ -39,6 +46,11 @@ class Contract::ParamType
         types[@name] = self
       end
       @name
+    end
+
+    def default_length length=nil
+      @length = length if length
+      @length
     end
   end
 

@@ -1,5 +1,4 @@
 class Contract < ActiveRecord::Base
-  belongs_to :contract_type
   has_one :contract_suspension
   has_one :contract_transfer
   belongs_to :template, :class_name =>  "ContractTemplate", :foreign_key => :template_id
