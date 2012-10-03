@@ -1,0 +1,4 @@
+%li{:id => "contract_template_#{contract_template.id}"}
+  .tools
+    = link_to_edit(contract_template, :url => edit_admin_contract_template_path(contract_template))
+  %span= contract_template.created_at

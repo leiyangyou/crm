@@ -22,7 +22,7 @@ class ContractTemplate < ActiveRecord::Base
   belongs_to :contract_type
 
   attr_accessible :template
-  serialize :parameter, Hash
+  serialize :parameters, Hash
 
   before_validation(:on => :create) do
     self.parse_and_refresh_parameters
@@ -36,8 +36,8 @@ class ContractTemplate < ActiveRecord::Base
 
   # convert the contract to its printable form( a html) with all the placeholders are replaces by underlines
   def to_printable
-    template = Contract::Parser.parse(self.template) do |name, type, param|
-      type = ParamType.get_type_by_name type
+    template = Contract::Parser.parse(self.template) do |name, type, params|
+      type = Contract::ParamType.get_type_by_name type
       length = (params[:length] || type.default_length).to_i
       "_" * length
     end
