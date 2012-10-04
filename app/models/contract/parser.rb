@@ -36,6 +36,7 @@ class Contract::Parser
         else
           result << matcher[0]
         end
+        binding.pry
       end
       result << remain
     end
