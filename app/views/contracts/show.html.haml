@@ -1,0 +1,31 @@
+%p#notice= notice
+%p
+  %b Contract:
+  = @contract.contract_id
+%p
+  %b Contract type:
+  = @contract.contract_type
+%p
+  %b Contract template:
+  = @contract.contract_template
+%p
+  %b Content:
+  = @contract.content
+%p
+  %b Parameters:
+  = @contract.parameters
+%p
+  %b State:
+  = @contract.state
+%p
+  %b Start at:
+  = @contract.start_at
+%p
+  %b End at:
+  = @contract.end_at
+%p
+  %b Signed at:
+  = @contract.signed_at
+= link_to 'Edit', edit_contract_path(@contract)
+|
+\#{link_to 'Back', contracts_path}
