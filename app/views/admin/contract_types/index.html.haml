@@ -1,12 +1,6 @@
-- content_for :styles do
-  :plain
-    .bottom_tools {
-      font-size: 10px;
-      float: right;
-      padding 0px 0px 0px 4px;
-      position: relative;
-      top: -12px;
-    }
+- content_for :stylesheet_links do
+  = stylesheet_link_tag "admin/contract_types"
+
 
 .title_tools
   =link_to_inline(:create_contract_type, new_admin_contract_type_path, :text => t(:create_contract_type))

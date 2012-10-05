@@ -1,4 +1,5 @@
-%li{:id => "contract_template_#{contract_template.id}"}
+%li{:id => "contract_template_#{contract_template.id}", :class => "#{contract_template_counter == 0 ? "first" : ""}"}
   .tools
-    = link_to_edit(contract_template, :url => edit_admin_contract_template_path(contract_template))
+    = link_to_edit(contract_template, :url => edit_admin_contract_template_path(contract_template)) << " |"
+    = link_to(t(:preview), preview_admin_contract_template_path(contract_template), :target => "_blank")
   %span= contract_template.created_at

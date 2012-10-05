@@ -29,7 +29,7 @@ class ContractTemplate < ActiveRecord::Base
   end
 
   before_validation(:on => :update) do
-    if self.template_chnaged?
+    if self.template_changed?
       self.parse_and_refresh_parameters
     end
   end

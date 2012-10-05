@@ -19,29 +19,26 @@ class Contract::Parser
 
     def parse( contract)
       remain = contract
-      first = true
       result = ""
       while matcher = PLACEHOLDER_PATTERN.match(remain)
         remain = matcher.post_match
-        if first
-          result = matcher.pre_match
-        else
-          first = false
-        end
+        result << matcher.pre_match
         name = matcher[1]
         type = matcher[2] || "string"
         attributes = parse_attributes(matcher[3])
         if replacement = yield(name, type, attributes)
-          result << replacement
+          result << escape_markdown(replacement)
         else
           result << matcher[0]
         end
-        binding.pry
       end
       result << remain
     end
 
     private
+    def escape_markdown text
+      "`#{text}`"
+    end
     def parse_attributes attributes
       attributes.split(",").reduce({}) do |result, section|
         if section.index(":")

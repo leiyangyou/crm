@@ -14,6 +14,12 @@ Til5::Application.routes.draw do
     end
 
     resources :contract_templates, :only => [:edit, :update, :destroy] do
+      collection do
+        post :preview, :to => "contract_templates#preview", :as => "preview"
+      end
+      member do
+        get :preview
+      end
     end
   end
 

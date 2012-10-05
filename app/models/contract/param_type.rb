@@ -43,7 +43,7 @@ class Contract::ParamType
     def name name=nil
       if name
         @name = name.to_s
-        types[@name] = self
+        types[@name] = self.new
       end
       @name
     end

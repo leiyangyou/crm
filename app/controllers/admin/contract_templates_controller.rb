@@ -3,7 +3,8 @@ class Admin::ContractTemplatesController < Admin::ApplicationController
 
   load_resource :contract_type, :only => [:index, :new, :create]
   load_resource :contract_template, :through => :contract_type, :only => [:index, :new, :create]
-  load_resource :contract_template, :only => [:edit, :update, :destroy]
+  load_resource :contract_template, :only => [:edit, :update, :destroy, :preview]
+  layout "contract", :only => [:preview]
   # GET /contract_types/1/contract_templates
   # AJAX
   def index
@@ -37,26 +38,12 @@ class Admin::ContractTemplatesController < Admin::ApplicationController
   def update
     @contract_template = ContractTemplate.find(params[:id])
     respond_with(@contract_template) do |format|
-      if @contract_template.update_attributes(params[:contract_template])
-        redirect_to @contract_template
-      else
-        render action: "update"
-      end
+      @contract_template.update_attributes(params[:contract_template])
     end
   end
 
   # DELETE /contract_templates/1
   # AJAX
   def destroy
-  end
-
-  # POST /contract_templates/preview
-  # AJAX
-  def preview
-    @contract_template = ContractTemplate.new(params[:contract_template])
-    respond_with(@contract_template) do |format|
-      format.html {}
-      format.json {render :text => @contract_template.to_printable}
-    end
   end
 end

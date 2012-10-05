@@ -6,13 +6,14 @@
     - else
       = link_to_delete(contract_type, :url => url_for([:admin, contract_type]))
 
-  %span.black= contract_type.name
-  %dt= t(:description)
-  %dd= contract_type.description
-
-  %ul.list.contract-templates{:id => "contract_type_#{contract_type.id}_contract_templates"}
-    = render :partial => "admin/contract_templates/contract_template", :collection => contract_type.contract_templates
+  .contract_info
+    %span.black= contract_type.name
+    \-
+    %tt= contract_type.description
 
   .bottom_tools
     = link_to_inline(:"create_contract_type_#{contract_type.id}_contract_template", new_admin_contract_type_contract_template_path(contract_type), :text => t(:add_template))
   .remote{hidden.merge(:id => "create_contract_type_#{contract_type.id}_contract_template") }
+  %ul.sub_list.contract-templates{:id => "contract_type_#{contract_type.id}_contract_templates"}
+    = render :partial => "admin/contract_templates/contract_template", :collection => contract_type.contract_templates.order("created_at DESC")
+
