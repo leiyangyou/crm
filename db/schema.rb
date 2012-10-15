@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002040244) do
+ActiveRecord::Schema.define(:version => 20121014062348) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(:version => 20121002040244) do
     t.text     "parameters"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "format"
   end
 
   add_index "contract_templates", ["contract_type_id"], :name => "index_contract_templates_on_contract_type_id"
@@ -246,10 +247,12 @@ ActiveRecord::Schema.define(:version => 20121002040244) do
     t.datetime "signed_at"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "type_id"
   end
 
   add_index "contracts", ["contract_id"], :name => "index_contracts_on_contract_id", :unique => true
   add_index "contracts", ["template_id"], :name => "index_contracts_on_template_id"
+  add_index "contracts", ["type_id"], :name => "index_contracts_on_type_id"
 
   create_table "dependencies", :force => true do |t|
     t.integer  "question_id"

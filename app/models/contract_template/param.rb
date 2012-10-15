@@ -1,4 +1,4 @@
-class Contract::Param
+class ContractTemplate::Param
   attr_accessor :name, :type, :attributes
 
   def initialize values={}
@@ -10,5 +10,4 @@ class Contract::Param
   def required?
     (required = params[:required]) ? required == "true" : true
   end
-
 end

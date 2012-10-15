@@ -7,7 +7,11 @@ require 'markdown'
 # using attachments as the content of the contract, and only require the user to fill all the blacks
 # back.
 class ContractTemplate < ActiveRecord::Base
-
+  module Format
+    MARKDOWN = "markdown"
+    HTML = "html"
+    AVAILABLE = [MARKDOWN, HTML]
+  end
   class ValidationError < Error
   end
   class TypeValidationError < ValidationError
@@ -21,8 +25,10 @@ class ContractTemplate < ActiveRecord::Base
 
   belongs_to :contract_type
 
-  attr_accessible :template
+  attr_accessible :template, :format
   serialize :parameters, Hash
+
+  validates_inclusion_of :format, :in => Format::AVAILABLE
 
   before_validation(:on => :create) do
     self.parse_and_refresh_parameters
@@ -36,12 +42,19 @@ class ContractTemplate < ActiveRecord::Base
 
   # convert the contract to its printable form( a html) with all the placeholders are replaces by underlines
   def to_printable
-    template = Contract::Parser.parse(self.template) do |name, type, params|
-      type = Contract::ParamType.get_type_by_name type
+    template = ContractTemplate::Parser.parse(self.template) do |name, type, params|
+      type = ContractTemplate::ParamType.get_type_by_name type
       length = (params[:length] || type.default_length).to_i
       "_" * length
     end
-    Markdown.new(template).to_html
+    case self.format
+      when Format::MARKDOWN
+        Markdown.new(template).to_html
+      when Format::HTML
+        template
+      else
+        "Unrecognizable format: '#{self.format}'"
+    end
   end
 
   def validate_params params
@@ -49,7 +62,7 @@ class ContractTemplate < ActiveRecord::Base
     self.parameters.each do |key, parameter|
       param = params[key]
       raise ParamRequiredError unless param || !parameter.required?
-      type = ParamType.get_type_by_name parameter.type
+      type = ContractTemplate::ParamType.get_type_by_name parameter.type
       raise TypeValidationError.new( parameter.type) unless type && type.validate(param)
     end
   end
@@ -64,7 +77,9 @@ class ContractTemplate < ActiveRecord::Base
   protected
 
   def parse_and_refresh_parameters
-    parameters = Contract::Parser.parse_parameters( self.template, self.errors)
+    parameters = ContractTemplate::Parser.parse_parameters( self.template, self.errors)
     self.parameters = parameters
   end
 end
+require File.join(File.dirname(__FILE__), "/contract_template/param") #to fix the yaml-dump
+
