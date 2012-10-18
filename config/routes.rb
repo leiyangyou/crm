@@ -1,4 +1,5 @@
 Til5::Application.routes.draw do
+  match 'welcome' => 'welcome#index'
   namespace :admin do
     resources :schedules, :except => [:new, :edit, :update, :create, :delete] do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
