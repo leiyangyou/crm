@@ -2,7 +2,6 @@ require File.join(File.dirname(__FILE__), "/contract/parameters_assignment")
 require File.join(File.dirname(__FILE__), "/contract/contract_parameter")
 class Contract < ActiveRecord::Base
   has_one :contract_suspension
-  has_one :contract_transfer
   belongs_to :contract_template
   belongs_to :contract_type
   #belongs_to :offeree, :polymorphic => true
