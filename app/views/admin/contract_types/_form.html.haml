@@ -1,0 +1,8 @@
+= form_for [:admin, @contract_type], :html => one_submit_only(:contract_type), :remote => true do |f|
+  = link_to_close new_admin_contract_type_path
+  = f.error_messages :object_name => t(:contract_types)
+  = render "admin/contract_types/top_section", :f => f
+  .buttonbar
+    = f.submit t(:create_contract_type), :id => :contract_type_submit
+    or
+    = link_to_cancel new_admin_contract_type_path

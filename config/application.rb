@@ -25,6 +25,8 @@ module Til5
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
+    config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
+      Dir[Rails.root.join("app/controllers/entities")]
 
     # Add migrations from all engines
     Railties.engines.each do |engine|
@@ -73,3 +75,6 @@ module Til5
     config.assets.version = '1.0'
   end
 end
+
+require 'gem_ext'
+require_dependency Rails.root.join('app/models/contract_template').to_s

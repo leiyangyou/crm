@@ -1,9 +1,25 @@
 Til5::Application.routes.draw do
   match 'welcome' => 'welcome#index'
+  resources :contracts
+
+  resources :contract_types
   namespace :admin do
     resources :schedules, :except => [:new, :edit, :update, :create, :delete] do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
       resources :slots
+    end
+    resources :contract_types, :only => [:index, :new, :edit, :update, :create, :destroy] do
+      resources :contract_templates, :only => [:index, :new, :create] do
+      end
+    end
+
+    resources :contract_templates, :only => [:edit, :update, :destroy] do
+      collection do
+        post :preview, :to => "contract_templates#preview", :as => "preview"
+      end
+      member do
+        get :preview
+      end
     end
   end
 

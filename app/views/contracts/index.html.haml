@@ -1,0 +1,17 @@
+= styles_for :contract
+
+.title_tools
+  = link_to_inline(:create_contract, new_contract_path, :text => t(:create_contract)) << " | "
+
+.title
+  %span#create_contract_title #{t :contract}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+.remote#create_contract{ hidden }
+
+.list#accounts
+  - if @contracts.any?
+    = render @contracts
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate"

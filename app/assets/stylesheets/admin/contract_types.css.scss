@@ -1,0 +1,39 @@
+// Place all the styles related to the contract_types controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.sub_list {
+  padding-left: 10px;
+  li.first {
+    border-top: 1px silver dotted;
+  }
+  li {
+    padding: 3px 5px;
+    border-left: 1px silver dotted;
+    border-bottom: 1px silver dotted;
+    border-right: 1px silver dotted;
+  }
+  li:hover {
+    background-color: seaShell;
+  }
+}
+.bottom_tools {
+  font-size: 10px;
+  float: right;
+  padding: 0px 0px 0px 4px;
+  position: relative;
+  top: -5px;
+}
+.contract_info {
+   padding-bottom: 10px;
+}
+.details {
+  dt, dd {
+    color: silver;
+  }
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+
+

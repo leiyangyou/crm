@@ -1,0 +1,9 @@
+.remote
+  = form_for([:admin, @contract_type], :as => :contract_type, :html => one_submit_only(:contract_type).merge(:class => "edit_contract_type", :id => "edit_contract_type_#{@contract_type.id}"), :remote => true) do |f|
+    = link_to_close edit_admin_contract_type_path(@contract_type)
+    = f.error_messages
+    = render :partial => "top_section", :locals => {:f => f, :edit => true}
+    .buttonbar
+      = f.submit t(:save_contract_type), :id =>:contract_type_submit
+      or
+      = link_to_cancel edit_admin_contract_type_path(@contract_type)

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  contract_type: 
+  template: MyText
+  parameters: MyText
+
+two:
+  contract_type: 
+  template: MyText
+  parameters: MyText

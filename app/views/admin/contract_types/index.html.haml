@@ -1,0 +1,17 @@
+- content_for :stylesheet_links do
+  = stylesheet_link_tag "admin/contract_types"
+
+
+.title_tools
+  =link_to_inline(:create_contract_type, new_admin_contract_type_path, :text => t(:create_contract_type))
+
+.title
+  %span#create_contract_type_title #{t :contract_types}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+.remote#create_contract_type{ hidden }
+
+.list#contract_types
+  - if @contract_types.any?
+    = render :partial => "admin/contract_types/contract_type", :collection => @contract_types
+  - else
+    = render "shared/empty"

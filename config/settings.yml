@@ -217,13 +217,15 @@
   { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
   { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } },
   { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
-  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } }
+  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } },
+  { :active : false, :text : :contracts,         :url : { :controller : "contracts"      } }
 ]
 
 :admin_tabs: [
-  { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
-  { :active : false,  :text : :admin_tab_schedules,    :url : { :controller : "admin/schedules"    } },
-  { :active : false, :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } }
+  { :active : true,   :text : :admin_tab_users,           :url : { :controller : "admin/users"          } },
+  { :active : false,  :text : :admin_tab_schedules,       :url : { :controller : "admin/schedules"      } },
+  { :active : false,  :text : :admin_tab_tags,            :url : { :controller : "admin/tags"           } },
+  { :action : false,  :text : :admin_tab_contract_types,  :url : { :controller : "admin/contract_types" } }
 #  { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
 #  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
 #  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
