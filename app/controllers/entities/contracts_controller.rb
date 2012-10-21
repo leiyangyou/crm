@@ -1,3 +1,4 @@
+
 class ContractsController < EntitiesController
 
   def index
@@ -21,6 +22,10 @@ class ContractsController < EntitiesController
   # POST /contracts
   # POST /contracts.json
   def create
+    puts @contract.inspect
+    respond_with(@contract) do |format|
+      @contract.save(params[:contract])
+    end
   end
 
   # PUT /contracts/1

@@ -1,3 +1,8 @@
-= form_for(@contract) do |f|
+= form_for(@contract, :remote => true) do |f|
+  = link_to_close new_contract_path
+  = f.hidden_field :contract_template_id
   = f.template_attributes(:parameters, :template_method => "contract_template")
-
+  .buttonbar
+    = f.submit t(:create_contract), :id => :"contract_submit"
+    or
+    = link_to_cancel new_contract_path

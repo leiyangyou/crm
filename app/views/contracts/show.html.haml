@@ -1,31 +1,16 @@
-%p#notice= notice
-%p
-  %b Contract:
-  = @contract.contract_id
-%p
-  %b Contract type:
-  = @contract.contract_type
-%p
-  %b Contract template:
-  = @contract.contract_template
-%p
-  %b Content:
-  = @contract.content
-%p
-  %b Parameters:
-  = @contract.parameters
-%p
-  %b State:
-  = @contract.state
-%p
-  %b Start at:
-  = @contract.start_at
-%p
-  %b End at:
-  = @contract.end_at
-%p
-  %b Signed at:
-  = @contract.signed_at
-= link_to 'Edit', edit_contract_path(@contract)
-|
-\#{link_to 'Back', contracts_path}
+%table
+  %th
+    %td= t(:name)
+    %td= t(:state)
+    %td= t(:signed_at)
+    %td= t(:started_at)
+    %td= t(:end_at)
+  %tr
+    %td= @contract.contract_template.contract_type.name
+    %td= @contract.state
+    %td= @contract.signed_at
+    %td= @contract.started_at
+    %td= @contract.end_at
+%hr
+%div
+  = @contract.content.html_safe

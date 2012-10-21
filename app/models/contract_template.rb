@@ -68,10 +68,23 @@ class ContractTemplate < ActiveRecord::Base
   end
 
   def generate_contract params
-    contract = Contract.new params
-    contract.template = self
-    #TODO figure out how to fill in the rest params like start time / end time
-    contract
+    template = ContractTemplate::Parser.parse(self.template) do |name, type, attributes|
+      value = params[name.to_s]
+      unless value
+        type = ContractTemplate::ParamType.get_type_by_name type
+        length = (params[:length] || type.default_length).to_i
+        value = "_" * length
+      end
+      value.to_s
+    end
+    case self.format
+      when Format::MARKDOWN
+        Markdown.new(template).to_html
+      when Format::HTML
+        template
+      else
+        "Unrecognizable format: '#{self.format}'"
+    end
   end
 
   protected

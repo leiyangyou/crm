@@ -8,12 +8,7 @@ class Contract::Params
   end
 
   def []= name, value
-    case value
-      when Contract::ParamValue
-        @params[name.to_s] = value
-      else
-        raise ArgumentError "value is not an instance of Contract::ParamValue"
-    end
+    @params[name.to_s] = value
   end
 
   def [] name
@@ -22,6 +17,10 @@ class Contract::Params
 
   def each &block
     @params.each block
+  end
+
+  def merge params
+    @params.merge params
   end
 
   def method_missing(method, *args, &block)

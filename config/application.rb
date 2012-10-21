@@ -77,3 +77,4 @@ module Til5
 end
 
 require 'gem_ext'
+require_dependency Rails.root.join('app/models/contract_template').to_s

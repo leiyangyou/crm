@@ -16,8 +16,8 @@ module ActionView
         parameters = @object.send(@method_name) || {}
         result = ""
         result << tag("table", {:id => "#{tag_id}_table"}, true)
-          template.parameters.each do |name, parameter|
-            @sanitized_method_name = "parameter_attributes"
+          template.parameters.merge(@object.class.contract_parameters).each do |name, parameter|
+            @sanitized_method_name = "parameters_attributes"
             instance_tag = InstanceTag.new(tag_name, name, @template_object, parameters)
             result << tag("tr", {}, true)
               result << tag("td", {}, true)

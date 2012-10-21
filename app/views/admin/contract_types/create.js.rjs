@@ -6,7 +6,7 @@ if @contract_type.valid?
   page[dom_id(@contract_type)].visual_effect :highlight, :duration => 1.5
   page.call "crm.flick", :empty, :remove
 else
-  page[:create_contract_type].replace_html :partial => "new"
+  page[:create_contract_type].replace_html :partial => "form"
   page[:create_contract_type].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:contract_type_name].focus
 end
