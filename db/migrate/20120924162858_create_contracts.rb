@@ -5,7 +5,7 @@ class CreateContracts < ActiveRecord::Migration
       t.references :contract_template
       t.text :content
       t.text :parameters
-      t.string :state
+      t.string :status
       t.timestamp :started_at
       t.timestamp :end_at
       t.timestamp :signed_at
