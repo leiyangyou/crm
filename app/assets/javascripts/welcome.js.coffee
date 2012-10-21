@@ -3,26 +3,38 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 (($)->
   $(()->
-    member_id = {
-      block: $('member-id')
+    class MemberIdInput
+      constructor: ()->
+        @$block = $('#member-id')
+        @clear()
       clear: ()->
-        this.block.text()
+        @$block.text(MemberIdInput.PLACEHOLDER)
+        @$block.addClass('empty')
       append: (char)->
-        this.block.text(this.text() + char)
+        if @$block.hasClass('empty')
+          @$block.text('')
+          @$block.removeClass('empty')
+        @$block.text( @$block.text() + char)
       text: ()->
-        this.block.text()
-    }
-    is_alphanum: (input)->
-      (input >= 48 && input <= 57 ) || (input >= 65 && input <= 90)
-    append_member_id = ()->
-    $('body').keypress((event)->
+        @$block.text()
+    MemberIdInput.PLACEHOLDER = "刷卡或者输入会员号码"
+
+    member_id_input = new MemberIdInput()
+
+    is_alphanum = (input)->
+      (input >= 65 && input <= 90 ) || (input >= 97 && input <= 122)
+    submit_code = (member_id)->
+      alert("submit" + member_id)
+    $('body').keydown((event)->
       which = event.which
-      if whick == 8 #backspace
-        member_id.clear()
+      if which == 8 || which == 27 #backspace/or esc
+        member_id_input.clear()
       else if which == 13 #enter
-        submit_code(member_id.text())
-      else if is_laphanum(which)
-        member_id.append(String.fromCharCode(which))
+        submit_code(member_id_input.text())
+        member_id_input.clear()
+      else if is_alphanum(which)
+        member_id_input.append(String.fromCharCode(which))
+      event.preventDefault()
     )
   )
 )(jQuery)
