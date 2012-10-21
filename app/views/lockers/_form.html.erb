@@ -1,0 +1,37 @@
+<%= form_for(@locker) do |f| %>
+  <% if @locker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@locker.errors.count, "error") %> prohibited this locker from being saved:</h2>
+
+      <ul>
+      <% @locker.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :string %><br />
+    <%= f.text_field :string %>
+  </div>
+  <div class="field">
+    <%= f.label :account %><br />
+    <%= f.text_field :account %>
+  </div>
+  <div class="field">
+    <%= f.label :contract %><br />
+    <%= f.text_field :contract %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :due_date %><br />
+    <%= f.date_select :due_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

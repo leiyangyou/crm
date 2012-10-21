@@ -1,0 +1,31 @@
+<h1>Listing lockers</h1>
+
+<table>
+  <tr>
+    <th>String</th>
+    <th>Account</th>
+    <th>Contract</th>
+    <th>Start date</th>
+    <th>Due date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @lockers.each do |locker| %>
+  <tr>
+    <td><%= locker.string %></td>
+    <td><%= locker.account %></td>
+    <td><%= locker.contract %></td>
+    <td><%= locker.start_date %></td>
+    <td><%= locker.due_date %></td>
+    <td><%= link_to 'Show', locker %></td>
+    <td><%= link_to 'Edit', edit_locker_path(locker) %></td>
+    <td><%= link_to 'Destroy', locker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Locker', new_locker_path %>
