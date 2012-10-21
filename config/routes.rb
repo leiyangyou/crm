@@ -1,4 +1,6 @@
 Til5::Application.routes.draw do
+  resources :lockers
+
   match 'welcome' => 'welcome#index'
   resources :contracts
 
