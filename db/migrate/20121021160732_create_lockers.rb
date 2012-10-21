@@ -1,7 +1,7 @@
 class CreateLockers < ActiveRecord::Migration
   def change
     create_table :lockers do |t|
-      t.id, :string
+      t.string :identifier
       t.references :account
       t.references :contract
       t.date :start_date
