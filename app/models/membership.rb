@@ -7,4 +7,5 @@ class Membership < ActiveRecord::Base
   has_one :membership_terminations
   has_one :membership_transfers
   attr_accessible :due_date, :duration
+  validates_presence_of :membership_type_id
 end
