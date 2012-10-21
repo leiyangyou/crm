@@ -1,0 +1,71 @@
+%html
+  %head
+    = stylesheet_link_tag :welcome
+    = javascript_include_tag :application
+    = javascript_include_tag :welcome
+  %body
+    #container
+      #header
+        %span.company-name OZone
+        %span.system-name Swap Card
+        #member-id
+      #top
+        %ul#recommend-actions
+          %li.first= "Member fee discount"
+          %li= "Course fee discount"
+      #content
+        #left
+          #user-info-block
+            .avatar-wrapper
+              .avatar
+                = image_tag 'default_avatar_128_128.jpg', :width => 128, :height => 128
+              .info
+                %dl
+                  %dt= t(:name)
+                  %dd 杨磊
+                  %dt= t(:sex)
+                  %dd 男
+                  %dt= t(:age)
+                  %dd 25
+                  %dt= t(:phone)
+                  %dd 13901234567
+          #membership-block
+            .info
+              %dl
+                %dt= t(:membership_consultor)
+                %dd 杜思雨
+                %dt= t(:has_order_today)
+                %dd 没有预约
+                %dt= t(:membership_type)
+                %dd 免费卡
+                %dt= t(:membership_age)
+                %dd 3年186天
+                %dt= t(:membership_due_date)
+                %dd 2012/12/23
+                %dt= t(:days_to_due_date)
+                %dd= 12
+                %dt= t(:last_visite_time)
+                %dd 2012/09/22
+                %dt= t(:days_since_last_visite)
+                %dd 1
+        #right
+          #lesson-block
+            .info
+              %dl
+                %dt= t(:lesson_consultor)
+                %dd Ray
+                %dt= t(:has_order_today)
+                %dd 是, 10:00AM - 11:00AM
+                %dt= t(:lesson_type)
+                %dd 标准100次
+
+                %dt= t(:used_times)
+                %dd= 10
+                %dt= t(:surplus_times)
+                %dd= 90
+
+                %dt= t(:last_training_time)
+                %dd 2012/09/21
+                %dt= t(:last_training_couch)
+                %dd Ray
+

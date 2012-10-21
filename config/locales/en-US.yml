@@ -16,3 +16,6 @@ en-US:
     admin: "Admin"
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
 
+  view:
+    welcome:
+      title: "OZone Swap Card"
