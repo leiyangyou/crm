@@ -10,6 +10,12 @@ class Admin::MembershipTypesController < ApplicationController
       @membership_type.save
     end
   end
+  def update
+    @membership_type = MembershipType.find(params[:id])
+    respond_with(@membership_type) do |format|
+      @membership_type.update_attributes(params[:membership_type])
+    end
+  end
   def destroy
     @membership_type = MembershipType.find(params[:id])
     @membership_type.destroy
