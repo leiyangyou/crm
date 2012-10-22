@@ -1,0 +1,10 @@
+id = dom_id(@membership_type)
+
+if @membership_type.valid?
+  page[id].replace :partial => "membership_type", :collection => [@membership_type]
+  page[id].visual_effect :highlight, :duration => 1.0
+else
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:membership_type_name].focus
+end

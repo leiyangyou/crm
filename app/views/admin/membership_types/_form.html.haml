@@ -1,0 +1,8 @@
+= form_for [:admin, @membership_type], :html => one_submit_only(:membership_type), :remote => true do |f|
+  = link_to_close new_admin_membership_type_path
+  = f.error_messages :object_name => t(:membership_types)
+  = render "admin/membership_types/top_section", :f => f
+  .buttonbar
+    = f.submit t(:create_membership_type), :id => :membership_type_submit
+    or
+    = link_to_cancel new_admin_membership_type_path

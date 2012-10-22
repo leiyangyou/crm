@@ -8,6 +8,8 @@ Til5::Application.routes.draw do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
       resources :slots
     end
+
+    resources :membership_types, :only => [:index, :new, :edit, :update, :create, :destroy]
     resources :contract_types, :only => [:index, :new, :edit, :update, :create, :destroy] do
       resources :contract_templates, :only => [:index, :new, :create] do
       end

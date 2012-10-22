@@ -1,7 +1,7 @@
 class CreateMemberships < ActiveRecord::Migration
   def change
     create_table :memberships do |t|
-      t.references :type_id
+      t.references :type
       t.references :account
       t.date :due_date
       t.integer :duration
