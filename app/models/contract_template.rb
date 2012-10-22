@@ -40,6 +40,11 @@ class ContractTemplate < ActiveRecord::Base
     end
   end
 
+  def self.for model
+    #TODO implement this
+    ContractTemplate.first
+  end
+
   # convert the contract to its printable form( a html) with all the placeholders are replaces by underlines
   def to_printable
     template = ContractTemplate::Parser.parse(self.template) do |name, type, params|
