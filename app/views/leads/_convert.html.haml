@@ -32,7 +32,7 @@
         %table
           %td
             .label.req= t(:contract_id)
-            = m.text_field(:contract_id) << %Q{<a href='#' onclick='crm.create_contract(#{ContractTemplate.for(@membership).id}); return false;'>#{t :create_contract}</a>}.html_safe
+            = m.text_field(:contract_id) << %Q{<a href='#' onclick='crm.create_contract(#{ContractTemplate.for(@membership).id}, 'membership_contract_id'); return false;'>#{t :create_contract}</a>}.html_safe
           %td
             .label.req= t(:membership_type)
             = m.collection_select :type_id, MembershipType.all, :id, :name
