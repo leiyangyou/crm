@@ -57,6 +57,22 @@ class ContractTemplate < ActiveRecord::Base
     end
   end
 
+  def to_preview
+    template = ContractTemplate::Parser.parse(self.template) do |name, type, params|
+      type = ContractTemplate::ParamType.get_type_by_name type
+      length = (params[:length] || type.default_length).to_i
+      ("%-#{length * 2}s" % "(#{name})")
+    end
+    case self.format
+      when Format::MARKDOWN
+        Markdown.new(template).to_html
+      when Format::HTML
+        template
+      else
+        "Unrecognizable format: '#{self.format}'"
+    end
+  end
+
   def validate_params params
     params.symbolize_keys!
     self.parameters.each do |key, parameter|

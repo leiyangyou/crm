@@ -1,6 +1,13 @@
 Til5::Application.routes.draw do
   match 'welcome' => 'welcome#index'
-  resources :contracts
+  resources :contract_templates, :only => [:show] do
+    resources :contracts, :only => [:new]
+  end
+  resources :contracts, :only => [:create, :show] do
+    collection do
+      post :preview, :to => "contracts#preview"
+    end
+  end
 
   resources :contract_types
   namespace :admin do
