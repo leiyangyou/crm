@@ -4,11 +4,13 @@ else
   if @callback
     page << %Q{
       window.opener.#{@callback}('#{@contract.contract_id}')
+      window.opener = null;
+      window.open('', '_self');
+      window.close();
+    }
+  else
+    page << %Q{
+      window.location = "#{url_for @contract}"
     }
   end
-  page << %Q{
-    window.opener = null;
-    window.open('', '_self');
-    window.close();
-  }
 end
