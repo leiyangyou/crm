@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121014062348) do
+ActiveRecord::Schema.define(:version => 20121025162816) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -234,24 +234,25 @@ ActiveRecord::Schema.define(:version => 20121014062348) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "url"
   end
 
   create_table "contracts", :force => true do |t|
     t.string   "contract_id"
-    t.integer  "template_id"
+    t.integer  "contract_template_id", :null => false
     t.text     "content"
     t.text     "parameters"
     t.string   "state"
     t.datetime "started_at"
     t.datetime "end_at"
     t.datetime "signed_at"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.integer  "type_id"
   end
 
   add_index "contracts", ["contract_id"], :name => "index_contracts_on_contract_id", :unique => true
-  add_index "contracts", ["template_id"], :name => "index_contracts_on_template_id"
+  add_index "contracts", ["contract_template_id"], :name => "index_contracts_on_template_id"
   add_index "contracts", ["type_id"], :name => "index_contracts_on_type_id"
 
   create_table "dependencies", :force => true do |t|
@@ -371,6 +372,67 @@ ActiveRecord::Schema.define(:version => 20121014062348) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "membership_suspensions", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "membership_suspensions", ["contract_id"], :name => "index_membership_suspensions_on_contract_id"
+  add_index "membership_suspensions", ["membership_id"], :name => "index_membership_suspensions_on_membership_id"
+
+  create_table "membership_terminations", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "contract_id"
+    t.string   "reason"
+    t.integer  "refund"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "membership_terminations", ["contract_id"], :name => "index_membership_terminations_on_contract_id"
+  add_index "membership_terminations", ["membership_id"], :name => "index_membership_terminations_on_membership_id"
+
+  create_table "membership_transfers", :force => true do |t|
+    t.integer  "from_membership_id"
+    t.integer  "to_membership_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "membership_transfers", ["contract_id"], :name => "index_membership_transfers_on_contract_id"
+  add_index "membership_transfers", ["from_membership_id"], :name => "index_membership_transfers_on_from_membership_id"
+  add_index "membership_transfers", ["to_membership_id"], :name => "index_membership_transfers_on_to_membership_id"
+
+  create_table "membership_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "duration"
+    t.boolean  "transferable", :default => true
+    t.boolean  "suspendable",  :default => true
+    t.boolean  "terminatable", :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "type_id"
+    t.integer  "account_id"
+    t.date     "due_date"
+    t.integer  "duration"
+    t.string   "status"
+    t.integer  "consultant_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"
+  add_index "memberships", ["consultant_id"], :name => "index_memberships_on_consultant_id"
+  add_index "memberships", ["contract_id"], :name => "index_memberships_on_contract_id"
+  add_index "memberships", ["type_id"], :name => "index_memberships_on_type_id"
 
   create_table "opportunities", :force => true do |t|
     t.integer  "user_id"

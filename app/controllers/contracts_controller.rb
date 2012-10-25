@@ -8,10 +8,13 @@ class ContractsController < ApplicationController
   # GET /contract_templates/id/contracts/new
   def new
     @callback = params[:callback]
-    @template = ContractTemplate.find(params[:contract_template_id])
-    if @template
-      @contract = Contract.new
-      @contract.contract_template = @template
+    @template_type = ContractType.find_by_url(params[:contract_type_id])
+    if @template_type
+      @template = @template_type.contract_templates.master
+      if @template
+        @contract = Contract.new
+        @contract.contract_template = @template
+      end
     end
   end
 

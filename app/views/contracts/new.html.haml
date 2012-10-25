@@ -4,9 +4,12 @@
     = javascript_include_tag :application
     = javascript_include_tag :contracts
   %body
-    %h1= @contract.contract_template.contract_type.name
-    #create_contract
-      = render :partial => "form"
-    %fieldset#preview
-      %legend= t(:preview)
-      = @contract.contract_template.to_preview.html_safe
+    - unless @contract
+      %h1= "Cannot Find Contract for '#{params[:contract_type_id]}'"
+    - else
+      %h1= @contract.contract_template.contract_type.name
+      #create_contract
+        = render :partial => "form"
+      %fieldset#preview
+        %legend= t(:preview)
+        = @contract.contract_template.to_preview.html_safe
