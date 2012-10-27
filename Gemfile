@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'rails', '3.2.8'
+gem "stringex", "~> 1.4.0"
 gem 'fat_free_crm'
 
 gem 'ransack',      :git => "git://github.com/fatfreecrm/ransack.git"

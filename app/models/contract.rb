@@ -6,7 +6,7 @@ class Contract < ActiveRecord::Base
   belongs_to :contract_type
   #belongs_to :offeree, :polymorphic => true
   #belongs_to :created_by,
-  attr_accessible :content, :contract_id, :end_at, :parameters, :signed_at, :started_at, :state, :parameters_attributes, :contract_template_id
+  attr_accessible :content, :contract_id, :end_at, :parameters, :signed_at, :started_at, :status, :parameters_attributes, :contract_template_id
   sortable :by => ["signed_at DESC", "started_at DESC", "end_at DESC", "created_at DESC"], :default => "created_at DESC"
   validates_presence_of :content, :contract_id, :end_at, :parameters, :signed_at, :started_at
   validates_presence_of :contract_template_id
@@ -32,6 +32,10 @@ class Contract < ActiveRecord::Base
   def parameters_attributes= attributes
     self.parameters = Contract::Params.new
     assign_parameters( attributes)
+  end
+
+  def to_param
+    contract_id
   end
 
   protected
