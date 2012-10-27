@@ -1,5 +1,0 @@
-%li[contract]
-  .tools
-    = link_to_edit(contract, :url => edit_contract_path(contract)) << " |"
-    = link_to(t(:show), contract_path(contract), :target => "_blank")
-  %span= "#{contract.contract_template.contract_type.name}(#{contract.signed_at})"

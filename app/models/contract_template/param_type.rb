@@ -1,7 +1,7 @@
 class ContractTemplate::ParamType
   attr_accessor :name
 
-  DEFAULT_LENGTH = 8
+  DEFAULT_LENGTH = 20
 
   def extract_params params
     params.stringify_keys!.reduce({}) do |result, key, value|

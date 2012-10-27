@@ -1,16 +1,1 @@
-%table
-  %th
-    %td= t(:name)
-    %td= t(:state)
-    %td= t(:signed_at)
-    %td= t(:started_at)
-    %td= t(:end_at)
-  %tr
-    %td= @contract.contract_template.contract_type.name
-    %td= @contract.state
-    %td= @contract.signed_at
-    %td= @contract.started_at
-    %td= @contract.end_at
-%hr
-%div
-  = @contract.content.html_safe
+= @contract.content
