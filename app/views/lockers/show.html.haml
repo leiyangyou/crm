@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %b String:
+  = @locker.string
+%p
+  %b Account:
+  = @locker.account
+%p
+  %b Contract:
+  = @locker.contract
+%p
+  %b Start date:
+  = @locker.start_date
+%p
+  %b Due date:
+  = @locker.due_date
+= link_to 'Edit', edit_locker_path(@locker)
+|
+\#{link_to 'Back', lockers_path}
