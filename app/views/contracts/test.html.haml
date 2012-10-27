@@ -1,0 +1,4 @@
+= javascript_include_tag :application
+= javascript_include_tag :crm_contract
+%input#test-input{:type => "text"}
+%a{ :href=>"#", :onclick => "crm.create_contract('contract-type-for-test', 'test-input')"} test

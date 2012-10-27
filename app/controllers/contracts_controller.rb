@@ -26,6 +26,7 @@ class ContractsController < ApplicationController
   # POST /contracts
   def create
     @contract = Contract.new(params[:contract])
+    @callback = params[:callback]
     respond_with(@contract) do
       @contract.save
     end

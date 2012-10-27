@@ -6,6 +6,7 @@ Til5::Application.routes.draw do
   resources :contracts, :only => [:index, :create, :show] do
     collection do
       post :preview, :to => "contracts#preview"
+      get :test, :to => "contracts#test"
     end
   end
 

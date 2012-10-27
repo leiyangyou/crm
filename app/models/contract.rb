@@ -34,6 +34,10 @@ class Contract < ActiveRecord::Base
     assign_parameters( attributes)
   end
 
+  def to_param
+    contract_id
+  end
+
   protected
   def generate_contract_id
     begin
