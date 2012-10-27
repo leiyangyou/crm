@@ -1,0 +1,15 @@
+.title_tools
+  = link_to_inline(:create_locker, new_admin_locker_path, :text => t(:create_locker))
+
+.title
+  %span#create_locker_title= t(:locker)
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+
+.remote#create_locker{ hidden}
+
+.list#lockers
+  - if @lockers.any?
+    = render :partial => "admin/lockers/locker", :collection => @lockers
+  - else
+    = render "shared/empty"
+
