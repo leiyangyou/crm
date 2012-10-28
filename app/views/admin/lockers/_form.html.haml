@@ -1,7 +1,7 @@
 = form_for [:admin, @locker], :html =>one_submit_only(:locker), :remote => true do |f|
   = link_to_close new_admin_locker_path
   = f.error_messages :object_name => t(:locker)
-  = render "admin/locker/top_section", :f =>f
+  = render :partial => "admin/lockers/top_section", :locals =>{ :f =>f }
   .buttonbar
     = f.submit t(:create_locker), :id => :locker_submit
     or

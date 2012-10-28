@@ -5,6 +5,6 @@ class CreateLockers < ActiveRecord::Migration
       t.string :status
       t.timestamps
     end
-    create_index :lockers, :identifier, :unique => true
+    add_index :lockers, :identifier, :unique => true
   end
 end

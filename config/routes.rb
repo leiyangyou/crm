@@ -1,5 +1,11 @@
 Til5::Application.routes.draw do
-  resources :lockers
+  resources :lockers do
+    member do
+      get :rent, :as => :new_rent, :to => "lockers#new_rent"
+      post :rent, :as => :create_rent, :to => "lockers#create_rent"
+      post :restore
+    end
+  end
 
   match 'welcome' => 'welcome#index'
   resources :contract_types, :only => [:show] do
@@ -20,6 +26,9 @@ Til5::Application.routes.draw do
     resources :contract_types, :only => [:index, :new, :edit, :update, :create, :destroy] do
       resources :contract_templates, :only => [:index, :new, :create] do
       end
+    end
+
+    resources :lockers, :only => [:index, :destroy, :new, :create] do
     end
 
     resources :contract_templates, :only => [:edit, :update, :destroy] do

@@ -1,13 +1,19 @@
 class Locker < ActiveRecord::Base
+  has_one :locker_rent
   attr_accessible :identifier
-  validates_uniqueness :identifier
-  state_machine :status, :initial => :free do
+  validates_uniqueness_of :identifier
+  accepts_nested_attributes_for :locker_rent
+
+  sortable :by => ["identifier ASC"]
+  state_machine :status, :initial => :available do
     event :rent do
-      transition :free => :occupied
+      transition :available => :occupied
     end
 
-    event :return do
-      transition :occupied => :free
+    event :restore do
+      transition :occupied => :available
     end
   end
+
+  delegate :overdue?, :to => :locker_rent, :allow_nil => true
 end

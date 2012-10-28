@@ -1,4 +1,4 @@
-page.call "crm.flip_form", :crate_locker
+page.call "crm.flip_form", :create_locker
 
 unless params[:cancel].true?
   page[:create_locker].replace_html :partial =>"form"

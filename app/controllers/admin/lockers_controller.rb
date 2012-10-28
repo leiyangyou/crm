@@ -1,48 +1,26 @@
 class Admin::LockersController < Admin::ApplicationController
+  before_filter "set_current_tab('admin/lockers')", :only => [ :index, :show ]
 
   load_resource
-  # GET /lockers
-  # GET /lockers.json
+
   def index
+    respond_with(@lockers)
   end
 
-  # GET /lockers/1
-  # GET /lockers/1.json
-  def show
-  end
-
-  # GET /lockers/new
-  # GET /lockers/new.json
   def new
+    respond_with(@locker)
   end
 
-  # GET /lockers/1/edit
-  def edit
-  end
-
-  # POST /lockers
-  # POST /lockers.json
   def create
     @locker = Locker.new(params[:locker])
-
-    respond_to do |format|
+    respond_with(@locker) do |format|
       @locker.save
     end
   end
 
-  # PUT /lockers/1
-  # PUT /lockers/1.json
-  def update
-    @locker = Locker.find(params[:id])
-    respond_with(@locker) do |format|
-      @locker.update_attributes(params[:locker])
-    end
-  end
-
-  # DELETE /lockers/1
-  # DELETE /lockers/1.json
   def destroy
     @locker = Locker.find(params[:id])
     @locker.destroy
+    respond_with(@locker)
   end
 end

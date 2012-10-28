@@ -1,23 +1,11 @@
-%h1 Listing lockers
-%table
-  %tr
-    %th String
-    %th Account
-    %th Contract
-    %th Start date
-    %th Due date
-    %th
-    %th
-    %th
-  - @lockers.each do |locker|
-    %tr
-      %td= locker.string
-      %td= locker.account
-      %td= locker.contract
-      %td= locker.start_date
-      %td= locker.due_date
-      %td= link_to 'Show', locker
-      %td= link_to 'Edit', edit_locker_path(locker)
-      %td= link_to 'Destroy', locker, method: :delete, data: { confirm: 'Are you sure?' }
-%br/
-= link_to 'New Locker', new_locker_path
+= styles_for :locker
+
+.title
+  %span #{t :locker}
+
+.list#lockers
+  = render @lockers
+
+#paginate= render "shared/paginate"
+#export= render "shared/export"
+
