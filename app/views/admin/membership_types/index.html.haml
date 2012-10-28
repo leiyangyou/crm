@@ -1,0 +1,14 @@
+.title_tools
+  =link_to_inline( :create_membership_type, new_admin_membership_type_path, :text => t(:create_membership_type))
+
+.title
+  %span#create_membership_type_title= t(:membership_types)
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  .remote#create_membership_type{ hidden}
+
+.list#membership_types
+  - if @membership_types.any?
+    = render :partial => "admin/membership_types/membership_type", :collection => @membership_types
+  - else
+    = render "shared/empty"
+

@@ -1,0 +1,7 @@
+id = dom_id(@locker)
+if @locker_rent.valid?
+  page[id].replace :partial => "locker", :collection =>[@locker]
+else
+  page[id].replace_html :partial => "form"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+end

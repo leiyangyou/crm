@@ -1,0 +1,12 @@
+= styles_for :locker
+= javascript_include_tag :crm_contract
+
+.title
+  %span #{t :locker}
+
+.list#lockers
+  = render @lockers
+
+#paginate= render "shared/paginate"
+#export= render "shared/export"
+

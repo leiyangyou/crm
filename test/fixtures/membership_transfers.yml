@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from_membership: 
+  to_membership: 
+  contract: 
+
+two:
+  from_membership: 
+  to_membership: 
+  contract: 

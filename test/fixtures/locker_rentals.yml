@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  locker: 
+  account: 
+  start_date: 2012-10-22
+  due_date: 2012-10-22
+
+two:
+  locker: 
+  account: 
+  start_date: 2012-10-22
+  due_date: 2012-10-22

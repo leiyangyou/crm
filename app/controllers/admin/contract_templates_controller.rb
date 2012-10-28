@@ -1,10 +1,10 @@
 class Admin::ContractTemplatesController < Admin::ApplicationController
   before_filter "set_current_tab('admin/contract_templates')", :only => [ :index, :show ]
 
-  load_resource :contract_type, :only => [:index, :new, :create]
+  load_resource :contract_type, :only => [:index, :new, :create], :find_by => :url
   load_resource :contract_template, :through => :contract_type, :only => [:index, :new, :create]
   load_resource :contract_template, :only => [:edit, :update, :destroy, :preview]
-  layout "contract", :only => [:preview]
+  layout "contracts", :only => [:preview]
   # GET /contract_types/1/contract_templates
   # AJAX
   def index

@@ -373,6 +373,27 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "locker_rents", :force => true do |t|
+    t.integer  "locker_id"
+    t.integer  "account_id"
+    t.date     "start_date"
+    t.date     "due_date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "locker_rents", ["account_id"], :name => "index_locker_rents_on_account_id"
+  add_index "locker_rents", ["locker_id"], :name => "index_locker_rents_on_locker_id"
+
+  create_table "lockers", :force => true do |t|
+    t.string   "identifier"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "lockers", ["identifier"], :name => "index_lockers_on_identifier", :unique => true
+
   create_table "membership_suspensions", :force => true do |t|
     t.integer  "membership_id"
     t.integer  "contract_id"

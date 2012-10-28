@@ -1,0 +1,9 @@
+.remote
+  = form_for([:admin, @membership_type], :as => :membership_type, :html => one_submit_only(:membership_type), :remote => true) do |f|
+    = link_to_close edit_admin_membership_type_path(@membership_type)
+    = f.error_messages
+    = render :partial => "top_section", :locals => {:f => f, :edit => true}
+    .buttonbar
+      = f.submit t(:save_membership_type), :id => :membership_type_submit
+      or
+      = link_to_cancel edit_admin_membership_type_path(@membership_type)

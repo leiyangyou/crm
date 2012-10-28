@@ -1,0 +1,5 @@
+%li[locker]
+  .tools
+    = link_to_delete(locker, :url => url_for([:admin, locker]))
+  .locker_info
+    %span.black= locker.identifier

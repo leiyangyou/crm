@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  membership: 
+  reason: MyString
+  refund: 1
+
+two:
+  membership: 
+  reason: MyString
+  refund: 1

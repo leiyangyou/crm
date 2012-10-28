@@ -9,13 +9,12 @@ class ContractType < ActiveRecord::Base
   has_many :contracts
 
   def self.type_for instance
-    type =
-        if instance.class.respond_to? :contract_type
-          instance.class.contract_type
-        else
-          instance.class.name.to_url
-        end
-    find_by_url type
+    klass = instance.kind_of?( Class) ? instance : instance.class
+    if klass.respond_to? :contract_type
+      klass.contract_type
+    else
+      klass.name.underscore.to_url.squish
+    end
   end
 
   def to_param

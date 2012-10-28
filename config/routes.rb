@@ -1,4 +1,12 @@
 Til5::Application.routes.draw do
+  resources :lockers do
+    member do
+      get :rent, :as => :new_rent, :to => "lockers#new_rent"
+      post :rent, :as => :create_rent, :to => "lockers#create_rent"
+      post :restore
+    end
+  end
+
   match 'welcome' => 'welcome#index'
   resources :contract_types, :only => [:show] do
     resources :contracts, :only => [:new]
@@ -15,9 +23,14 @@ Til5::Application.routes.draw do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
       resources :slots
     end
+
+    resources :membership_types, :only => [:index, :new, :edit, :update, :create, :destroy]
     resources :contract_types, :only => [:index, :new, :edit, :update, :create, :destroy] do
       resources :contract_templates, :only => [:index, :new, :create] do
       end
+    end
+
+    resources :lockers, :only => [:index, :destroy, :new, :create] do
     end
 
     resources :contract_templates, :only => [:edit, :update, :destroy] do

@@ -1,0 +1,23 @@
+.section
+  %table
+    %tr
+      %td
+        .label.top.req= t(:name) + ":"
+        = f.text_field :name
+    %tr
+      %td
+        .label.req= t(:duration) + "(" + t(:days) + "):"
+        = f.text_field(:duration)
+    %tr
+      %td
+        .label.req= t(:transferable) + ":"
+        = f.check_box(:transferable)
+    %tr
+      %td
+        .label.req= t(:suspendable) + ":"
+        = f.check_box(:suspendable)
+    %tr
+      %td
+        .label.req= t(:terminatable) + ":"
+        = f.check_box(:terminatable)
+
