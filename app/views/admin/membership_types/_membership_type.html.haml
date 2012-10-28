@@ -1,0 +1,18 @@
+%li[membership_type]
+  .tools
+    = link_to_edit(membership_type, :url => edit_admin_membership_type_path(membership_type)) << " |"
+    - if membership_type.memberships.count <= 0
+      = link_to_delete(membership_type, :url => url_for([:admin, membership_type]))
+    - else
+      %span{:style => "color: #777"} Delete
+  .membership_info
+    %span.black= membership_type.name
+    %tt
+      %span.black= "|"
+      = t(:duration) + ": " + membership_type.duration.to_s
+    %dt
+      = t(:transferable) + ": " + membership_type.transferable.to_s
+      %span.black="|"
+      = t(:suspendable) + ": " + membership_type.suspendable.to_s
+      %span.black="|"
+      = t(:terminatable) + ":" + membership_type.terminatable.to_s

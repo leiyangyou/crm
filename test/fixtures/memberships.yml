@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 
+  account: 
+  due_date: 2012-10-21
+  duration: 1
+  consultant: 
+  contract: 
+
+two:
+  type: 
+  account: 
+  due_date: 2012-10-21
+  duration: 1
+  consultant: 
+  contract: 

@@ -16,7 +16,6 @@ class ContractType < ActiveRecord::Base
         else
           klass.name.to_url
         end
-    find_by_url type
   end
 
   def to_param
