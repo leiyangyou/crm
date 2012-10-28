@@ -1,18 +1,28 @@
-= form_for @locker, :url => new_rent_locker_path(@locker), :html => one_submit_only(:locker), :remote => true do |f|
+= form_for @locker_rent, :url => new_rent_locker_path(@locker), :html => one_submit_only(:locker), :remote => true do |f|
   .tools
     = link_to_close new_rent_locker_path(@locker)
   = f.error_messages :object_name => t(:locker)
-  = f.fields_for :locker_rent_attributes do |lr|
-    .section
-      %table
-        %tr
-          %td
-            .label.top.req= t("account") + ":"
-            = lr.collection_select( :account_id, Account.order("name ASC").all, :id, :name)
-          %td
-            .label.top.req=t("contract_id") + ":"
-            = lr.text_field :contract_id
-            = link_to t("create_contract"), '#', :onclick => %Q{crm.create_contract(\\"#{ContractType.type_for(LockerRent)}\\", \\"locker_rent_attributes_contract_id\\");}
+  .section
+    %table
+      %tr
+        %td
+          .label.top.req= t("account") + ":"
+          = f.collection_select( :account_id, Account.order("name ASC").all, :id, :name)
+        %td
+          .label.top.req=t("contract_id") + ":"
+          = f.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(LockerRent)}', 'locker_rent_contract_id');">#{t :create_contract}</a>}.html_safe
+      %tr
+        %td{:colspan =>2}
+          .label.req= t("start_date") + ":"
+      %tr
+        %td{:colspan =>2}
+          = f.date_select(:start_date)
+      %tr
+        %td{:colspan =>2}
+          .label.req= t("due_date") + ":"
+      %tr
+        %td{:colspan =>2}
+          = f.date_select(:due_date)
   .buttonbar
     = f.submit t(:rent), :id => :locker_rent_submit
     or

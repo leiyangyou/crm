@@ -3,6 +3,7 @@ class CreateLockerRents < ActiveRecord::Migration
     create_table :locker_rents do |t|
       t.references :locker
       t.references :account
+      t.string :contract_id
       t.date :start_date
       t.date :due_date
 

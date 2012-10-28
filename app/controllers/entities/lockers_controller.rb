@@ -13,7 +13,9 @@ class LockersController < EntitiesController
   end
 
   def create_rent
+    @locker = Locker.find(params[:id])
     @locker_rent = LockerRent.new(params[:locker_rent])
+    @locker.locker_rent = @locker_rent
     respond_with(@locker_rent) do |format|
       if @locker_rent.save
         @locker.rent
@@ -22,7 +24,7 @@ class LockersController < EntitiesController
   end
 
   def restore
-    @locker = Locker.fidn(params[:id])
+    @locker = Locker.find(params[:id])
     @locker.restore
   end
 end

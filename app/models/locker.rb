@@ -2,7 +2,6 @@ class Locker < ActiveRecord::Base
   has_one :locker_rent
   attr_accessible :identifier
   validates_uniqueness_of :identifier
-  accepts_nested_attributes_for :locker_rent
 
   sortable :by => ["identifier ASC"]
   state_machine :status, :initial => :available do
