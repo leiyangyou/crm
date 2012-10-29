@@ -15,7 +15,6 @@ class AccountCallback < FatFreeCRM::Callback::Base
       end
     else
       view.content_tag(:li) do
-        binding.pry
         view.link_to_renewal(account)
       end
     end
