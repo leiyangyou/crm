@@ -1,5 +1,5 @@
 Lead.class_eval do
-  def promote
+  def promote params
     account     = Account.create_or_select_for(self, params[:account], params[:users])
     opportunity = Opportunity.create_for(self, account, params[:opportunity], params[:users])
     contact     = Contact.create_for(self, account, opportunity, params)

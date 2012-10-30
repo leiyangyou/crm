@@ -8,6 +8,7 @@ AccountsController.class_eval do
     @account = Account.find(params[:id])
     @membership = @account.create_or_update_membership(params[:account][:membership])
     @membership.renewal
+    @membership.save
     respond_with(@account)
   end
 

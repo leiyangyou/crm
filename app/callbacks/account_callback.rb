@@ -8,8 +8,12 @@ class AccountCallback < FatFreeCRM::Callback::Base
         end
       end
       if account.normal?
-        view.content_tag(:li) do
-          view.link_to_suspend(account) + view.link_to_transfer(account)
+        result = ""
+        result << view.content_tag(:li) do
+          view.link_to_suspend(account)
+        end
+        result << view.content_tag(:li) do
+          view.link_to_transfer(account)
         end
       end
     else

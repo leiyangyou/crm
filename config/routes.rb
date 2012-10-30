@@ -13,6 +13,8 @@ Til5::Application.routes.draw do
       put :promote_renewal
       get :suspend
       put :promote_suspend
+      get :transfer
+      put :promote_transfer
     end
   end
 

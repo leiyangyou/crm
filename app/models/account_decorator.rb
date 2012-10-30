@@ -4,7 +4,6 @@ Account.class_eval do
   delegate :normal?, :transferred?, :suspended?, :expired?, :to => :membership
 
   def create_or_update_membership(params)
-    binding.pry
     membership = self.membership
     unless membership
       membership = Membership.new(params)
@@ -15,8 +14,7 @@ Account.class_eval do
       end
       membership.update_attributes(params)
     end
-    binding.pry
     membership.due_date = membership.start_date + membership.type.duration
-    membership.save
+    membership
   end
 end
