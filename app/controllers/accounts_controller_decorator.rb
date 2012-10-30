@@ -6,7 +6,8 @@ AccountsController.class_eval do
   end
   def promote_renewal
     @account = Account.find(params[:id])
-    @membership = @account.create_or_update_membership(params[:membership])
+    @membership = @account.create_or_update_membership(params[:account][:membership])
+    @membership.renewal
     respond_with(@account)
   end
 

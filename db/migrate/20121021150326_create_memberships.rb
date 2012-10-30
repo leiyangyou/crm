@@ -8,7 +8,7 @@ class CreateMemberships < ActiveRecord::Migration
       t.integer :duration
       t.string :status
       t.references :consultant
-      t.references :contract
+      t.string :contract_id
 
       t.timestamps
     end

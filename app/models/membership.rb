@@ -6,18 +6,12 @@ class Membership < ActiveRecord::Base
   has_many :membership_suspensions
   has_one :membership_terminations
   has_one :membership_transfers
-  attr_accessible :start_date, :contract_id
-  validates_presence_of :membership_type_id
-
-  before_validation do
-    contract = Contract.find_by_contract_id(params[:contract_id])
-    raise "Cannot find contract for id '#{contract_id}'" unless contract
-    self.contract = contract
-  end
+  attr_accessible :start_date, :contract_id, :type_id, :consultant_id
+  validates_presence_of :type_id
 
   after_find :check_expiration
 
-  state_machine :status do
+  state_machine :status, :initial => :expired do
     event :transfer do
       transition :normal => :transferred
     end
