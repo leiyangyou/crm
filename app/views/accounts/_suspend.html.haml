@@ -1,0 +1,23 @@
+#suspend_membership.remote
+  %h3 Suspend Membership for #{account.name}
+  = form_for account, :url =>promote_suspend_account_path(account), :remote => true do |f|
+    = link_to_close suspend_account_path(account)
+    .section
+      = f.fields_for(membership_suspension) do |m|
+        = m.error_messages :object_name => t(:membership_suspension)
+        %table
+          %tr
+            %td{:colspan => 2}
+              .label.top.req= t(:contract_id)
+              = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership)}', 'account_membership_contract_id');">#{t :create_contract}</a>}.html_safe
+          %tr
+            %td
+              .label.req= t(:start_date) + ":"
+              = m.date_select :start_date
+            %td
+              .label.req= t(:due_date) + ":"
+              = m.date_select :due_date
+    .buttonbar
+      = f.submit t(:suspend), :id => :account_suspend_submit
+      or
+      = link_to_cancel suspend_account_path(account)

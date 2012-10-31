@@ -18,13 +18,15 @@ AccountsController.class_eval do
   def suspend
     @account = Account.find(params[:id])
     @membership = @account.membership || Membership.new
+    @membership_suspension = MembershipSuspension.new
+    @membership_suspension.membership = @membership
     respond_with(@account)
   end
 
   def promote_suspend
     @account = Account.find(params[:id])
     @membership = @account.membership
-    @membership.suspend(params[:membership_suspension])
+    @membership_suspension = @membership.suspend(params[:membership_suspension])
     respond_with(@account)
   end
 end

@@ -38,6 +38,15 @@ class Membership < ActiveRecord::Base
     end
   end
 
+  def suspend( params)
+    suspension = MembershipSuspension.new(params)
+    suspension.membership = self
+    if suspension.save
+      membership.suspend
+    end
+    suspension
+  end
+
   def total_duration
     self.duration + Date.today - start_date
   end
