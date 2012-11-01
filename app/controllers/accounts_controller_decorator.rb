@@ -26,7 +26,7 @@ AccountsController.class_eval do
   def promote_suspend
     @account = Account.find(params[:id])
     @membership = @account.membership
-    @membership_suspension = @membership.suspend(params[:membership_suspension])
+    @membership_suspension = @membership.create_suspension(params[:membership_suspension])
     respond_with(@account)
   end
 end

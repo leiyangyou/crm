@@ -18,6 +18,9 @@ class Membership < ActiveRecord::Base
     event :suspend do
       transition :normal => :suspended
     end
+    event :continue do
+      transition :suspended => :normal
+    end
     event :renewal do
       transition :expired => :normal
     end
@@ -38,11 +41,11 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def suspend( params)
+  def create_suspension( params)
     suspension = MembershipSuspension.new(params)
     suspension.membership = self
     if suspension.save
-      membership.suspend
+      self.suspend
     end
     suspension
   end

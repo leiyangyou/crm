@@ -9,7 +9,7 @@
           %tr
             %td{:colspan => 2}
               .label.top.req= t(:contract_id)
-              = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership)}', 'account_membership_contract_id');">#{t :create_contract}</a>}.html_safe
+              = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership_suspension)}', 'account_membership_suspension_contract_id');">#{t :create_contract}</a>}.html_safe
           %tr
             %td
               .label.req= t(:start_date) + ":"
