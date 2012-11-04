@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  type: 
-  attributes: MyText
+  schedule: 
+  date: 2012-11-03
+  slots: 1
 
 two:
-  type: 
-  attributes: MyText
+  schedule: 
+  date: 2012-11-03
+  slots: 1

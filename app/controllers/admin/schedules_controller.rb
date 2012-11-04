@@ -13,7 +13,7 @@ class Admin::SchedulesController < Admin::ApplicationController
     @dates = (beginning_of_week..end_of_week).to_a
     @schedules = current_user.subordinates.map do |subordinate|
       [subordinate,
-       subordinate.find_or_create_schedule_by_week(beginning_of_week)]
+       subordinate.weekly_schedules(beginning_of_week)]
     end
     respond_to do |format|
       format.html {

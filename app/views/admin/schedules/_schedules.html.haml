@@ -8,17 +8,9 @@
       %th
       - @dates.each do |date|
         %th #{date.strftime("%a %m/%d")}
-    - @schedules.each do |user, schedule|
+    - @schedules.each do |user, schedules|
       %tr
         %th #{user.full_name} #{"#{user.mobile}" if user.mobile}
-        - @dates.each do |date|
+        - schedules.each do |schedule|
           %td
-            - slot = schedule.slots_by_date(date).first
-            - if slot
-              #{time_to_s(slot.start_time)}-#{time_to_s(slot.end_time)}
-            - else
-              |NA
-
-
-
-
+            = schedule.readable_working_time

@@ -11,9 +11,9 @@ User.class_eval do
   acts_as_user :roles => ROLES
   attr_protected :roles
 
-  has_many :schedules
+  has_one :schedule
 
-  has_many :slots, :through => :schedules
+  after_create :initialize_schedule
 
   scope :manageable_by, (lambda do |user|
     where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
@@ -30,14 +30,29 @@ User.class_eval do
     User.with_any_role(*self.manageable_roles)
   end
 
-  def find_or_create_schedule_by_week( date)
-    date = date.beginning_of_week(Schedule::FIRST_DAY_OF_WEEK)
-    schedule = self.schedules.for_date( date).first || self.schedule_template.apply_to(self, date)
-    schedule.save!
-    schedule
+  def weekly_schedules beginning_of_week
+    self.schedule.weekly_schedules( beginning_of_week)
   end
 
-  def schedule_template
-    ScheduleTemplate.default
+  def available date, time_range
+    User.include(:schedule).select{|user|
+      daily_schedule = user.schedule.schedule_for(date)
+      daily_schedule.available? time_range
+    }
+  end
+
+  def schedule
+    schedule = self.read_attribute(:schedule)
+    return schedule if schedule
+    initialize_schedule
+  end
+
+  private
+  def initialize_schedule
+    schedule = Schedule.new
+    schedule.user = self
+    schedule.template = ScheduleTemplate.default
+    schedule.save
+    schedule
   end
 end
