@@ -360,3 +360,6 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+
+default_working_time:
+  - "8:00-16:00"
