@@ -41,10 +41,11 @@ User.class_eval do
     }
   end
 
+  alias_method :original_schedule, :schedule
   def schedule
-    schedule = self.read_attribute(:schedule)
+    schedule = self.original_schedule
     return schedule if schedule
-    initialize_schedule
+    self.schedule = initialize_schedule
   end
 
   private
