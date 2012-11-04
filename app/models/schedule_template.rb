@@ -1,19 +1,36 @@
-class ScheduleTemplate
-  attr_accessor :template
+require 'schedule_template_decorator/template'
+module ScheduleTemplateDecorator
+end
+class ScheduleTemplate < ActiveRecord::Base
+  include ScheduleTemplateDecorator
+  attr_accessible :parameters, :template_type, :is_default
 
-  class << self
-    def default
-      return @default_template if @default_template
-      @default_template = ScheduleTemplate::Template.new
-      now = Time.now
-      slot = ScheduleTemplate::Template::Slot.new(
-          :start_time => Time.parse("8:00", now).seconds_since_midnight,
-          :end_time => Time.parse("17:00", now).seconds_since_midnight
-      )
-      7.times do |i|
-        @default_template.add_slot(i, slot)
+  # to make sure there is only one default template
+  after_save do
+    if self.is_default
+      ScheduleTemplate.find_all_by_is_default(true).each do |template|
+        if template != self
+          template.update_attributes(:is_default => false)
+          template.save
+        end
       end
-      @default_template
     end
+  end
+
+  def schedule_for(date)
+    template = Template.template_for self.template_type
+    template = Template::DefaultTemplate unless template
+    template.new(self.parameters).schedule_for(date)
+  end
+
+  def self.default
+    ScheduleTemplate.find_by_is_default(true) || create_default_template
+  end
+
+  private
+  def self.create_default_template
+    template = ScheduleTemplate.new(:template_type => 'default', :parameters => '{}', :is_default => true)
+    template.save
+    template
   end
 end

@@ -1,23 +1,24 @@
 class Schedule < ActiveRecord::Base
-  FIRST_DAY_OF_WEEK = :sunday
-
   belongs_to :user
-  has_many :slots
-  attr_accessible :date
-  validates_uniqueness_of :date, :scope => [:user_id]
-  validates_with Validators::SlotsConflictValidator
+  belongs_to :template, :class_name => "ScheduleTemplate"
+  has_many :daily_schedules
 
-  scope :for_date, lambda{|date| where(:date => date)}
+  FIRST_DAY_OF_WEEK = :sunday unless defined? FIRST_DAY_OF_WEEK
 
-  def available? time
-    slots.select{|slot| slot.available?(time)}.size > 0
+  def schedule_for( date)
+    daily_schedule = self.daily_schedules.find_by_date( date)
+    unless daily_schedule
+      template = self.template || ScheduleTemplate.default
+      daily_schedule = template.schedule_for( date)
+      self.daily_schedules << daily_schedule
+    end
+    daily_schedule
   end
 
-  def slots_group_by_date
-    slots.group_by{|slot| slot.date.strftime "%Y-%m-%d"}
-  end
-
-  def slots_by_date date
-    slots.select{|slot| slot.date == date}
+  def weekly_schedules(date)
+    date = date.beginning_of_week(FIRST_DAY_OF_WEEK)
+    (0..6).map do |delta|
+      schedule_for( date + delta)
+    end
   end
 end

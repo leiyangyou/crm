@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025162816) do
+ActiveRecord::Schema.define(:version => 20121103094454) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -255,6 +255,17 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
   add_index "contracts", ["contract_template_id"], :name => "index_contracts_on_template_id"
   add_index "contracts", ["type_id"], :name => "index_contracts_on_type_id"
 
+  create_table "daily_schedules", :force => true do |t|
+    t.integer  "schedule_id"
+    t.date     "date"
+    t.integer  "slots",        :limit => 8
+    t.integer  "working_time", :limit => 8
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "daily_schedules", ["schedule_id"], :name => "index_daily_schedules_on_schedule_id"
+
   create_table "dependencies", :force => true do |t|
     t.integer  "question_id"
     t.integer  "question_group_id"
@@ -378,8 +389,9 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
     t.integer  "account_id"
     t.date     "start_date"
     t.date     "due_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "contract_id"
   end
 
   add_index "locker_rents", ["account_id"], :name => "index_locker_rents_on_account_id"
@@ -396,9 +408,11 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
 
   create_table "membership_suspensions", :force => true do |t|
     t.integer  "membership_id"
-    t.integer  "contract_id"
+    t.string   "contract_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.date     "start_date"
+    t.date     "due_date"
   end
 
   add_index "membership_suspensions", ["contract_id"], :name => "index_membership_suspensions_on_contract_id"
@@ -445,9 +459,10 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
     t.integer  "duration"
     t.string   "status"
     t.integer  "consultant_id"
-    t.integer  "contract_id"
+    t.string   "contract_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.date     "start_date"
   end
 
   add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"
@@ -570,22 +585,21 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
   add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
 
   create_table "schedule_templates", :force => true do |t|
-    t.text     "template"
-    t.text     "attributes"
-    t.integer  "parent_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "template_type"
+    t.boolean  "is_default"
+    t.text     "parameters"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
-
-  add_index "schedule_templates", ["parent_id"], :name => "index_schedule_templates_on_parent_id"
 
   create_table "schedules", :force => true do |t|
     t.integer  "user_id"
-    t.date     "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "template_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
+  add_index "schedules", ["template_id"], :name => "index_schedules_on_template_id"
   add_index "schedules", ["user_id"], :name => "index_schedules_on_user_id"
 
   create_table "sessions", :force => true do |t|
@@ -606,17 +620,6 @@ ActiveRecord::Schema.define(:version => 20121025162816) do
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
-
-  create_table "slots", :force => true do |t|
-    t.integer  "schedule_id"
-    t.integer  "start_time"
-    t.integer  "end_time"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.date     "date"
-  end
-
-  add_index "slots", ["schedule_id"], :name => "index_slots_on_schedule_id"
 
   create_table "survey_sections", :force => true do |t|
     t.integer  "survey_id"
