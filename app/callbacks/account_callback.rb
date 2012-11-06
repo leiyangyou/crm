@@ -35,6 +35,11 @@ class AccountCallback < FatFreeCRM::Callback::Base
           view.t(:expired)
         end
       end
+      if membership.contract_id
+        result << "("
+        result << view.link_to(view.t(:contract), view.contract_path(membership.contract_id))
+        result << ")"
+      end
     end
     result
   end

@@ -3,7 +3,7 @@ class ContractsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => :contract_id
 
   # GET /contract_templates/id/contracts/new
   def new
