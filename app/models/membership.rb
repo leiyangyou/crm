@@ -3,9 +3,13 @@ class Membership < ActiveRecord::Base
   belongs_to :consultant, :class_name => 'User'
   belongs_to :contract
   belongs_to :type, :class_name => "MembershipType", :foreign_key => "type_id"
-  has_many :membership_suspensions
-  has_one :membership_terminations
-  has_one :membership_transfers
+  has_many :membership_suspensions do
+    def latest
+      order('created_at DESC').first
+    end
+  end
+  has_one :membership_termination
+  has_one :membership_transfer
   attr_accessible :start_date, :contract_id, :type_id, :consultant_id
   validates_presence_of :type_id
 

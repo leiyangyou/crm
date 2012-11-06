@@ -5,7 +5,7 @@ class CreateMemberships < ActiveRecord::Migration
       t.references :account
       t.date :start_date
       t.date :due_date
-      t.integer :duration
+      t.integer :duration, :default => 0
       t.string :status
       t.references :consultant
       t.string :contract_id

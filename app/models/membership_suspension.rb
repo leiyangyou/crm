@@ -1,6 +1,6 @@
 class MembershipSuspension < ActiveRecord::Base
   belongs_to :membership
-  belongs_to :contract
+  attr_accessible :contract_id, :due_date, :start_date
   validates_presence_of :membership_id
 
   def self.create( membership, params)

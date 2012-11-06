@@ -30,15 +30,35 @@ class AccountCallback < FatFreeCRM::Callback::Base
     if membership = account.membership
       result << membership.type.name + ":"
       result << "#{membership.start_date.strftime("%Y/%m/%d")} - #{membership.due_date.strftime("%Y/%m/%d")}"
+      if membership.contract_id
+        result << "("
+        result << view.link_to(view.t(:contract), view.contract_path(membership.contract_id))
+        result << ")"
+      end
       if membership.expired?
         result << view.content_tag(:span, :class => "warning") do
           view.t(:expired)
         end
       end
-      if membership.contract_id
-        result << "("
-        result << view.link_to(view.t(:contract), view.contract_path(membership.contract_id))
-        result << ")"
+      if membership.transferred?
+        membership_transfer = membership.membership_transfer
+        result << view.content_tag(:span, :class => "warning") do
+          if membership_transfer.contract_id
+            view.link_to( view.t(:transferred), view.contract_path(membership_transfer.contract_id))
+          else
+            view.t(:transferred)
+          end
+        end
+      end
+      if membership.suspended?
+        membership_suspension = membership.membership_suspensions.latest
+        result << view.content_tag(:span, :class => "warning") do
+          if membership_suspension.contract_id
+            view.link_to( view.t(:suspended), view.contract_path(membership_suspension.contract_id))
+          else
+            view.t(:suspended)
+          end
+        end
       end
     end
     result
