@@ -18,4 +18,12 @@ AccountsHelper.class_eval do
       :remote =>true
     )
   end
+
+  def link_to_continue account
+    link_to( t(:continue), continue_account_path(account),
+      :method => :post,
+      :remote => true,
+      :confirm => t(:continue_account_confirm)
+    )
+  end
 end

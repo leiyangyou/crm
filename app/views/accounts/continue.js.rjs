@@ -1,0 +1,3 @@
+id = dom_id(account)
+
+page[id].replace :partial => "account", :collection => [@account]

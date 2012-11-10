@@ -3,6 +3,11 @@ class AccountCallback < FatFreeCRM::Callback::Base
     result = ""
     account = context[:account]
     if account.membership
+      if account.suspended?
+        result << view.content_tag(:li) do
+          view.link_to_continue(account)
+        end
+      end
       if account.expired?
         result << view.content_tag(:li) do
           view.link_to_renewal(account)
@@ -27,7 +32,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
   def account_bottom view, context
     result = ""
     account = context[:account]
-    if membership = account.membership
+    if (membership = account.membership) && membership.type
       result << membership.type.name + ":"
       result << "#{membership.start_date.strftime("%Y/%m/%d")} - #{membership.due_date.strftime("%Y/%m/%d")}"
       if membership.contract_id

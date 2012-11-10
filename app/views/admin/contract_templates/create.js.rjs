@@ -1,7 +1,7 @@
 if @contract_template.valid?
-  page[:"create_contract_type_#{@contract_type.id}_contract_template_arrow"].replace_html "$#9658;"
+  page[:"create_contract_type_#{@contract_type.id}_contract_template_arrow"].replace_html "&#9658;"
   page.visual_effect :toggle_blind, :"create_contract_type_#{@contract_type.id}_contract_template", :duration =>0.3, :afterFinish => 'function(effect){ effect.element.update("")}'
-  page.insert_html :top, :"contract_type_#{@contract_type.id}_contract_template", :partial => "contract_template", :collection => [@contract_template]
+  page.insert_html :top, :"contract_type_#{@contract_type.id}_contract_templates", :partial => "contract_template", :collection => [@contract_template]
   page[dom_id(@contract_template)].visual_effect :highlight, :duration =>1.5
   page.call "crm.flick", :empty, :remove
 else
