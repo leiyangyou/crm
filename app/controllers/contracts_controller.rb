@@ -14,6 +14,7 @@ class ContractsController < ApplicationController
       if @template
         @contract = Contract.new
         @contract.contract_template = @template
+        @contract.parameters_attributes = params
       end
     end
   end
