@@ -13,7 +13,8 @@ module ParametersAssignment
         send("#{k}=", v)
       elsif
         param = template.parameters[k]
-        raise(ActiveRecord::UnknownAttributeError, "unknown attribute: #{k} for template '#{template.contract_type.name}'") unless param
+        next unless param
+        # raise(ActiveRecord::UnknownAttributeError, "unknown attribute: #{k} for template '#{template.contract_type.name}'") unless param
         type = ContractTemplate::ParamType.get_type_by_name param.type
         param_value = type.convert v
         puts "assign #{k} with #{param_value}"

@@ -23,7 +23,6 @@ class Contract < ActiveRecord::Base
   before_validation :generate_contract_id, :on =>:create
   before_validation :generate_content
 
-
   def self.generate_contract_id
     "C#{SecureRandom.hex(6).upcase}"
   end
