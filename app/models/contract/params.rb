@@ -24,6 +24,7 @@ class Contract::Params
   end
 
   def method_missing(method, *args, &block)
+    method = method.to_s
     if method =~ /=$/
       name = method[0..-2]
       self[name]= args.first
