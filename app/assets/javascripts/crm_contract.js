@@ -16,7 +16,7 @@
         parameters_string = (function(){
             var results = [];
             for( key in parameters){
-                _result.push(key + "=" + parameters[key])
+                results.push(key + "=" + parameters[key])
             }
             return results;
         })().join("&");
