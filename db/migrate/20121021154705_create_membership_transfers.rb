@@ -3,7 +3,7 @@ class CreateMembershipTransfers < ActiveRecord::Migration
     create_table :membership_transfers do |t|
       t.references :from_membership
       t.references :to_membership
-      t.references :contract
+      t.string :contract_id
 
       t.timestamps
     end

@@ -2,7 +2,7 @@ class CreateMembershipTerminations < ActiveRecord::Migration
   def change
     create_table :membership_terminations do |t|
       t.references :membership
-      t.references :contract
+      t.string :contract_id
       t.string :reason
       t.integer :refund
 

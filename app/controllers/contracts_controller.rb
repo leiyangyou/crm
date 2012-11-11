@@ -3,9 +3,9 @@ class ContractsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => :contract_id
 
-  # GET /contract_templates/id/contracts/new
+  # GET /contract_types/type_id/contracts/new
   def new
     @callback = params[:callback]
     @contract_type = ContractType.find_by_url(params[:contract_type_id])

@@ -1,0 +1,9 @@
+id = dom_id(@account)
+
+unless params[:cancel].true?
+  page.call "crm.highlight_off", id
+  page.call "crm.hide_form", :create_account
+  page[id].replace_html :partial => "transfer", :locals => {:account => @account, :membership => @membership, :membership_transfer => @membership_transfer}
+else
+  page[id].replace :partial => "account", :collection => [@account]
+end

@@ -7,6 +7,18 @@ Til5::Application.routes.draw do
     end
   end
 
+  resources :accounts do
+    member do
+      get :renewal
+      put :promote_renewal
+      get :suspend
+      put :promote_suspend
+      get :transfer
+      put :promote_transfer
+      post :continue
+    end
+  end
+
   match 'welcome' => 'welcome#index'
   resources :contract_types, :only => [:show] do
     resources :contracts, :only => [:new]

@@ -1,0 +1,25 @@
+#renewal_membership.remote
+  %h3 Renewal Membership for #{account.name}
+  = form_for account, :url => promote_renewal_account_path(account), :remote => true do |f|
+    = link_to_close  renewal_account_path(account)
+    = f.fields_for(membership) do |m|
+      = m.error_messages :object_name => t(:membership)
+      %table
+        %tr
+          %td
+            .label.top.req= t(:contract_id)
+            = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership)}', 'account_membership_contract_id');">#{t :create_contract}</a>}.html_safe
+          %td
+            .label.top.req= t(:type) + ":"
+            = m.collection_select :type_id, MembershipType.all, :id, :name
+        %tr
+          %td
+            .label.req= t(:start_date) + ":"
+            = m.date_select :start_date
+          %td
+            .label= t(:consultant) +":"
+            = m.collection_select :consultant_id, User.all, :id, :username
+    .buttonbar
+      = f.submit t(:renewal), :id => :account_renewal_submit
+      or
+      = link_to_cancel renewal_account_path(account)

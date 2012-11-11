@@ -13,4 +13,21 @@ LeadsController.class_eval do
 
     respond_with(@lead)
   end
+
+  def promote
+    @users = User.except(@current_user)
+    @account, @opportunity, @contact, @membership= @lead.promote(params)
+    @accounts = Account.my.order('name')
+    @stage = Setting.unroll(:opportunity_stage)
+
+    respond_with(@lead) do |format|
+      if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
+        @lead.convert
+        update_sidebar
+      else
+        format.json { render :json => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 end
