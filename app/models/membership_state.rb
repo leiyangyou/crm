@@ -11,6 +11,7 @@ class MembershipState < ActiveRecord::Base
   belongs_to :last_state
   attr_accessible :contract_id, :state_type
   validates_presence_of :state_type
+  validates_with MembershipStateDecorator::ParametersValidator
 
   serialize :parameters, Hash
   type TYPES::ACTIVE do

@@ -118,7 +118,6 @@ module MembershipStateDecorator
         parameter_descriptor = ParameterDescriptor.new(name.to_s, type)
         @parameters_descriptor.add_parameter( @current_type, parameter_descriptor)
       end
-
     end
 
     module InstanceMethods
@@ -126,9 +125,13 @@ module MembershipStateDecorator
         parameter_descriptor_for name
       end
       def parameter_descriptor_for name
-        descriptor_map = self.class.parameters_descriptor[self.state_type]
-        descriptor_map[name.to_s]
+        parameters_descriptor[name.to_s]
       end
+
+      def parameters_descriptor
+        self.class.parameters_descriptor[self.state_type] || {}
+      end
+
       def convert_parameter(name, value)
         return nil unless value
         descriptor = parameter_descriptor_for name
