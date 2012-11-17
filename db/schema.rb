@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103094454) do
+ActiveRecord::Schema.define(:version => 20121111075937) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -406,6 +406,17 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
 
   add_index "lockers", ["identifier"], :name => "index_lockers_on_identifier", :unique => true
 
+  create_table "membership_states", :force => true do |t|
+    t.string   "state_type"
+    t.string   "contract_id"
+    t.integer  "last_state_id"
+    t.text     "parameters"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "membership_states", ["last_state_id"], :name => "index_membership_states_on_last_state_id"
+
   create_table "membership_suspensions", :force => true do |t|
     t.integer  "membership_id"
     t.string   "contract_id"
@@ -433,7 +444,7 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
   create_table "membership_transfers", :force => true do |t|
     t.integer  "from_membership_id"
     t.integer  "to_membership_id"
-    t.integer  "contract_id"
+    t.string   "contract_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
@@ -456,12 +467,12 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
     t.integer  "type_id"
     t.integer  "account_id"
     t.date     "due_date"
-    t.integer  "duration"
+    t.integer  "duration",      :default => 0
     t.string   "status"
     t.integer  "consultant_id"
     t.string   "contract_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.date     "start_date"
   end
 

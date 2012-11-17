@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 
+  started_on: 2012-11-11
+  finished_on: 2012-11-11
+  contract_id: MyString
+  last_state: 
+
+two:
+  type: 
+  started_on: 2012-11-11
+  finished_on: 2012-11-11
+  contract_id: MyString
+  last_state: 

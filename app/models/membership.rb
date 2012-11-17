@@ -1,15 +1,13 @@
 class Membership < ActiveRecord::Base
   belongs_to :account
   belongs_to :consultant, :class_name => 'User'
-  belongs_to :contract
   belongs_to :type, :class_name => "MembershipType", :foreign_key => "type_id"
-  has_many :membership_suspensions do
-    def latest
+  has_many :membership_states do
+    def current
       order('created_at DESC').first
     end
   end
-  has_one :membership_termination
-  has_one :membership_transfer, :foreign_key =>  :from_membership_id
+  has_one :current_state, :class_name => 'MembershipState', :order => 'created_at DESC'
   attr_accessible :start_date, :contract_id, :type_id, :consultant_id
 
   delegate :name, :to => :account
@@ -61,16 +59,24 @@ class Membership < ActiveRecord::Base
     end
   end
 
+  def create_membership_state( params)
+    state = MembershipState.new(params)
+    state.membership = self
+    state.last_state = self.current_state
+    state.save
+    state
+  end
+
   def create_suspension( params)
-    suspension = MembershipSuspension.new(params)
-    suspension.membership = self
-    if suspension.save
+    suspension = self.create_membership_state(params.merge(:type => MembershipState::TYPES::SUSPEND))
+    if suspension.valid?
       self.suspend
     end
     suspension
   end
 
   def create_transfer(params)
+    suspension = self.create_membership_state(params.merge(:type => MembershipState::TYPES::TRANSFER))
     transfer = MembershipTransfer.new(params)
     transfer.from_membership = self
     target_membership = transfer.to_membership
