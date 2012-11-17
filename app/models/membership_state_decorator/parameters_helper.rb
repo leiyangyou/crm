@@ -5,10 +5,11 @@ module MembershipStateDecorator
       base.send :include, InstanceMethods
     end
     class ParameterDescriptor
-      attr_accessor :name, :type
-      def initialize name, type
-        self.name = name
-        self.type = type
+      attr_accessor :name, :type, :required
+      def initialize name, type, required = true
+        @name = name
+        @type = type
+        @required = required
       end
     end
     class ParameterConverter
@@ -113,9 +114,9 @@ module MembershipStateDecorator
         @current_type = nil
       end
 
-      def parameter( name, type )
+      def parameter( name, type, options = {})
         raise 'parameter should be put in the block of type' unless @current_type
-        parameter_descriptor = ParameterDescriptor.new(name.to_s, type)
+        parameter_descriptor = ParameterDescriptor.new(name.to_s, type, options[:required] || true)
         @parameters_descriptor.add_parameter( @current_type, parameter_descriptor)
       end
     end
