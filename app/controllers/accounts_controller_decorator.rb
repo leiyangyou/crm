@@ -2,16 +2,12 @@ AccountsController.class_eval do
 
   def renewal
     @account = Account.find(params[:id])
-    @membership = @account.membership || Membership.new
+    @membership_state = MembershipState.new :state_type => MembershipState::TYPES::ACTIVE
   end
+
   def promote_renewal
     @account = Account.find(params[:id])
-    @membership = @account.create_or_update_membership(params[:account][:membership])
-    @membership.renewal
-    if @membership.contract_id
-      @membership.activate
-    end
-    @membership.save
+    @membership_state = @account.membership.renewal params[:account]
     respond_with(@account)
   end
 
@@ -37,16 +33,16 @@ AccountsController.class_eval do
 
   def suspend
     @account = Account.find(params[:id])
-    @membership = @account.membership || Membership.new
-    @membership_suspension = MembershipSuspension.new
-    @membership_suspension.membership = @membership
+    membership = @account.membership
+    membership.contract_id = nil
+    membership.started_on = Date.today
+    @membership_state = MembershipState.new :state_type => MembershipState::TYPES::SUSPENDED
     respond_with(@account)
   end
 
   def promote_suspend
     @account = Account.find(params[:id])
-    @membership = @account.membership
-    @membership_suspension = @membership.create_suspension(params[:account][:membership_suspension])
+    @membership_state = @account.membership.suspend params[:account]
     respond_with(@account)
   end
 

@@ -15,7 +15,6 @@ module MembershipStateDecorator
     class ParameterConverter
       include Singleton
       def convert(descriptor, value)
-        binding.pry
         type = descriptor.type
         if type == String
           return value
@@ -32,7 +31,6 @@ module MembershipStateDecorator
 
       private
       def convert_date_parameter_value value
-        binding.pry
         case value
           when Date
             return value

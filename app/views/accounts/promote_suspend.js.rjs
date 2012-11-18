@@ -1,5 +1,5 @@
 id = dom_id(@account)
-if @account.valid? && @membership_suspension.valid?
+if @account.valid? && @account.membership.valid?
   page[id].replace :partial => "account", :collection => [@account]
   page[id].visual_effect :highlight, :duration => 1.0
 else

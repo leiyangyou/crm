@@ -8,7 +8,7 @@ class Membership < ActiveRecord::Base
     end
   end
   has_one :current_state, :class_name => 'MembershipState', :order => 'created_at DESC'
-  attr_accessible :start_date, :contract_id, :type_id, :consultant_id
+  attr_accessible :started_on, :finished_on, :type_id, :consultant_id, :contract_id
 
   delegate :name, :to => :account
 
@@ -17,24 +17,63 @@ class Membership < ActiveRecord::Base
   scope :transfer_acceptable, where(:status => ['expired', 'transferred', 'expired'])
 
   state_machine :status, :initial => :expired do
-    event :transfer do
-      transition :normal => :transferred
+    event :state_transfer do
+      transition :active => :transferred
     end
-    event :activate do
-      transition :inactive => :active
+    event :state_suspend do
+      transition :active => :suspended
     end
-    event :suspend do
-      transition :normal => :suspended
+    event :state_continue do
+      transition :suspended => :active
     end
-    event :continue do
-      transition :suspended => :normal
+    event :state_renewal do
+      transition all => :active
     end
-    event :renewal do
-      transition all => :inactive
+    event :state_expire do
+      transition :active => :expired
     end
-    event :expire do
-      transition :normal => :expired
+
+    after_transition :active => any, :do => :accumulate_membership_duration
+  end
+
+  def transfer params
+    self.update_attributes(params[:membership])
+    self.finished_on = Date.today
+    self.state_transfer
+    target_membership = Membership.find(params[:membership_state][:target_id])
+    target_membership.accept_transfer(self)
+    self.new_membership_state(params[:membership_state])
+  end
+
+  def suspend params
+    self.update_attributes(params[:membership])
+    self.state_suspend
+    self.new_membership_state params[:membership_state]
+  end
+
+  def continue params
+    self.state_continue
+    current_state = self.current_state
+    last_suspend_state = current_state.find_last_state MembershipState::TYPES::SUSPENDED
+    last_active_state = current_state.find_last_state MembershipState::TYPES::ACTIVE
+    if last_suspend_state && last_active_state
+      duration = last_active_state.started_on - last_suspend_state.started_on
+      remain = self.type.duration - duration
+      self.started_on = Date.today
+      self.finished_on = self.started_on + remain
     end
+  end
+
+  def renewal params
+    membership_type = MembershipType.find(params[:membership][:type_id])
+    self.update_attributes(params[:membership])
+    self.finished_on = self.started_on + membership_type.duration
+    self.state_renewal
+    self.new_membership_state params[:membership_state]
+  end
+
+  def expire params
+    self.state_expire
   end
 
   def self.create_or_select_for(account, params)
@@ -48,78 +87,72 @@ class Membership < ActiveRecord::Base
       else
         membership = Membership.new(params)
       end
-      if membership.type
-        membership.start_date = Date.today unless membership.start_date
-        membership.due_date = membership.start_date + membership.type.duration
-        membership.renewal
-      end
       account.membership = membership
       membership.save
       membership
     end
   end
 
-  def create_membership_state( params)
-    state = MembershipState.new(params)
+  def accept_transfer(membership)
+    remain = membership.finished_on - Date.today
+    self.type = membership.type
+    self.started_on = Date.today
+    self.finished_on = Date.today + remain
+    self.state_renewal
+    self.new_membership_state
+    self.save
+  end
+
+  def total_duration
+    duration = self.duration
+    if self.active?
+      duration += (Date.today - self.started_on)
+    end
+    duration
+  end
+
+  def check_expiration
+    if self.active? && self.finished_on < Date.today
+      self.state_expire
+    end
+  end
+
+  def contract_required?
+    %w{active suspended transferred}.include?(self.status)
+  end
+
+  protected
+  def new_membership_state params = {}
+    params = params || {}
+    state = MembershipState.new params
+    state.last_state =  self.current_state
+    state.state_type = self.status
+    state.contract_id = self.contract_id
     state.membership = self
-    state.last_state = self.current_state
+    [:started_on, :finished_on].each do |method|
+      if state.respond_to? method
+        state.send(:"#{method}=", self.send(:"#{method}"))
+      end
+    end
+    if state.respond_to? :type_id
+      state.type_id = self.type_id
+    end
     state.save
     state
   end
 
-  def create_suspension( params)
-    suspension = self.create_membership_state(params.merge(:type => MembershipState::TYPES::SUSPEND))
-    if suspension.valid?
-      self.suspend
+  def accumulate_membership_duration
+    duration = 0
+    if current_state
+      if status == "transferred"
+        transferred_state = self.current_state
+        active_state = transferred_state.find_last_state MembershipState::TYPES::ACTIVE
+        duration = transferred_state.started_on - active_state.started_on if active_state
+      else
+        active_state = self.current_state.find_last_state MembershipState::TYPES::ACTIVE
+        duration = active_state.finished_on - active_state.started_on if active_state
+      end
     end
-    suspension
-  end
-
-  def create_transfer(params)
-    suspension = self.create_membership_state(params.merge(:type => MembershipState::TYPES::TRANSFER))
-    transfer = MembershipTransfer.new(params)
-    transfer.from_membership = self
-    target_membership = transfer.to_membership
-    target_membership.accept_transfer(self)
-    self.due_date = Date.today
-    if transfer.save
-      self.transfer
-    end
-    transfer
-  end
-
-  def accept_transfer(membership)
-    remain = membership.due_date - Date.today
-    self.type = membership.type
-    self.start_date = Date.today
-    self.due_date = Date.today + remain
-    self.renewal
-    self.save
-  end
-
-  def continue_membership
-    suspension = membership_suspensions.latest
-    if suspension
-      remain = self.type.duration - ( suspension.start_date - self.start_date)
-      self.start_date = Date.today
-      self.due_date = self.start_date + remain
-    end
-    self.continue
-    self.save
-    self
-  end
-
-  def total_duration
-    self.duration + Date.today - start_date
-  end
-
-  def should_accumulate_membership_duration?
-    ! self.transferred?
-  end
-
-  def check_expiration
-    if self.normal? && self.due_date < Date.today
-      self.expire
-    end
+    self.duration += duration
   end
 end

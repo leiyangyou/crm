@@ -13,7 +13,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
           view.link_to_renewal(account)
         end
       end
-      if account.normal?
+      if account.active?
         result << view.content_tag(:li) do
           view.link_to_suspend(account)
         end
@@ -30,6 +30,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
   end
 
   def account_bottom view, context
+=begin
     result = ""
     account = context[:account]
     if (membership = account.membership) && membership.type
@@ -67,5 +68,6 @@ class AccountCallback < FatFreeCRM::Callback::Base
       end
     end
     result
+=end
   end
 end
