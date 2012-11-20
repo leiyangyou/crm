@@ -38,7 +38,7 @@ class DailySchedule < ActiveRecord::Base
   module Utils
     class << self
       def compact *times
-        times.reduce(0) do |result,time|
+        times.flatten.reduce(0) do |result,time|
           binary = case time
                      when /(\d+(?:\:\d+)?)-(\d+(?:\:\d+)?)/
               TimeRange.new($1, $2).compact

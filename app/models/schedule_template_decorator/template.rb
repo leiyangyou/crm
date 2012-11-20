@@ -57,7 +57,7 @@ module ScheduleTemplateDecorator
       type 'default'
       def schedule_for(date)
         daily_schedule = DailySchedule.new
-        daily_schedule.working_time = DailySchedule::Utils.compact Setting['default_working_time']
+        daily_schedule.working_time = DailySchedule::Utils.compact *Setting['default_working_time']
         daily_schedule.date = date
         daily_schedule
       end
