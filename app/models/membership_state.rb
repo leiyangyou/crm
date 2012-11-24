@@ -43,9 +43,10 @@ class MembershipState < ActiveRecord::Base
 
   def find_last_state type = nil
     return self.last_state unless type
-    begin
-      current_state = self.last_state
-    end while current_state && current_state.state_type != type
+    current_state = self.last_state
+    while current_state && current_state.state_type != type
+      current_state = current_state.last_state
+    end
     current_state
   end
 
@@ -64,7 +65,7 @@ class MembershipState < ActiveRecord::Base
         return assign_parameters_attributes :"#{method}" => args.first
       end
     elsif self.valid_parameter? method
-      return parameters[method]
+      return parameters[method.to_s]
     end
     super
   end

@@ -1,0 +1,4 @@
+id = dom_id(@account)
+
+page[id].replace :partial => "account", :collection => [@account]
+page[id].visual_effect :highlight, :duration => 1.0

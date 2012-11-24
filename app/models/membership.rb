@@ -23,7 +23,7 @@ class Membership < ActiveRecord::Base
     event :state_suspend do
       transition :active => :suspended
     end
-    event :state_continue do
+    event :state_resume do
       transition :suspended => :active
     end
     event :state_renewal do
@@ -37,11 +37,11 @@ class Membership < ActiveRecord::Base
   end
 
   def transfer params
+    target_membership = Membership.find(params[:membership_state][:parameters_attributes][:target_id])
     self.update_attributes(params[:membership])
-    self.finished_on = Date.today
     self.state_transfer
-    target_membership = Membership.find(params[:membership_state][:target_id])
     target_membership.accept_transfer(self)
+    self.finished_on = Date.today
     self.new_membership_state(params[:membership_state])
   end
 
@@ -51,8 +51,8 @@ class Membership < ActiveRecord::Base
     self.new_membership_state params[:membership_state]
   end
 
-  def continue params
-    self.state_continue
+  def resume params
+    self.state_resume
     current_state = self.current_state
     last_suspend_state = current_state.find_last_state MembershipState::TYPES::SUSPENDED
     last_active_state = current_state.find_last_state MembershipState::TYPES::ACTIVE
@@ -124,6 +124,9 @@ class Membership < ActiveRecord::Base
   protected
   def new_membership_state params = {}
     params = params || {}
+    params = params.merge(
+        :state_type => self.status
+    )
     state = MembershipState.new params
     state.last_state =  self.current_state
     state.state_type = self.status

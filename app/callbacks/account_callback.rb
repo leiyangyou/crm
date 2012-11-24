@@ -5,7 +5,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
     if account.membership
       if account.suspended?
         result << view.content_tag(:li) do
-          view.link_to_continue(account)
+          view.link_to_resume(account)
         end
       end
       if account.expired?

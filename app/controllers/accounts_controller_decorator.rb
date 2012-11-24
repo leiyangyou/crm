@@ -19,15 +19,16 @@ AccountsController.class_eval do
 
   def transfer
     @account = Account.find(params[:id])
-    @membership = @account.membership || Membership.new
-    @membership_transfer = MembershipTransfer.new
+    membership = @account.membership
+    membership.contract_id = nil
+    @membership_state = MembershipState.new :state_type => MembershipState::TYPES::TRANSFERRED
     respond_with(@account)
   end
 
   def promote_transfer
     @account = Account.find(params[:id])
-    @membership = @account.membership
-    @membership_transfer = @membership.create_transfer(params[:account][:membership_transfer])
+    @membership_state = @account.membership.transfer params[:account]
+    @target_account = Membership.find(@membership_state.target_id).account
     respond_with(@account)
   end
 
@@ -46,10 +47,8 @@ AccountsController.class_eval do
     respond_with(@account)
   end
 
-  def continue
+  def resume
     @account = Account.find(params[:id])
-    if @account.suspended?
-      @account.membership.continue_membership
-    end
+    @account.membership.resume params[:account]
   end
 end

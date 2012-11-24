@@ -4,18 +4,18 @@
     = link_to_close suspend_account_path(account)
     .section
       %table
-        = f.fields_for(@membership_state) do |m|
-          = m.fields_for(:parameters_attributes) do |p|
+        = f.fields_for(account.membership) do |m|
+          = f.fields_for(@membership_state) do |s|
             = m.error_messages :object_name => t(:membership_state)
-            = m.hidden_field :state_type, :value => MembershipState::TYPES::TRANSFERRED
             %tr
               %td
                 .label.top= t(:contract_id)
-                = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership_transfer)}', 'account_membership_state_contract_id');">#{t :create_contract}</a>}.html_safe
+                = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for('membership transfer')}', 'account_membership_contract_id');">#{t :create_contract}</a>}.html_safe
               %tr
                 %td
-                  .label.req= t(:target)
-                  = p.collection_select :target_id, Membership.includes(:account).transfer_acceptable.all, :id, :name
+                  = s.fields_for(:parameters_attributes) do |p|
+                    .label.req= t(:target)
+                    = p.collection_select :target_id, Membership.includes(:account).transfer_acceptable.all, :id, :name
     .buttonbar
       = f.submit t(:transfer), :id => :account_transfer_submit
       or
