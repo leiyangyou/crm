@@ -3,18 +3,17 @@ class CreateMemberships < ActiveRecord::Migration
     create_table :memberships do |t|
       t.references :type
       t.references :account
-      t.date :start_date
-      t.date :due_date
+      t.date :started_on
+      t.date :finished_on
       t.integer :duration, :default => 0
       t.string :status
-      t.references :consultant
       t.string :contract_id
+      t.references :consultant
 
       t.timestamps
     end
     add_index :memberships, :account_id
     add_index :memberships, :consultant_id
-    add_index :memberships, :contract_id
     add_index :memberships, :type_id
   end
 end

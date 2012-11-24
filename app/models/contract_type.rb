@@ -9,6 +9,7 @@ class ContractType < ActiveRecord::Base
   has_many :contracts
 
   def self.type_for instance
+    return instance.underscore.to_url.squish if instance.kind_of?(String)
     klass = instance.kind_of?( Class) ? instance : instance.class
     if klass.respond_to? :contract_type
       klass.contract_type

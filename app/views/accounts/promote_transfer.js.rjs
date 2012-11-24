@@ -1,6 +1,5 @@
 source_dom_id = dom_id(@account)
-target_account = @membership_transfer.to_membership.account
-target_dom_id = dom_id(target_account)
+target_dom_id = dom_id(@target_account)
 
 page[source_dom_id].replace :partial => "account", :collection => [@account]
-page[target_dom_id].replace :partial => "account", :collection =>[target_account]
+page[target_dom_id].replace :partial => "account", :collection =>[@target_account]

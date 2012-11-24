@@ -3,20 +3,20 @@
   = form_for account, :url =>promote_suspend_account_path(account), :remote => true do |f|
     = link_to_close suspend_account_path(account)
     .section
-      = f.fields_for(membership_suspension) do |m|
-        = m.error_messages :object_name => t(:membership_suspension)
+      = f.fields_for(account.membership) do |m|
+        = m.error_messages :object_name => t(:membership_state)
         %table
           %tr
             %td{:colspan => 2}
-              .label.top.req= t(:contract_id)
-              = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(@membership_suspension)}', 'account_membership_suspension_contract_id');">#{t :create_contract}</a>}.html_safe
-          %tr
-            %td
-              .label.req= t(:start_date) + ":"
-              = m.date_select :start_date
-            %td
-              .label.req= t(:due_date) + ":"
-              = m.date_select :due_date
+              .label.top= t('view.membership.contract')
+              = m.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for('membership suspension')}', 'account_membership_contract_id');">#{t :create_contract}</a>}.html_safe
+            %tr
+              %td
+                .label.req= t('view.membership.started_on') + ":"
+                = m.date_select :started_on
+              %td
+                .label.req= t('view.membership.finished_on') + ":"
+                = m.date_select :finished_on
     .buttonbar
       = f.submit t(:suspend), :id => :account_suspend_submit
       or

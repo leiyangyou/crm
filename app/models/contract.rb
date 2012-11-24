@@ -19,6 +19,20 @@ class Contract < ActiveRecord::Base
   serialize :parameters, Contract::Params
   attr_accessor :parameters_attributes
 
+  state_machine :status, :initial => :inactive do
+    event :activate do
+      transition :inactive => :active
+    end
+
+    event :expire do
+      transition :active => :due
+    end
+
+    event :terminate do
+      transition :active => :terminated
+    end
+  end
+
   before_validation :attribute_signed_at, :on => :create
   before_validation :generate_contract_id, :on =>:create
   before_validation :generate_content

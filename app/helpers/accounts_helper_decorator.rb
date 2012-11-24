@@ -19,11 +19,11 @@ AccountsHelper.class_eval do
     )
   end
 
-  def link_to_continue account
-    link_to( t(:continue), continue_account_path(account),
+  def link_to_resume account
+    link_to( t(:resume), resume_account_path(account),
       :method => :post,
       :remote => true,
-      :confirm => t(:continue_account_confirm)
+      :confirm => t(:resume_account_confirm)
     )
   end
 end

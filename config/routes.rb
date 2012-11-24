@@ -15,7 +15,7 @@ Til5::Application.routes.draw do
       put :promote_suspend
       get :transfer
       put :promote_transfer
-      post :continue
+      post :resume
     end
   end
 

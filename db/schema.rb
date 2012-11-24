@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103094454) do
+ActiveRecord::Schema.define(:version => 20121111075937) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -219,16 +219,6 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
 
   add_index "contract_templates", ["contract_type_id"], :name => "index_contract_templates_on_contract_type_id"
 
-  create_table "contract_trasfers", :force => true do |t|
-    t.integer  "contract_id"
-    t.integer  "new_contract_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "contract_trasfers", ["contract_id"], :name => "index_contract_trasfers_on_contract_id"
-  add_index "contract_trasfers", ["new_contract_id"], :name => "index_contract_trasfers_on_new_contract_id"
-
   create_table "contract_types", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -239,10 +229,10 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
 
   create_table "contracts", :force => true do |t|
     t.string   "contract_id"
-    t.integer  "contract_template_id", :null => false
+    t.integer  "contract_template_id"
     t.text     "content"
     t.text     "parameters"
-    t.string   "state"
+    t.string   "status"
     t.datetime "started_at"
     t.datetime "end_at"
     t.datetime "signed_at"
@@ -252,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
   end
 
   add_index "contracts", ["contract_id"], :name => "index_contracts_on_contract_id", :unique => true
-  add_index "contracts", ["contract_template_id"], :name => "index_contracts_on_template_id"
+  add_index "contracts", ["contract_template_id"], :name => "index_contracts_on_contract_template_id"
   add_index "contracts", ["type_id"], :name => "index_contracts_on_type_id"
 
   create_table "daily_schedules", :force => true do |t|
@@ -387,11 +377,11 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
   create_table "locker_rents", :force => true do |t|
     t.integer  "locker_id"
     t.integer  "account_id"
+    t.string   "contract_id"
     t.date     "start_date"
     t.date     "due_date"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "contract_id"
   end
 
   add_index "locker_rents", ["account_id"], :name => "index_locker_rents_on_account_id"
@@ -406,13 +396,24 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
 
   add_index "lockers", ["identifier"], :name => "index_lockers_on_identifier", :unique => true
 
+  create_table "membership_states", :force => true do |t|
+    t.string   "state_type"
+    t.string   "contract_id"
+    t.integer  "last_state_id"
+    t.text     "parameters"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "membership_states", ["last_state_id"], :name => "index_membership_states_on_last_state_id"
+
   create_table "membership_suspensions", :force => true do |t|
     t.integer  "membership_id"
     t.string   "contract_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
     t.date     "start_date"
     t.date     "due_date"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "membership_suspensions", ["contract_id"], :name => "index_membership_suspensions_on_contract_id"
@@ -420,7 +421,7 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
 
   create_table "membership_terminations", :force => true do |t|
     t.integer  "membership_id"
-    t.integer  "contract_id"
+    t.string   "contract_id"
     t.string   "reason"
     t.integer  "refund"
     t.datetime "created_at",    :null => false
@@ -433,7 +434,7 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
   create_table "membership_transfers", :force => true do |t|
     t.integer  "from_membership_id"
     t.integer  "to_membership_id"
-    t.integer  "contract_id"
+    t.string   "contract_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
@@ -455,19 +456,17 @@ ActiveRecord::Schema.define(:version => 20121103094454) do
   create_table "memberships", :force => true do |t|
     t.integer  "type_id"
     t.integer  "account_id"
-    t.date     "due_date"
-    t.integer  "duration"
+    t.date     "started_on"
+    t.date     "finished_on"
+    t.integer  "duration",      :default => 0
     t.string   "status"
     t.integer  "consultant_id"
-    t.string   "contract_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.date     "start_date"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"
   add_index "memberships", ["consultant_id"], :name => "index_memberships_on_consultant_id"
-  add_index "memberships", ["contract_id"], :name => "index_memberships_on_contract_id"
   add_index "memberships", ["type_id"], :name => "index_memberships_on_type_id"
 
   create_table "opportunities", :force => true do |t|
