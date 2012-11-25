@@ -1,5 +1,5 @@
 = form_for [:admin, @lesson], :html => one_submit_only(:lesson), :remote => true do |f|
-  = linkt_to_close new_admin_lesson_path
+  = link_to_close new_admin_lesson_path
   = f.error_messages :object_name => t(:lessons)
   = render "admin/lessons/top_section", :f => f
   .buttonbar

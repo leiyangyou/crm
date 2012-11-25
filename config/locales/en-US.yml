@@ -18,6 +18,9 @@ en-US:
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
 
   view:
+    lesson:
+      price: "Price"
+      times: "Times"
     welcome:
       title: "OZone Swap Card"
   create_contract_type: "Create Contract Type"

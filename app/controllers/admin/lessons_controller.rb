@@ -6,7 +6,7 @@ class Admin::LessonsController < ApplicationController
   def create
     @lesson = Lesson.new(params[:lesson])
 
-    responde_with(@lesson) do |format|
+    respond_with(@lesson) do |format|
       @lesson.save
     end
   end
