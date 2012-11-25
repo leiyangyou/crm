@@ -1,4 +1,5 @@
 Til5::Application.routes.draw do
+
   resources :lockers do
     member do
       get :rent, :as => :new_rent, :to => "lockers#new_rent"
@@ -41,6 +42,8 @@ Til5::Application.routes.draw do
       resources :contract_templates, :only => [:index, :new, :create] do
       end
     end
+
+    resources :lessons, :only => [:index, :new, :edit, :update, :create, :destroy]
 
     resources :lockers, :only => [:index, :destroy, :new, :create] do
     end
