@@ -18,6 +18,12 @@ en-US:
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
 
   view:
+    membership_states:
+      state:
+        active: "Active"
+        suspended: "Suspended"
+        transferred: "Transferred"
+        terminated: "Terminated"
     welcome:
       title: "OZone Swap Card"
   create_contract_type: "Create Contract Type"
