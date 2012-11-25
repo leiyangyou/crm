@@ -6,11 +6,13 @@
   .list#states
     - object.membership_states.each do |membership_state|
       %li{:class =>membership_state.state_type}
+        %span.type.strip
+          = "#{t("view.membership_states.state.#{membership_state.state_type}")}"
         %span.created_at
           = "#{membership_state.created_at.to_date}:"
         - case membership_state.state_type
           - when MembershipState::TYPES::ACTIVE
-            %span.type
+            %span.membership_type
               = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
             %span.range
               = "#{membership_state.started_on} - #{membership_state.finished_on}"
