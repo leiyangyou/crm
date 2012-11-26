@@ -1,0 +1,10 @@
+id = dom_id(@participation)
+if flash[:warning]
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:flash].replace_html flash[:warning]
+  page.call "crm_flash", :warning
+  flash[:warning] = nil
+else
+  page[id].replace :partial => "participation", :collection => [@participation]
+  page[id].visual_effect :highlight, :duration =>1.5
+end
