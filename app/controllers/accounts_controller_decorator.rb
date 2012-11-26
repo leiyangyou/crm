@@ -51,4 +51,22 @@ AccountsController.class_eval do
     @account = Account.find(params[:id])
     @account.membership.resume params[:account]
   end
+
+  def new_participation
+    @account = Account.find(params[:id])
+    @participation = Participation.new
+    @participation.account = @account
+  end
+
+  def participate
+    @account = Account.find(params[:id])
+    @participation = @account.participate_lesson(params[:account])
+  end
+
+  def delete_participation
+    @account = Account.find(params[:id])
+    @lesson = Lesson.find(params[:lesson_id])
+    @participation = Participation.find_by_account_id_and_lesson_id(@account.id, @lesson.id)
+    @participation.detroy
+  end
 end

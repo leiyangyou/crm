@@ -1,0 +1,17 @@
+.section
+  %table
+    %tr
+      %td{:colspan => 2}
+        .label.top.req= t(:name) + ":"
+        = f.text_field :name
+    %tr
+      %td{:colspan => 2}
+        .label.req= t(:description) + ":"
+        = f.text_field :description
+    %tr
+      %td
+        .label.req= t(:price) + ":"
+        = f.text_field :price
+      %td
+        .label.req= t(:times) + ":"
+        = f.text_field :times

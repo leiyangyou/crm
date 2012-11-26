@@ -1,0 +1,21 @@
+%h3 New Lesson
+= form_for account, :url => participate_account_path(account), :remote => true do |f|
+  = link_to_close participate_account_path(account)
+  .section
+    %table
+      = f.fields_for(@participation) do |p|
+        = p.hidden_field :account_id
+        %tr
+          %td
+            .label.top.req= t(:lesson)
+            = p.collection_select :lesson_id, Lesson.all, :id, :name
+        %tr
+          %td
+            .label.req= t(:trainer)
+            = p.collection_select :trainer_id, User.trainers, :id, :name
+
+  .buttonbar
+    = f.submit t(:new), :id => :new_lesson_submit
+    or
+    = link_to_cancel participate_account_path(account)
+
