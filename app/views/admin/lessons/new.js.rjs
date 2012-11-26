@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :create_lesson
+
+unless params[:cancel].true?
+  page[:create_lesson].replace_html :partial => "form"
+  page.call "crm.set_title", :create_lesson, t(:create_lesson)
+else
+  page.call "crm.set_title", :create_lesson, t(:lessons)
+end

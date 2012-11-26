@@ -1,0 +1,10 @@
+id = dom_id(@lesson)
+
+if @lesson.valid?
+  page[id].replace :partial => "lesson", :collection => [@lesson]
+  page[id].visual_effect :highlight, :duration => 1.0
+else
+  page[id].replace_html :partial =>"edit"
+  page[id].visual_effect :shake, :duration =>0.25, :distance =>6
+  page[:lesson_name].focus
+end

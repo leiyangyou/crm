@@ -24,6 +24,9 @@ en-US:
         suspended: "Suspended"
         transferred: "Transferred"
         terminated: "Terminated"
+    lesson:
+      price: "Price"
+      times: "Times"
     welcome:
       title: "OZone Swap Card"
   create_contract_type: "Create Contract Type"

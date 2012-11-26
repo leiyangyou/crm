@@ -1,0 +1,14 @@
+%li[lesson]
+  .tools
+    = link_to_edit(lesson, :url => edit_admin_lesson_path(lesson))
+    = " |"
+    = link_to_delete(lesson, :url => url_for([:admin, lesson]))
+
+  .lesson_info
+    %span.black= lesson.name
+    \-
+    %tt= lesson.description
+    \|
+    %tt= "#{t(:"view.lesson.price")}:#{lesson.price}"
+    \|
+    %tt= "#{t(:"view.lesson.times")}:#{lesson.times}"

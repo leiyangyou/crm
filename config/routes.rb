@@ -1,4 +1,5 @@
 Til5::Application.routes.draw do
+
   resources :lockers do
     member do
       get :rent, :as => :new_rent, :to => "lockers#new_rent"
@@ -16,6 +17,14 @@ Til5::Application.routes.draw do
       get :transfer
       put :promote_transfer
       post :resume
+      get :participate, :as => :new_participation, :to => "accounts#new_participation"
+      put :participate, :as => :participate, :to => "accounts#participate"
+    end
+  end
+
+  resources :participations, :only => [:destroy] do
+    member do
+      post :attend
     end
   end
 
@@ -31,7 +40,7 @@ Til5::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :schedules, :except => [:new, :edit, :update, :create, :delete] do
+    resources :schedules, :except => [:new, :edit, :update, :create, :destroy] do
       get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
       resources :slots
     end
@@ -41,6 +50,8 @@ Til5::Application.routes.draw do
       resources :contract_templates, :only => [:index, :new, :create] do
       end
     end
+
+    resources :lessons, :only => [:index, :new, :edit, :update, :create, :destroy]
 
     resources :lockers, :only => [:index, :destroy, :new, :create] do
     end

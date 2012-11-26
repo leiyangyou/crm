@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121111075937) do
+ActiveRecord::Schema.define(:version => 20121125072849) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -367,6 +367,15 @@ ActiveRecord::Schema.define(:version => 20121111075937) do
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"
   add_index "leads", ["user_id", "last_name", "deleted_at"], :name => "index_leads_on_user_id_and_last_name_and_deleted_at", :unique => true
 
+  create_table "lessons", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "times"
+    t.integer  "price"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "lists", :force => true do |t|
     t.string   "name"
     t.text     "url"
@@ -403,6 +412,7 @@ ActiveRecord::Schema.define(:version => 20121111075937) do
     t.text     "parameters"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "membership_id"
   end
 
   add_index "membership_states", ["last_state_id"], :name => "index_membership_states_on_last_state_id"
@@ -463,6 +473,7 @@ ActiveRecord::Schema.define(:version => 20121111075937) do
     t.integer  "consultant_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.string   "contract_id"
   end
 
   add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"
@@ -490,6 +501,19 @@ ActiveRecord::Schema.define(:version => 20121111075937) do
 
   add_index "opportunities", ["assigned_to"], :name => "index_opportunities_on_assigned_to"
   add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "id_name_deleted", :unique => true
+
+  create_table "participations", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "lesson_id"
+    t.integer  "trainer_id"
+    t.integer  "times"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "participations", ["account_id"], :name => "index_participations_on_account_id"
+  add_index "participations", ["lesson_id"], :name => "index_participations_on_lesson_id"
+  add_index "participations", ["trainer_id"], :name => "index_participations_on_trainer_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"

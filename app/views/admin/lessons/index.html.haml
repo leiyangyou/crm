@@ -1,0 +1,13 @@
+.title_tools
+  = link_to_inline( :create_lesson, new_admin_lesson_path, :text => t(:create_lesson))
+
+.title
+  %span#create_lesson_title #{t(:lessons)}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display:none;")
+.remote#create_lesson{ hidden}
+
+.list#lessons
+  - if @lessons.any?
+    = render :partial => "admin/lessons/lesson", :collection => @lessons
+  - else
+    = render "shared/empty"

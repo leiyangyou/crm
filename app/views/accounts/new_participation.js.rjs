@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :new_lesson
+
+unless params[:cancel].true?
+  page[:new_lesson].replace_html :partial => "new_participation", :locals => {:account => @account, :participation =>@participation}
+  page.call "crm.set_title", :new_lesson, t(:new_lesson)
+else
+  page.call "crm.set_title", :new_lesson, t(:lessons)
+end
