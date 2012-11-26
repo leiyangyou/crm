@@ -7,10 +7,21 @@
 
 class DailySchedule < ActiveRecord::Base
   belongs_to :schedule
+  has_many :appointments
   attr_accessible :date, :slots, :working_time
 
+  def working? time_range
+    compacted_time_range = time_range.compact
+    (compacted_time_range & self.working_time) == compacted_time_range
+  end
+
   def available? time_range
-    (time_range.compact ^ self.working_time) == time_range.compact
+    compacted_time_range = time_range.compact
+    (compacted_time_range ^ self.slots) & compacted_time_range == compacted_time_range
+  end
+
+  def take time_range
+    self.slots = self.slots | time_range.compact
   end
 
   def readable_working_time

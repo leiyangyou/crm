@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  daily_schedule: 
+  date: 2012-11-26
+  started_at: 2012-11-26 17:56:28
+  finished_at: 2012-11-26 17:56:28
+  status: MyString
+  content: MyString
+
+two:
+  daily_schedule: 
+  date: 2012-11-26
+  started_at: 2012-11-26 17:56:28
+  finished_at: 2012-11-26 17:56:28
+  status: MyString
+  content: MyString
