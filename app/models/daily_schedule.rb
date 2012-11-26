@@ -35,11 +35,25 @@ class DailySchedule < ActiveRecord::Base
     end
 
     # get the index in the slots for specified time
-    def self.index_of time_str
-      sections = time_str.split(":")
-      index = sections[0].to_i * 2
-      index += 1 if sections[1] && sections[1].to_i >= 30
+    def self.index_of time
+      hour = 0
+      minute = 0
+      case time_str
+        when String
+          sections = time_str.split(":")
+          hour = sections[0].to_i
+          minute = sections[1] ? sections[1].to_i : 0
+        when Time
+          hour = time.hour
+          minute = time.minute
+      end
+      index = hour * 2
+      index += 1 if minute >= 30
       index
+    end
+
+    def length
+      @end_index - @start_index
     end
 
     def compact
