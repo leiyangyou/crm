@@ -43,17 +43,7 @@ User.class_eval do
 
   def add_appointment( appointment)
     daily_schedule = self.schedule.schedule_for appointment.date
-    time_range = TimeRange.new appointment.started_on, appointment.finished_on
-    if daily_schedule.working?(time_range)
-      if daily_schedule.available?(time_range)
-        daily_schedule.take time_range
-        daily_schedule.appointments << appointment
-      else
-        appointment.errors[:base] << t("user.error.unavailable")
-      end
-    else
-      appointment.errors[:base] << t("user.error.not_working")
-    end
+    daily_schedule.add_appointment(appointment)
   end
 
   alias_method :original_schedule, :schedule

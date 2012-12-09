@@ -1,0 +1,9 @@
+if @appointment.valid?
+  id = dom_id(@appointment)
+  page[id].visual_effect :blind_up, :duration => 0.25
+else
+  flash[:warning] = @appointment.errors[:base].join(",")
+  page[:flash].replace_html flash[:warning]
+  page.call "crm.flash", :warning
+  flash[:warning] = nil
+end

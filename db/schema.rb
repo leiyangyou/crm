@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121125072849) do
+ActiveRecord::Schema.define(:version => 20121126095627) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -105,6 +105,19 @@ ActiveRecord::Schema.define(:version => 20121125072849) do
     t.string   "api_id"
     t.string   "display_type"
   end
+
+  create_table "appointments", :force => true do |t|
+    t.integer  "daily_schedule_id"
+    t.date     "date"
+    t.time     "started_at"
+    t.time     "finished_at"
+    t.string   "status"
+    t.string   "content"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "appointments", ["daily_schedule_id"], :name => "index_appointments_on_daily_schedule_id"
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"

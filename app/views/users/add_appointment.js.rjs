@@ -1,0 +1,11 @@
+if @appointment.valid?
+  page[:create_appointment_arrow].replace_html "&#9658;"
+  page[:create_appointment_title].replace_html t(:appointments)
+  page.visual_effect :toggle_blind, :create_appointment, :duration => 0.3, :afterFinish => 'function(effect){effect.element.update("")}'
+  page.insert_html :top, :appointments, :partial => "appointments/appointment", :collection => [@appointment]
+  page[dom_id(@appointment)].visual_effect :highlight, :duration => 1.5
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_appointment].replace_html :partial => "appointments/form"
+  page[:create_appointment].visual_effect :shake, :duration => 0.25, :distance => 6
+end

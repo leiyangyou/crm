@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :create_appointment
+
+unless params[:cancel].true?
+  page[:create_appointment].replace_html :partial => "appointments/form"
+  page.call "crm.set_title", :create_appointment, t(:create_appointment)
+else
+  page.call "crm.set_title", :create_appointment, t(:appointments)
+end

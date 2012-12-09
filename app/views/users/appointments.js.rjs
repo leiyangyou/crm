@@ -1,0 +1,1 @@
+page[:appointments].replace_html :partial => "appointments/appointments", :locals => {:date => @date, :object => @user}

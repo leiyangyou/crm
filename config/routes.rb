@@ -39,9 +39,18 @@ Til5::Application.routes.draw do
     end
   end
 
-  resources :user do
+  resources :users do
     member do
       post :add_appointment, :to =>"users#add_appointment"
+      get :new_appointment, :to => "users#new_appointment"
+      get :appointments, :to => "users#appointments"
+    end
+    get 'appointments/:year-:month-:day', :on => :member, :action => :appointments, :as => :appointments_by_date
+  end
+
+  resources :appointments, :only => [:show, :destroy] do
+    member do
+      post :cancel, :to => "appointments#cancel"
     end
   end
 

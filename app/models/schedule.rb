@@ -10,9 +10,13 @@ class Schedule < ActiveRecord::Base
     unless daily_schedule
       template = self.template || ScheduleTemplate.default
       daily_schedule = template.schedule_for( date)
-      self.daily_schedules << daily_schedule
+      daily_schedule.schedule = self
     end
     daily_schedule
+  end
+
+  def schedule_for_today
+    self.schedule_for Date.today
   end
 
   def weekly_schedules(date)
