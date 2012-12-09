@@ -42,6 +42,7 @@ Til5::Application.routes.draw do
   resources :users do
     member do
       post :add_appointment, :to =>"users#add_appointment"
+      put :add_appointment, :to => "users#add_appointment"
       get :new_appointment, :to => "users#new_appointment"
       get :appointments, :to => "users#appointments"
     end

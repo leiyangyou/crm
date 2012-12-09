@@ -1,4 +1,4 @@
-if @appointment.valid?
+if @appointment.errors.empty?
   id = dom_id(@appointment)
   page[id].visual_effect :blind_up, :duration => 0.25
 else

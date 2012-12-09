@@ -1,4 +1,4 @@
-if @appointment.valid?
+if @appointment.errors.empty?
   page[:create_appointment_arrow].replace_html "&#9658;"
   page[:create_appointment_title].replace_html t(:appointments)
   page.visual_effect :toggle_blind, :create_appointment, :duration => 0.3, :afterFinish => 'function(effect){effect.element.update("")}'

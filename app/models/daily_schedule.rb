@@ -31,7 +31,7 @@ class DailySchedule < ActiveRecord::Base
   end
 
   def add_appointment appointment
-    self.appointments << appointment
+    appointment.daily_schedule = self
     if appointment.save
       self.take DailySchedule::TimeRange.new appointment.started_at, appointment.finished_at
     end

@@ -22,8 +22,7 @@ module ActionView
         VALID_TIMES.each do |valid_time|
           value = value_before_type_cast(object)
           option_options = {}
-          puts "#{@method_name}:#{value.hour}:#{value.min} == #{valid_time}" if value
-          option_options[:selected] = "selected" if value && "#{value.hour}:#{value.min}" == valid_time
+          option_options[:selected] = "selected" if value && "#{value.hour}:#{"%02d" % value.min}" == valid_time
           select_html << content_tag(:option, valid_time, option_options)
         end
         (content_tag(:select, select_html.html_safe, select_options) + "\n").html_safe
