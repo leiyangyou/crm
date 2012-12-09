@@ -1,7 +1,7 @@
 - klass = appointment.started? ? (appointment.completed? ?  "completed" : "doing") : ""
 %li.highlight[appointment]{:class => klass }
   %ul.tools
-    - if appointment.normal? and !appointment.started?
+    - if appointment.normal? && !appointment.started? && can?(:cancel, appointment)
       %li= link_to_cancel_appointment(appointment)
     /%li= link_to_delete_appointment(appointment)
   %span.date= appointment.date

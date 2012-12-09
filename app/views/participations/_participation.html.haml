@@ -9,3 +9,6 @@
     %span.black= lesson.name
     \-
     %tt= participation.times
+    - if participation.trainer
+      |
+      %tt= link_to participation.trainer.name, url_for(participation.trainer)
