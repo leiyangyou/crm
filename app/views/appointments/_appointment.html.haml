@@ -1,0 +1,11 @@
+- klass = appointment.started? ? (appointment.completed? ?  "completed" : "doing") : ""
+%li.highlight[appointment]{:class => klass }
+  %ul.tools
+    - if appointment.normal? and !appointment.started?
+      %li= link_to_cancel_appointment(appointment)
+    /%li= link_to_delete_appointment(appointment)
+  %span.date= appointment.date
+  %span.started_at= appointment.started_at.strftime("%H:%M")
+  %span.dash= "-"
+  %span.finished_at= appointment.finished_at.strftime("%H:%M")
+  %span.content= appointment.content.truncate(50)

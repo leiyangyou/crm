@@ -1,0 +1,24 @@
+= form_for @appointment, :url => add_appointment_user_path(@user), :html => one_submit_only(:appointment), :remote => true do |f|
+  = link_to_close new_appointment_user_path @user
+  = f.error_messages :object_name => t(:appointment)
+  .section
+    %table
+      %tr
+        %td{:colspan =>2}
+          .label.top.req=t("model.appointment.date") + ":"
+          = f.date_select :date
+      %tr
+        %td
+          .label.req=t("model.appointment.stated_at") + ":"
+          = f.time_range_select :started_at
+        %td
+          .label.req=t("model.appointment.finished_at") + ":"
+          = f.time_range_select :finished_at
+      %tr
+        %td{:colspan =>2}
+          .label.req=t("model.appointment.content") + ":"
+          = f.text_area :content
+  .buttonbar
+    = f.submit t(:create_appointment), :id => :appointment_submit
+    or
+    = link_to_cancel new_appointment_user_path @user

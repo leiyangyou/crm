@@ -7,10 +7,54 @@
 
 class DailySchedule < ActiveRecord::Base
   belongs_to :schedule
+  has_many :appointments
   attr_accessible :date, :slots, :working_time
 
+  def working? time_range
+    compacted_time_range = time_range.compact
+    (compacted_time_range & self.working_time) == compacted_time_range
+  end
+
   def available? time_range
-    (time_range.compact ^ self.working_time) == time_range.compact
+    compacted_time_range = time_range.compact
+    (compacted_time_range ^ self.slots) & compacted_time_range == compacted_time_range
+  end
+
+  def take time_range
+    self.slots = self.slots | time_range.compact
+    self.save
+  end
+
+  def free time_range
+    self.slots = self.slots ^ time_range.compact
+    self.save
+  end
+
+  def add_appointment appointment
+    appointment.daily_schedule = self
+    if appointment.save
+      self.take DailySchedule::TimeRange.new appointment.started_at, appointment.finished_at
+    end
+  end
+
+  # Dont invoke this directly, use appointment.cancel instead
+  def cancel_appointment appointment
+    time_range = TimeRange.new appointment.started_on, appointment.finished_on
+    if appointment.daily_schedule_id == self.id
+      self.free time_range
+      true
+    end
+    false
+  end
+
+  def delete_appointment appointment
+    if self.cancel_appointment appointment
+      self.appointments.delete appointment
+    end
+  end
+
+  def readable_slots
+    Utils.loosen(self.slots)
   end
 
   def readable_working_time
@@ -24,15 +68,33 @@ class DailySchedule < ActiveRecord::Base
     end
 
     # get the index in the slots for specified time
-    def self.index_of time_str
-      sections = time_str.split(":")
-      index = sections[0].to_i * 2
-      index += 1 if sections[1] && sections[1].to_i >= 30
+    def self.index_of time
+      hour = 0
+      minute = 0
+      case time
+        when String
+          sections = time.split(":")
+          hour = sections[0].to_i
+          minute = sections[1] ? sections[1].to_i : 0
+        when Time
+          hour = time.hour
+          minute = time.min
+      end
+      index = hour * 2
+      index += 1 if minute >= 30
       index
+    end
+
+    def length
+      @end_index - @start_index
     end
 
     def compact
       @compact ||= ((1 << @end_index) - 1) ^ ((1 << @start_index) - 1)
+    end
+
+    def to_s
+      "#{Utils.index_to_readable(@start_index)}-#{Utils.index_to_readable(@end_index)}"
     end
   end
   module Utils

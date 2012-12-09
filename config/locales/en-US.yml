@@ -16,7 +16,16 @@ en-US:
     general_manager: "General Manager"
     admin: "Admin"
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
-
+  activerecord:
+    errors:
+      models:
+        appointment:
+          attributes:
+            base:
+              user:
+                error:
+                  unavailable: "Unavailable during %{time}"
+                  not_working: "Not working during %{time}"
   view:
     membership_states:
       state:

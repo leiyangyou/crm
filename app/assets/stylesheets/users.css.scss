@@ -1,0 +1,24 @@
+#appointments {
+  li.appointment.completed {
+    text-decoration: line-through;
+  }
+  li.appointment.doing {
+    background-color: LightGreen;
+  }
+  .pagination {
+    form {
+      float: left;
+      input {
+        height: auto;
+        font-size: 11px;
+        text-decoration: none;
+        color: #105CB6;
+        border: 1px solid #9AAFE5;
+        padding: 0.2em 0.5em;
+        display: block;
+        float: left;
+        margin: 0px 2px 0px 0px;
+      }
+    }
+  }
+}

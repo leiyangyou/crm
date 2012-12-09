@@ -1,0 +1,8 @@
+%br
+  .subtitle_tools
+    =link_to_inline("create_appointment", new_appointment_user_path(object), :text => t(:create_appointment))
+  .subtitle#create_appointment_title= t(:appointments)
+  .remote#create_appointment{ hidden }
+.list#appointments
+  = render :partial => "appointments/appointments", :locals => {:object => object, :date => date}
+

@@ -41,6 +41,11 @@ User.class_eval do
     }
   end
 
+  def add_appointment( appointment)
+    daily_schedule = self.schedule.schedule_for appointment.date
+    daily_schedule.add_appointment(appointment)
+  end
+
   alias_method :original_schedule, :schedule
   def schedule
     schedule = self.original_schedule

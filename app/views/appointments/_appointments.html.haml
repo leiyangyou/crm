@@ -1,0 +1,10 @@
+- appointments = object.schedule.schedule_for(date).appointments
+= render :partial => "appointments/appointment", :collection => appointments
+.pagination
+  - previous_date = date - 1
+  - following_date = date + 1
+  = link_to "<<", appointments_by_date_user_path(:id => object.id, :year => previous_date.year, :month => previous_date.month, :day => previous_date.day), :remote => true
+  = form_tag appointments_user_path(:id =>object.id), :remote => true, :method => :get do
+    = text_field_tag(:date, date.strftime("%Y-%m-%d"))
+    = submit_tag("Go")
+  = link_to ">>", appointments_by_date_user_path(:id => object.id, :year => following_date.year, :month => following_date.month, :day => following_date.day), :remote => true
