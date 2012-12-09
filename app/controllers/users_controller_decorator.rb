@@ -18,6 +18,13 @@ UsersController.class_eval do
     @user = User.find(params[:id])
   end
 
+  def show
+    if params[:date]
+      @date = Date.parse params[:date] rescue Exception
+    end
+    respond_with(@user)
+  end
+
   private
 
   def extract_date_from_params params
