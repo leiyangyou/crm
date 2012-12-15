@@ -15,6 +15,10 @@ User.class_eval do
 
   has_one :schedule
 
+  has_one :user_order
+
+  delegate :order, :to => :user_order, :allow_nil => true
+
   after_create :initialize_schedule
 
   scope :manageable_by, (lambda do |user|
