@@ -11,6 +11,8 @@ User.class_eval do
   acts_as_user :roles => ROLES
   attr_protected :roles
 
+  has_many :assignments
+
   has_one :schedule
 
   after_create :initialize_schedule
@@ -51,6 +53,12 @@ User.class_eval do
     schedule = self.original_schedule
     return schedule if schedule
     self.schedule = initialize_schedule
+  end
+
+  def performance_since date
+    self.assignments.where(["created_at > ?", date]).reduce(0) do |result, assignment|
+      result + assignment.assignable.try(:assignable_value){0}
+    end
   end
 
   private

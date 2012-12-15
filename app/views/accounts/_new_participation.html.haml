@@ -13,6 +13,10 @@
           %td
             .label.req= t(:trainer)
             = p.collection_select :trainer_id, User.trainers, :id, :name
+          %td
+            .label.req= t(:assigner)
+            = p.fields_for :assignment_attributes do |a|
+              = a.collection_select :user_id, User.all, :id, :username
 
   .buttonbar
     = f.submit t(:new), :id => :new_lesson_submit

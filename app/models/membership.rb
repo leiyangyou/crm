@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+  include Assignable
   belongs_to :account
   belongs_to :consultant, :class_name => 'User'
   belongs_to :type, :class_name => "MembershipType", :foreign_key => "type_id"
@@ -119,6 +120,10 @@ class Membership < ActiveRecord::Base
 
   def contract_required?
     %w{active suspended transferred}.include?(self.status)
+  end
+
+  def assignable_value
+    self.type.try(:price){0}
   end
 
   protected

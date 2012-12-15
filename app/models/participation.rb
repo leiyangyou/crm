@@ -1,10 +1,15 @@
 class Participation < ActiveRecord::Base
+  include Assignable
   belongs_to :account
   belongs_to :lesson
   belongs_to :trainer, :class_name => "User"
   attr_accessible :account_id, :lesson_id, :trainer_id, :times
 
   validates_presence_of :account_id, :lesson_id, :trainer_id
+
+  def assignable_value
+    self.lesson.try(:price){0}
+  end
 
   def attend
     if self.times > 0
