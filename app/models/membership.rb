@@ -122,6 +122,10 @@ class Membership < ActiveRecord::Base
     %w{active suspended transferred}.include?(self.status)
   end
 
+  def assignable_value
+    self.type.try(:price){0}
+  end
+
   protected
   def new_membership_state params = {}
     params = params || {}

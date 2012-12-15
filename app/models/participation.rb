@@ -7,6 +7,10 @@ class Participation < ActiveRecord::Base
 
   validates_presence_of :account_id, :lesson_id, :trainer_id
 
+  def assignable_value
+    self.lesson.try(:price){0}
+  end
+
   def attend
     if self.times > 0
       self.times -= 1

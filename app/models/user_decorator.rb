@@ -55,6 +55,12 @@ User.class_eval do
     self.schedule = initialize_schedule
   end
 
+  def performance_since date
+    self.assignments.where(["created_at > ?", date]).reduce(0) do |result, assignment|
+      result + assignment.assignable.try(:assignable_value){0}
+    end
+  end
+
   private
   def initialize_schedule
     schedule = Schedule.new
