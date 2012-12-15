@@ -19,7 +19,7 @@
         %tr
           %td
             .label.req= t(:consultant) +":"
-            = m.collection_select :consultant_id, User.consultants.ordered, :id, :full_name,
+            = m.collection_select :consultant_id, User.consultants.ranked, :id, :full_name,
                 {:include_blank => ""},
                 { :"data-placeholder" => t(:myself), :style => "width:160px" }
           %td

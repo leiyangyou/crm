@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
     t.integer  "schedule_id"
     t.date     "date"
     t.integer  "slots",        :limit => 8, :default => 0
-    t.integer  "working_time", :limit => 8, :default => 0
+    t.integer  "working_time", :limit => 8
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
   end
@@ -752,11 +752,11 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
 
   add_index "user_daily_performances", ["user_id"], :name => "index_user_daily_performances_on_user_id"
 
-  create_table "user_orders", :force => true do |t|
+  create_table "user_ranks", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "order"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "rank",      :default => 99999
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "user_orders", ["user_id"], :name => "index_user_orders_on_user_id", :unique => true

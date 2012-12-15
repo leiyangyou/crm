@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserOrderTest < ActiveSupport::TestCase
+class UserRankTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

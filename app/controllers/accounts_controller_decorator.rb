@@ -1,7 +1,7 @@
 AccountsController.class_eval do
 
   def renewal
-    @users = User.consultants.except(@current_user).ordered
+    @users = User.consultants.except(@current_user).ranked
     @account = Account.find(params[:id])
     @membership_state = MembershipState.new :state_type => MembershipState::TYPES::ACTIVE
   end

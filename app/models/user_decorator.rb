@@ -15,13 +15,13 @@ User.class_eval do
 
   has_one :schedule
 
-  has_one :user_order
+  has_one :user_rank
 
-  delegate :order, :to => :user_order, :allow_nil => true
+  delegate :rank, :to => :user_rank, :allow_nil => true
 
   after_create :initialize_schedule
 
-  scope :ordered, includes(:user_order).order('COALESCE(user_orders.order, 999999) asc')
+  scope :ranked, includes(:user_rank).order('COALESCE(user_rank.rank, 999999) asc')
 
   scope :manageable_by, (lambda do |user|
     where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
