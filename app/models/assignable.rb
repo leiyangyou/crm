@@ -5,6 +5,7 @@ module Assignable
       has_one :assignment, :as => :assignable
       has_one :assigner, :through =>:assignment, :source => :user
       accepts_nested_attributes_for :assignment
+      attr_accessible :assignment_attributes
     end
     unless base.kind_of? Assignment
       base.send(:include, InstanceMethods)

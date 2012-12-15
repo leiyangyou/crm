@@ -20,6 +20,10 @@
           %td
             .label.req= t(:consultant) +":"
             = m.collection_select :consultant_id, User.all, :id, :username
+          %td
+            .label.req= t(:assigner) + ":"
+            = m.fields_for :assignment_attributes do |a|
+              = a.collection_select :user_id, User.all, :id, :username
     .buttonbar
       = f.submit t(:renewal), :id => :account_renewal_submit
       or
