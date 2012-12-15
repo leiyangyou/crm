@@ -57,8 +57,8 @@ User.class_eval do
 
   def performance options = {}
     assignments = self.assignments
-    assignments.where(["created_at > ?", date]) if date = options[:date]
-    assignments.where(:assignable_type => type) if type = options[:type]
+    assignments = assignments.where(["created_at >?", since]) if since = options[:since]
+    assignments = assignments.where(:assignable_type => type) if type = options[:type]
     assignments.reduce(0) do |result, assignment|
       result + assignment.assignable.try(:assignable_value){0}
     end
