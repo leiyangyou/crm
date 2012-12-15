@@ -11,6 +11,11 @@ module CRMTask
           daily_performance.user = user
           daily_performance.save
         end
+
+        User.all.sort_by(&:order).each_with_index do |user, index|
+          user_order = UserOrder.find_or_create_by_user_id( user.id, :order => index)
+          user_order.save
+        end
       end
 
       private

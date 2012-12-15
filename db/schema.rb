@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121215080040) do
+ActiveRecord::Schema.define(:version => 20121215145333) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -751,6 +751,15 @@ ActiveRecord::Schema.define(:version => 20121215080040) do
   end
 
   add_index "user_daily_performances", ["user_id"], :name => "index_user_daily_performances_on_user_id"
+
+  create_table "user_orders", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "order"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_orders", ["user_id"], :name => "index_user_orders_on_user_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "username",            :limit => 32, :default => "",    :null => false
