@@ -11,12 +11,17 @@
             = p.collection_select :lesson_id, Lesson.all, :id, :name
         %tr
           %td
-            .label.req= t(:trainer)
-            = p.collection_select :trainer_id, User.trainers, :id, :name
+            .label= t(:trainer)
+            = p.collection_select :trainer_id, User.trainers.ordered, :id, :full_name,
+              {:include_blank => ""},
+              { :"data-placeholder" => t(:myself), :style => "width:160px" }
           %td
             .label.req= t(:assigner)
             = p.fields_for :assignment_attributes do |a|
-              = a.collection_select :user_id, User.all, :id, :username
+              = a.collection_select :user_id, User.all, :id, :username,
+                {:prompt =>true},
+                { :"data-placeholder" => t(:myself), :style => "width:160px" }
+
 
   .buttonbar
     = f.submit t(:new), :id => :new_lesson_submit

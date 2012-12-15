@@ -1,7 +1,7 @@
 LeadsController.class_eval do
 
   def convert
-    @users = User.except(@current_user)
+    @users = User.consultants.except(@current_user).ordered
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my.order('name')
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)

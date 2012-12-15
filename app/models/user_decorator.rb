@@ -21,7 +21,6 @@ User.class_eval do
 
   after_create :initialize_schedule
 
-
   scope :ordered, includes(:user_order).order('COALESCE(user_orders.order, 999999) asc')
 
   scope :manageable_by, (lambda do |user|

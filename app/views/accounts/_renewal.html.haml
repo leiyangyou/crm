@@ -19,11 +19,15 @@
         %tr
           %td
             .label.req= t(:consultant) +":"
-            = m.collection_select :consultant_id, User.all, :id, :username
+            = m.collection_select :consultant_id, User.consultants.ordered, :id, :full_name,
+                {:include_blank => ""},
+                { :"data-placeholder" => t(:myself), :style => "width:160px" }
           %td
             .label.req= t(:assigner) + ":"
             = m.fields_for :assignment_attributes do |a|
-              = a.collection_select :user_id, User.all, :id, :username
+              = a.collection_select :user_id, User.all, :id, :full_name,
+                {:include_blank => ""},
+                { :"data-placeholder" => t(:myself), :style => "width:160px" }
     .buttonbar
       = f.submit t(:renewal), :id => :account_renewal_submit
       or
