@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126095627) do
+ActiveRecord::Schema.define(:version => 20121215044442) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -118,6 +118,17 @@ ActiveRecord::Schema.define(:version => 20121126095627) do
   end
 
   add_index "appointments", ["daily_schedule_id"], :name => "index_appointments_on_daily_schedule_id"
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "assignable_id"
+    t.string   "assignable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "assignments", ["assignable_id", "assignable_type"], :name => "index_assignments_on_assignable_id_and_assignable_type"
+  add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -261,10 +272,10 @@ ActiveRecord::Schema.define(:version => 20121126095627) do
   create_table "daily_schedules", :force => true do |t|
     t.integer  "schedule_id"
     t.date     "date"
-    t.integer  "slots",        :limit => 8
-    t.integer  "working_time", :limit => 8
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "slots",        :limit => 8, :default => 0
+    t.integer  "working_time", :limit => 8, :default => 0
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   add_index "daily_schedules", ["schedule_id"], :name => "index_daily_schedules_on_schedule_id"

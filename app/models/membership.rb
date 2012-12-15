@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+  include Assignable
   belongs_to :account
   belongs_to :consultant, :class_name => 'User'
   belongs_to :type, :class_name => "MembershipType", :foreign_key => "type_id"

@@ -11,6 +11,8 @@ User.class_eval do
   acts_as_user :roles => ROLES
   attr_protected :roles
 
+  has_many :assignments
+
   has_one :schedule
 
   after_create :initialize_schedule

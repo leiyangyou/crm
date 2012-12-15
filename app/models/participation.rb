@@ -1,4 +1,5 @@
 class Participation < ActiveRecord::Base
+  include Assignable
   belongs_to :account
   belongs_to :lesson
   belongs_to :trainer, :class_name => "User"
