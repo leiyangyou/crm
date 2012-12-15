@@ -24,13 +24,27 @@ User.class_eval do
   scope :ranked, includes(:user_rank).order('COALESCE(user_rank.rank, 999999) asc')
 
   scope :manageable_by, (lambda do |user|
-    where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
+    unless user.admin?
+      where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
+    end
   end)
+
+  def assign_roles_by(roles, manager)
+    manageable_roles = manager == self ? manager.self_assignable_roles : manager.manageable_roles
+    self.roles_mask = self.roles_mask ^ (User.mask_for(*manageable_roles) & (User.mask_for(*roles) ^ self.roles_mask))
+  end
 
   def manageable_roles
     ability = Ability.new(self)
     self.class.valid_roles.select do |role|
       ability.can? :manage, role
+    end
+  end
+
+  def self_assignable_roles
+    ability = Ability.new(self)
+    manageable_roles.select do |role|
+      ability.can? :self_assign_role, role
     end
   end
 

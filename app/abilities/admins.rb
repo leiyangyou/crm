@@ -23,7 +23,7 @@ Canard::Abilities.for(:admin) do
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
   can :manage, :all
-  cannot :self_assign, :admin
+  cannot :self_assign_role, :admin
 
   can :manage, User do |user|
     user.roles.all? do |role|

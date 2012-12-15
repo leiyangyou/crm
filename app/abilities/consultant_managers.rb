@@ -24,7 +24,7 @@ Canard::Abilities.for(:consultant_manager) do
 
   can :manage, :something
   can :manage, :consultant
-  cannot :self_assign, :consultant_manager
+  cannot :self_assign_role, :consultant_manager
 
   can :manage, User do |user|
     user.roles.all? do |role|

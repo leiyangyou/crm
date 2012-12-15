@@ -24,7 +24,7 @@ Canard::Abilities.for(:operator_manager) do
 
   can :manage, :something
   can :manage, :operator
-  cannot :self_assign, :operator_manager
+  cannot :self_assign_role, :operator_manager
 
   can :manage, User do |user|
     user.roles.all? do |role|

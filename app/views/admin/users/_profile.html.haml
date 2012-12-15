@@ -24,7 +24,7 @@
           - User.valid_roles.each do |role|
             - if can? :manage, role
               = check_box_tag :user_roles, role, @user.is?(role), :name => "user_roles[]",
-                :disabled => edit &&  @user == @current_user && cannot?(:self_assign, role)
+                :disabled => edit &&  @user == @current_user && cannot?(:self_assign_role, role)
               = f.label "user_roles[]", t(:"roles.#{role}")
 .subtitle #{t :personal_information}
 .section

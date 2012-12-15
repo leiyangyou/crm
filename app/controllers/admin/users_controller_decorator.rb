@@ -4,22 +4,12 @@ Admin::UsersController.class_eval do
   authorize_resource
 
   def create
-    roles = params[:user_roles] || []
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
 
     @user = User.new(params[:user])
 
-    User.valid_roles.each do |role|
-      if can? :manage, role
-        if roles.include? role
-          @user.roles << role
-        else
-          @user.roles.delete role
-        end
-      end
-    end
+    @user.assign_roles_by(params[:user_roles], @current_user)
 
-    @user.roles = roles
     @user.admin = @user.is?(:admin)
     @user.save_without_session_maintenance
     @users = get_users
@@ -28,21 +18,10 @@ Admin::UsersController.class_eval do
   end
 
   def update
-    roles = params[:user_roles] || []
-
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
 
     @user = User.find(params[:id])
-
-    User.valid_roles.each do |role|
-      if can?(:manage, role) && (!@user == @current_user || can?(:self_assign, role))
-        if roles.include? role
-          @user.roles << role
-        else
-          @user.roles.delete role
-        end
-      end
-    end
+    @user.assign_roles_by(params[:user_roles], @current_user)
 
     @user.admin = @user.is?(:admin)
     @user.update_attributes(params[:user])
