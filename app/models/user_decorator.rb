@@ -55,8 +55,11 @@ User.class_eval do
     self.schedule = initialize_schedule
   end
 
-  def performance_since date
-    self.assignments.where(["created_at > ?", date]).reduce(0) do |result, assignment|
+  def performance options = {}
+    assignments = self.assignments
+    assignments.where(["created_at > ?", date]) if date = options[:date]
+    assignments.where(:assignable_type => type) if type = options[:type]
+    assignments.reduce(0) do |result, assignment|
       result + assignment.assignable.try(:assignable_value){0}
     end
   end
