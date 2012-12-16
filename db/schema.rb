@@ -791,7 +791,7 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
-    t.integer  "roles_mask"
+    t.integer  "roles_mask", :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

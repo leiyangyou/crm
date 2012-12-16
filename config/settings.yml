@@ -72,6 +72,7 @@
 # Default locale is American English.
 #
 :locale: "en-US"
+#:locale: "zh-CN"
 
 
 # Settings for outgoing email (SMTP)
@@ -126,7 +127,7 @@
 # By default, individual users can't pick their own locale and are presented
 # with the default locale.
 #
-:per_user_locale: true
+:per_user_locale: false
 
 
 # Default records permissions
@@ -136,7 +137,7 @@
 #   Public  -- public access, share with everyone. This is the default.
 #   Shared  -- shared with selected accounts, should be selected by the user.
 #
-:default_access: "Public"
+:default_access: "Private"
 
 
 # User Signup
@@ -212,26 +213,25 @@
 #------------------------------------------------------------------------------
 :tabs: [
   { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
-#  { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
+  { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
 #  { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
   { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
-  { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } },
-# { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
-# { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } },
-  { :active : false, :text : :tab_lockers,       :url : { :controller : "lockers"        } }
-# { :active : false, :text : :contracts,         :url : { :controller : "contracts"      } }
+  { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } }
+#  { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
+#  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } },
+#  { :active : false, :text : :tab_lockers,       :url : { :controller : "lockers"        } }
 ]
 
 :admin_tabs: [
-  { :active : true,   :text : :admin_tab_users,             :url : { :controller : "admin/users"            } },
-  { :active : false,  :text : :admin_tab_schedules,         :url : { :controller : "admin/schedules"        } },
-  { :active : false,  :text : :admin_tab_tags,              :url : { :controller : "admin/tags"             } },
-  { :action : false,  :text : :admin_tab_contract_types,    :url : { :controller : "admin/contract_types"   } },
-  { :action : false,  :text : :admin_tab_lockers,           :url : { :controller : "admin/lockers"          } },
+  { :active : true,   :text : :admin_tab_users,           :url : { :controller : "admin/users"          } },
+  { :active : false,  :text : :admin_tab_schedules,       :url : { :controller : "admin/schedules"      } },
+  { :active : false,  :text : :admin_tab_tags,            :url : { :controller : "admin/tags"           } },
+  { :action : false, :text : :admin_tab_contract_types, :url : { :controller : "admin/contract_types" }, :access: :contract_types  },
+  { :action : false,  :text : :admin_tab_lockers,         :url : { :controller : "admin/lockers"        } },
   { :action : false,  :text : :admin_tab_membership_types,  :url : { :controller : "admin/membership_types" } },
   { :action : false,  :text : :admin_tab_lessons,           :url : { :controller : "admin/lessons"          } }
-#  { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
-#  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
+#  { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } }
+#  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } }
 #  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
 
@@ -292,14 +292,12 @@ lead_status_color:
   :rejected  : OrangeRed
 
 lead_source:
+  - :walk_in
+  - :telephone_in
+  - :referral
   - :campaign
   - :cold_call
-  - :conference
-  - :online
-  - :referral
-  - :self
   - :web
-  - :word_of_mouth
   - :other
 
 # Opportunity Stage.

@@ -40,7 +40,11 @@ Til5::Application.routes.draw do
   end
 
   resources :users do
+    collection do
+      post :redraw, :to => "users#redraw"
+    end
     member do
+      post :redraw, :to => "users#redraw"
       post :add_appointment, :to =>"users#add_appointment"
       put :add_appointment, :to => "users#add_appointment"
       get :new_appointment, :to => "users#new_appointment"

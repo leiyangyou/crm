@@ -12,7 +12,7 @@ module CRMTask
           daily_performance.save
         end
 
-        User.all.sort_by(&:order).each_with_index do |user, index|
+        User.all.sort_by(&:rank).each_with_index do |user, index|
           user_rank = UserRank.find_or_create_by_user_id( user.id, :rank => index)
           user_rank.save
         end

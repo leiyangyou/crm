@@ -1,4 +1,4 @@
 class UserRank < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :order
+  attr_accessible :rank
 end
