@@ -56,9 +56,12 @@ Til5::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :schedules, :except => [:new, :edit, :update, :create, :destroy] do
-      get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
-      resources :slots
+    resources :schedules, :only => [:index] do
+      collection do
+        get ':year-:month-:day', :action => :show, :as => :show
+        put ':year-:month-:day', :action => :update, :as => :update
+        get ':year-:month-:day/edit', :action => :edit, :as => :edit
+      end
     end
 
     resources :membership_types, :only => [:index, :new, :edit, :update, :create, :destroy]

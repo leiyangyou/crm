@@ -16,6 +16,7 @@ en-US:
     general_manager: "General Manager"
     admin: "Admin"
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
+  edit_weekly_schedules: "Edit schedules between %{first_day} and %{last_day}"
   activerecord:
     errors:
       models:
@@ -24,8 +25,13 @@ en-US:
             base:
               user:
                 error:
-                  unavailable: "Unavailable during %{time}"
+                  unavailable: "Only available during %{working_time}"
                   not_working: "Not working during %{time}"
+        daily_schedule:
+          attributes:
+            base:
+              error:
+                conflict_with_appointments: "Schedule for %{user} conflicts with appointment(s) %{appointments} on %{date}"
   view:
     membership_states:
       state:
@@ -45,3 +51,5 @@ en-US:
   add_template: "Add Template"
   contract_templates: "Contract Templates"
   create_contract_template: "Create Contract Template"
+  edit_schedules: "Edit Schedules"
+  save_schedules: "Save Schedules"

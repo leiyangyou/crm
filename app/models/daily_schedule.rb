@@ -9,6 +9,7 @@ class DailySchedule < ActiveRecord::Base
   belongs_to :schedule
   has_many :appointments
   attr_accessible :date, :slots, :working_time
+  validate :no_conflicting_appointments
 
   def working? time_range
     compacted_time_range = time_range.compact
@@ -136,6 +137,17 @@ class DailySchedule < ActiveRecord::Base
         minute = index % 2 > 0 ? '30' : '00'
         "#{hour}:#{minute}"
       end
+    end
+  end
+
+  protected
+  def no_conflicting_appointments
+    unless working_time & slots == slots
+      errors.add(:base,
+                 :"error.conflict_with_appointments",
+                 :user => schedule.user.full_name,
+                 :appointments => readable_slots,
+                 :date => date)
     end
   end
 end

@@ -18,7 +18,7 @@ document.observe("dom:loaded", ()->
       if (this.selection.getFirstDate() != beginning_of_the_week ||
           this.selection.getLastDate() != end_of_the_week )
         this.selection.reset([[beginning_of_the_week, end_of_the_week]])
-        new Ajax.Updater("schedules-container", "/admin/schedules/weekly/#{Calendar.printDate(beginning_of_the_week_as_date, '%Y-%m-%d')}", method:'GET')
+        new Ajax.Updater("schedules-container", "/admin/schedules/#{Calendar.printDate(beginning_of_the_week_as_date, '%Y-%m-%d')}?partial=true", method:'GET')
     )
   })
   calendar.selection.reset(Calendar.dateToInt(new Date))

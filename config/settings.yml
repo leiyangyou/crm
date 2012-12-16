@@ -363,4 +363,10 @@ task_completed:
   - :completed_last_month
 
 default_working_time:
-  - "8:00-16:00"
+  - "8:00-24:00"
+
+default_working_shifts:
+  :operator : ["8:00-15:00", "15:00-24:00"]
+  :consultant : ["9:00-17:00", "9:00-14:00", "13:00-18:00"]
+  :trainer : ["8:00-12:00", "12:00-18:00", "18:00-24:00"]
+  :default: ["8:00-24:00"]

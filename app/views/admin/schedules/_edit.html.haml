@@ -1,0 +1,19 @@
+= form_for( [:admin, :schedules], :as =>:schedules, :html => one_submit_only(:schedules).merge(:class => "edit_schedules", :method => :put, :id => "edit_schedules"), :remote => true, :url => update_admin_schedules_path) do |f|
+  = link_to_close edit_admin_schedules_path
+  - (@errors || []).each do |object|
+    = error_messages_for object
+  %table
+    %tr
+      %th
+      - @dates.each do |date|
+        %th #{date.strftime("%a %m/%d")}
+    - @schedules.each do |user, schedules|
+      %tr
+        %th= "#{user.full_name} #{"(#{user.mobile})" if user.mobile}"
+        - schedules.each do |schedule|
+          %td
+            = select_tag "schedules[#{user.id}][#{schedule.date.to_s('%Y-%m-%d')}]", options_for_select( [["", "0-0"]] + user.shifts, schedule.readable_working_time )
+  .buttonbar
+    = f.submit t(:save_schedules), :id => :"schedules_submit"
+    or
+    = link_to_cancel edit_admin_schedules_path

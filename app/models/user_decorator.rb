@@ -21,13 +21,21 @@ User.class_eval do
 
   after_create :initialize_schedule
 
-  scope :ranked, includes(:user_rank).order('COALESCE(user_rank.rank, 999999) asc')
+  scope :ranked, includes(:user_rank).order('COALESCE(user_ranks.rank, 999999) asc')
 
   scope :manageable_by, (lambda do |user|
     unless user.admin?
-      where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
+      where("#{role_mask_column} & :role_mask > 0 or #{role_mask_column} = 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
     end
   end)
+
+  def shifts
+    roles= (self.roles.to_set & Set.new([:operator, :consultant, :trainer]))
+    default_shifts = Setting["default_working_shifts"]
+    roles.reduce(default_shifts['default']) do |ax, r|
+      ax + default_shifts[r]
+    end.uniq
+  end
 
   def assign_roles_by(roles, manager)
     manageable_roles = manager == self ? manager.self_assignable_roles : manager.manageable_roles
