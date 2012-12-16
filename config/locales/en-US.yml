@@ -35,6 +35,11 @@ en-US:
             base:
               error:
                 conflict_with_appointments: "Schedule for %{user} conflicts with appointment(s) %{appointments} on %{date}"
+        lessons:
+          attributes:
+            trainer:
+              error:
+                no_trainer: "A valid trainer must be specified"
   view:
     membership_states:
       state:
@@ -45,6 +50,7 @@ en-US:
     lesson:
       price: "Price"
       times: "Times"
+      trainer: "Personal Trainer"
     welcome:
       title: "OZone Swap Card"
   create_contract_type: "Create Contract Type"
@@ -61,3 +67,9 @@ en-US:
   select_week: "Select Week"
   edit_schedules: "Edit Schedules"
   save_schedules: "Save Schedules"
+  lessons: "Lessons"
+  lesson_small: "lesson"
+  create_lesson: "Create lesson"
+  price: "Price"
+  times: "Times"
+  trainer: "Personal Trainer"

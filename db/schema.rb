@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121215145333) do
+ActiveRecord::Schema.define(:version => 20121216204103) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -398,6 +398,7 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
     t.integer  "price"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "trainer_id"
   end
 
   create_table "lists", :force => true do |t|
@@ -754,12 +755,12 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
 
   create_table "user_ranks", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "rank",      :default => 99999
+    t.integer  "rank",       :default => 99999, :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
 
-  add_index "user_orders", ["user_id"], :name => "index_user_orders_on_user_id", :unique => true
+  add_index "user_ranks", ["user_id"], :name => "index_user_orders_on_user_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "username",            :limit => 32, :default => "",    :null => false
@@ -791,7 +792,7 @@ ActiveRecord::Schema.define(:version => 20121215145333) do
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
-    t.integer  "roles_mask", :default => 0
+    t.integer  "roles_mask",                        :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
