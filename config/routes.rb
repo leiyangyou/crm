@@ -29,6 +29,7 @@ Til5::Application.routes.draw do
   end
 
   match 'welcome' => 'welcome#index'
+  match 'welcome/:id' =>'welcome#show'
   resources :contract_types, :only => [:show] do
     resources :contracts, :only => [:new]
   end
