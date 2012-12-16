@@ -85,11 +85,29 @@ User.class_eval do
 
   def performance options = {}
     assignments = self.assignments
-    assignments = assignments.where(["created_at >?", since]) if since = options[:since]
-    assignments = assignments.where(:assignable_type => type) if type = options[:type]
+    if since = options[:since]
+      assignments = assignments.where(["created_at >= ?", since])
+    end
+
+    if til = options[:til]
+      assignments = assignments.where(["created_at < ?", til])
+    end
+
+    if type = options[:type]
+      assignments = assignments.where(:assignable_type => type)
+    end
+
     assignments.reduce(0) do |result, assignment|
       result + assignment.assignable.try(:assignable_value){0}
     end
+  end
+
+  def trainer_performance options = {}
+    performance options.merge(:type => "Participation")
+  end
+
+  def consultant_performance options = {}
+    performance options.merge(:type => "Membership")
   end
 
   private

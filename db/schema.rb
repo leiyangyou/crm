@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216204103) do
+ActiveRecord::Schema.define(:version => 20121216224826) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -401,6 +401,8 @@ ActiveRecord::Schema.define(:version => 20121216204103) do
     t.integer  "trainer_id"
   end
 
+  add_index "lessons", ["trainer_id"], :name => "index_lessons_on_trainer_id"
+
   create_table "lists", :force => true do |t|
     t.string   "name"
     t.text     "url"
@@ -744,22 +746,28 @@ ActiveRecord::Schema.define(:version => 20121216204103) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|
-    t.time     "date"
+    t.date     "date"
     t.integer  "user_id"
-    t.integer  "performance"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "performance"
+    t.string   "type"
   end
 
+  add_index "user_daily_performances", ["type"], :name => "index_user_daily_performances_on_type"
   add_index "user_daily_performances", ["user_id"], :name => "index_user_daily_performances_on_user_id"
 
   create_table "user_ranks", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "rank",       :default => 99999, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "rank"
+    t.string   "type"
+    t.integer  "rank_override"
+    t.integer  "weekly_performance"
   end
 
+  add_index "user_ranks", ["type"], :name => "index_user_ranks_on_type"
   add_index "user_ranks", ["user_id"], :name => "index_user_orders_on_user_id", :unique => true
 
   create_table "users", :force => true do |t|
