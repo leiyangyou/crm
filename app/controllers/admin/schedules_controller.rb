@@ -2,7 +2,7 @@ class Admin::SchedulesController < Admin::ApplicationController
   before_filter "set_current_tab('admin/schedules')", :only => [ :index, :show ]
   before_filter :load_schedules, :except => [:index]
   skip_before_filter :require_admin_user
-  before_filter :require_manager
+  before_filter "require_manager(Schedule)"
 
   def index
     today = Date.today

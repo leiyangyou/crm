@@ -2,7 +2,7 @@ ApplicationHelper.class_eval do
   def tabs(tabs = nil)
     tabs ||= controller_path =~ /admin/ ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
     tabs = tabs.select do |tab|
-      tab[:access] ? (can?(:manage, tab[:access])) : true
+      tab[:access] ? (can?(:manage, tab[:access].to_s.singularize.classify.constantize)) : true
     end
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.

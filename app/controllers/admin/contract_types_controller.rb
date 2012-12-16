@@ -1,5 +1,7 @@
 class Admin::ContractTypesController < Admin::ApplicationController
   before_filter "set_current_tab('admin/contract_types')", :only => [ :index, :show ]
+  skip_before_filter :require_admin_user
+  before_filter "require_manager(ContractTypes)"
 
   load_resource
   # GET /contract_types
