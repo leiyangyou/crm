@@ -1,9 +1,14 @@
+module AccountDecorator
+end
 Account.class_eval do
+  include  AccountDecorator::ContractHandler
   has_one :membership
 
   has_many :participations
 
   has_many :lessons, :through => :participations
+
+  has_many :contracts
 
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 

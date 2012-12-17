@@ -1,0 +1,24 @@
+%li.highlight[contract]
+  .strip{:class => contract.type.underscore.split("/").last }= t("view.contract.contracts.#{contract.type.underscore.split("/").last}")
+  %ul.tools
+    - unless contract.signed?
+      - if can? :edit, contract
+        %li= link_to_edit_contract(contract)
+      - if can? :sign, contract
+        %li= link_to_sign_contract(contract)
+  .indent
+    %tt
+      %span.contract_id= link_to contract.contract_id, contract_path(contract)
+    %dt
+      %span.account_title= t("view.contract.account") + ":"
+      %span.account= link_to contract.account.name, contract.account
+      |
+      %span.started_on= contract.started_on
+      %span -
+      %span.finished_on= contract.finished_on
+      - if contract.signed?
+        |
+        %span.signed_at_title= t("view.contract.signed_at") + ":"
+        %span.signed_at= contract.signed_at
+      |
+      %span.abstract= contract.abstract

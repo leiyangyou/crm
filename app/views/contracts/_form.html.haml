@@ -1,8 +1,18 @@
-= form_for(@contract, :remote => true) do |f|
+= form_for(@contract, :url => @contract.persisted? ? contract_path(@contract) : account_contracts_path(@contract.account), :as => :contract) do |f|
   = f.error_messages :object_name => t(:contract)
   = hidden_field_tag :callback, @callback
-  = f.hidden_field :contract_template_id
-  = f.template_attributes(:parameters, :template_method => "contract_template")
+  = f.hidden_field :type
+  .section
+    %table
+      %tr
+        %td
+          .label.top.req= t(:"view.contract.started_on") + ":"
+          = f.date_select :started_on
+        %td
+          .label.top.req= t(:"view.contract.finished_on") + ":"
+          = f.date_select :finished_on
+  .section
+    = render :partial => @contract.type.underscore.split("/").last, :locals => {:f => f}
   .buttonbar
     = f.submit t(:create_contract), :id => :"contract_submit"
     = button_tag t(:preview), :id => :contract_preview

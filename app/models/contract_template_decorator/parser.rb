@@ -1,5 +1,5 @@
 require 'singleton'
-class ContractTemplate::Parser
+class ContractTemplateDecorator::Parser
   DEFAULT_TYPE = "string"
   class << self
     #PLACE_HOLDER_PATTERN=/\${(?'name'[^:}]*)(?::(?'type'[^},]*))?(,([^:]+:[^},]+)*)}/
@@ -7,10 +7,10 @@ class ContractTemplate::Parser
     def parse_parameters(contract, errors = nil)
       parameters = {}
       parse(contract) do |name, type, attributes|
-        unless ContractTemplate::ParamType.valid_type?(type)
+        unless ContractTemplateDecorator::ParamType.valid_type?(type)
           errors.add(:parameters, :invalid_type, {:type => type, :name => name}) if errors
         else
-          parameters[name.to_s] = ContractTemplate::Param.new :name => name, :type => type, :attributes => attributes
+          parameters[name.to_s] = ContractTemplateDecorator::Param.new :name => name, :type => type, :attributes => attributes
         end
         nil #replace with nothing
       end

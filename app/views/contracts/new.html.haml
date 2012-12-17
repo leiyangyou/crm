@@ -1,16 +1,3 @@
-%html
-  %head
-    = stylesheet_link_tag :contracts
-    = javascript_include_tag :application
-    = javascript_include_tag :contracts
-  %body
-    - unless @contract_type
-      %h1= "Cannot Find Contract for '#{params[:contract_type_id]}'"
-      = link_to t(:create_new_contract_type), admin_contract_types_path(:contract_type => {:name => params[:contract_type_id]})
-    - else
-      %h1= @contract_type.name
-      #create_contract
-        = render :partial => "form"
-      %fieldset#preview
-        %legend= t(:preview)
-        = @contract.contract_template.to_preview.html_safe
+%h1= @contract.type
+#create_contract
+  = render :partial => "form"

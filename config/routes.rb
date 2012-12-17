@@ -20,7 +20,9 @@ Til5::Application.routes.draw do
       get :participate, :as => :new_participation, :to => "accounts#new_participation"
       put :participate, :as => :participate, :to => "accounts#participate"
     end
+    resources :contracts, :only => [:new, :create]
   end
+
 
   resources :participations, :only => [:destroy] do
     member do
@@ -29,13 +31,12 @@ Til5::Application.routes.draw do
   end
 
   match 'welcome' => 'welcome#index'
-  resources :contract_types, :only => [:show] do
-    resources :contracts, :only => [:new]
-  end
   resources :contracts, :only => [:index, :create, :show] do
+    member do
+      post :sign, :to => "contracts#sign"
+    end
     collection do
       post :preview, :to => "contracts#preview"
-      get :test, :to => "contracts#test"
     end
   end
 
@@ -73,10 +74,7 @@ Til5::Application.routes.draw do
     end
 
 
-    resources :contract_templates, :only => [:edit, :update, :destroy] do
-      collection do
-        post :preview, :to => "contract_templates#preview", :as => "preview"
-      end
+    resources :contract_templates do
       member do
         get :preview
       end

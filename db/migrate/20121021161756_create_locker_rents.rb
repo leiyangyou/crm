@@ -4,8 +4,8 @@ class CreateLockerRents < ActiveRecord::Migration
       t.references :locker
       t.references :account
       t.string :contract_id
-      t.date :start_date
-      t.date :due_date
+      t.date :started_on
+      t.date :finished_on
 
       t.timestamps
     end

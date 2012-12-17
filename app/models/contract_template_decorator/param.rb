@@ -1,4 +1,4 @@
-class ContractTemplate::Param
+class ContractTemplateDecorator::Param
   attr_accessor :name, :type, :attributes
 
   def initialize values={}

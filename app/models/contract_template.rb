@@ -1,4 +1,6 @@
 require 'markdown'
+module ContractTemplateDecorator
+end
 # template for contract,
 # can take placeholders in the form of ${name:type[,param1:value]*} for farther customizing.
 #
@@ -23,12 +25,11 @@ class ContractTemplate < ActiveRecord::Base
   class ParamRequiredError < ValidationError
   end
 
-  belongs_to :contract_type
-
-  attr_accessible :template, :format
+  attr_accessible :template, :format, :contract_type
   serialize :parameters, Hash
 
   validates_inclusion_of :format, :in => Format::AVAILABLE
+  validates_uniqueness_of :contract_type
 
   before_validation(:on => :create) do
     self.parse_and_refresh_parameters
@@ -40,15 +41,10 @@ class ContractTemplate < ActiveRecord::Base
     end
   end
 
-  def self.for model
-    #TODO implement this
-    ContractTemplate.first
-  end
-
   # convert the contract to its printable form( a html) with all the placeholders are replaces by underlines
   def to_printable
-    template = ContractTemplate::Parser.parse(self.template) do |name, type, params|
-      type = ContractTemplate::ParamType.get_type_by_name type
+    template = ContractTemplateDecorator::Parser.parse(self.template) do |name, type, params|
+      type = ContractTemplateDecorator::ParamType.get_type_by_name type
       length = (params[:length] || type.default_length).to_i
       "_" * length
     end
@@ -63,8 +59,8 @@ class ContractTemplate < ActiveRecord::Base
   end
 
   def to_preview
-    template = ContractTemplate::Parser.parse(self.template) do |name, type, params|
-      type = ContractTemplate::ParamType.get_type_by_name type
+    template = ContractTemplateDecorator::Parser.parse(self.template) do |name, type, params|
+      type = ContractTemplateDecorator::ParamType.get_type_by_name type
       length = (params[:length] || type.default_length).to_i
       ("%-#{length * 2}s" % "(#{name})")
     end
@@ -83,16 +79,16 @@ class ContractTemplate < ActiveRecord::Base
     self.parameters.each do |key, parameter|
       param = params[key]
       raise ParamRequiredError unless param || !parameter.required?
-      type = ContractTemplate::ParamType.get_type_by_name parameter.type
+      type = ContractTemplateDecorator::ParamType.get_type_by_name parameter.type
       raise TypeValidationError.new( parameter.type) unless type && type.validate(param)
     end
   end
 
-  def generate_contract params
-    template = ContractTemplate::Parser.parse(self.template) do |name, type, attributes|
-      value = params[name.to_s]
+  def generate_contract contract
+    template = ContractTemplateDecorator::Parser.parse(self.template) do |name, type, attributes|
+      value = contract.respond_to?(name.to_sym) ? contract.send(name.to_sym) : nil
       unless value
-        type = ContractTemplate::ParamType.get_type_by_name type
+        type = ContractTemplateDecorator::ParamType.get_type_by_name type
         length = (params[:length] || type.default_length).to_i
         value = "_" * length
       end
@@ -111,9 +107,10 @@ class ContractTemplate < ActiveRecord::Base
   protected
 
   def parse_and_refresh_parameters
-    parameters = ContractTemplate::Parser.parse_parameters( self.template, self.errors)
+    parameters = ContractTemplateDecorator::Parser.parse_parameters( self.template, self.errors)
     self.parameters = parameters
   end
 end
-require File.join(File.dirname(__FILE__), "/contract_template/param") #to fix the yaml-dump
+require File.join(File.dirname(__FILE__), "/contract_template_decorator/param") #to fix the yaml-dump
+
 

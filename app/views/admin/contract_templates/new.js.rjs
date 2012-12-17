@@ -1,4 +1,4 @@
-id = :"create_contract_type_#{@contract_type.id}_contract_template"
+id = :"create_contract_template"
 page.call "crm.flip_form", id
 
 unless params[:cancel].true?
