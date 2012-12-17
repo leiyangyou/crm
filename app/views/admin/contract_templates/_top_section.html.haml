@@ -1,10 +1,13 @@
-- contract_type = @contract_type || @contract_template.contract_type
 .section
   %table
     %tr
       %td
-        .label.top.req= t("template") + ":"
-        = f.text_area :template, :id => "contract_type_#{contract_type.id}_contract_template_template"
+        .label.req= t("contract_type") +":"
+        = f.select :contract_type, Contract.contracts.reduce([]){|result, ele| result << [t("view.contract_templates.contracts.#{ele.to_s.underscore.split("/").last}"), ele.to_s]}
+    %tr
+      %td
+        .label.req= t("template") + ":"
+        = f.text_area :template, :id => "contract_template_template"
       %td
         .label.req= t("format") + ":"
         = f.select :format, options_for_select(ContractTemplate::Format::AVAILABLE.map{|e| [e, e]})

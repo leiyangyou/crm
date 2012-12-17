@@ -1,4 +1,4 @@
-class ContractTemplate::ParamType
+class ContractTemplateDecorator::ParamType
   attr_accessor :name
 
   DEFAULT_LENGTH = 20
@@ -54,7 +54,7 @@ class ContractTemplate::ParamType
     end
   end
 
-  class StringType < ContractTemplate::ParamType
+  class StringType < ContractTemplateDecorator::ParamType
     name :string
     def convert string_value, default_value=""
       string_value
@@ -69,7 +69,7 @@ class ContractTemplate::ParamType
     name :text
   end
 
-  class DateType < ContractTemplate::ParamType
+  class DateType < ContractTemplateDecorator::ParamType
     name :date
     def convert string_value, default_value=Date.today
       begin
@@ -89,7 +89,7 @@ class ContractTemplate::ParamType
     end
   end
 
-  class NumberType < ContractTemplate::ParamType
+  class NumberType < ContractTemplateDecorator::ParamType
     name :number
     def convert string_value, default_value=0
       begin

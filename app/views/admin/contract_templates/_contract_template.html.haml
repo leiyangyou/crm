@@ -2,4 +2,5 @@
   .tools
     = link_to_edit(contract_template, :url => edit_admin_contract_template_path(contract_template)) << " |"
     = link_to(t(:preview), preview_admin_contract_template_path(contract_template), :target => "_blank")
+  %span= t("view.contract_templates.contracts.#{contract_template.contract_type.to_s.underscore.split("/").last}")
   %span= contract_template.created_at

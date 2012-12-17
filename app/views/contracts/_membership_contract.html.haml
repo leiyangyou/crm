@@ -1,0 +1,20 @@
+%table
+  %tr
+    %td
+      .label.top.req= t(:type) + ":"
+      = f.collection_select :type_id, MembershipType.all, :id, :name
+  %tr
+    %td
+      .label.req= t(:started_on) + ":"
+      = f.date_select :started_on
+  %tr
+    %td
+      .label.req= t(:consultant) +":"
+      = f.collection_select :consultant_id, User.consultants.ranked, :id, :full_name,
+          {:include_blank => ""},
+          { :"data-placeholder" => t(:myself), :style => "width:160px" }
+    %td
+      .label.req= t(:assigner) + ":"
+      = f.collection_select :assigner_id, User.all, :id, :full_name,
+        {:include_blank => ""},
+        { :"data-placeholder" => t(:myself), :style => "width:160px" }

@@ -37,7 +37,7 @@ class Membership < ActiveRecord::Base
     after_transition :active => any, :do => :accumulate_membership_duration
   end
 
-  def transfer params
+  def _transfer params
     target_membership = Membership.find(params[:membership_state][:parameters_attributes][:target_id])
     self.update_attributes(params[:membership])
     self.state_transfer
@@ -46,10 +46,21 @@ class Membership < ActiveRecord::Base
     self.new_membership_state(params[:membership_state])
   end
 
-  def suspend params
-    self.update_attributes(params[:membership])
+  def transfer contract
+    target = contract.target
+    target_membership = target.membership
+    self.state_transfer
+    target_membership.accept_transfer(contract)
+    self.finished_on = contract.started_on
+    self.new_membership_state
+  end
+
+  def suspend contract
+    self.started_on = contract.started_on
+    self.finished_on = contract.finished_on
+    self.contract_id = contract.contract_id
     self.state_suspend
-    self.new_membership_state params[:membership_state]
+    self.new_membership_state
   end
 
   def resume params
@@ -65,12 +76,13 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def renewal params
-    membership_type = MembershipType.find(params[:membership][:type_id])
-    self.update_attributes(params[:membership])
+  def renewal contract
+    self.started_on = contract.started_on
+    membership_type = contract.membership_type
     self.finished_on = self.started_on + membership_type.duration
+    self.contract_id = contract.contract_id
     self.state_renewal
-    self.new_membership_state params[:membership_state]
+    self.new_membership_state
   end
 
   def expire params
@@ -94,11 +106,14 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def accept_transfer(membership)
+  def accept_transfer(contract)
+    source_account = contract.account
+    membership = source_account.membership
     remain = membership.finished_on - Date.today
     self.type = membership.type
     self.started_on = Date.today
     self.finished_on = Date.today + remain
+    self.contract_id = contract_id
     self.state_renewal
     self.new_membership_state
     self.save

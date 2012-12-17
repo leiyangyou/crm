@@ -1,0 +1,12 @@
+%table
+  %tr
+    %td
+      .label.top.req= t("lesson") + ":"
+      = f.collection_select :lesson_id, Lesson.all, :id, :name
+    %td
+      .label.top.req= t("trainer") + ":"
+      = f.collection_select :trainer_id, User.trainers.ranked, :id, :name
+  %tr
+    %td
+      .label.req= t("assigner") + ":"
+      = f.collection_select :assigner_id, User.all, :id, :name

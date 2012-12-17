@@ -1,0 +1,9 @@
+= styles_for :contract
+
+.title
+  %span #{t :contracts}
+
+.list#contracts
+  = render :partial => "contract", :collection => @contracts, :as => :contract
+
+#parginate= render "shared/paginate"

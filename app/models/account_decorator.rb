@@ -20,6 +20,8 @@ Account.class_eval do
 
   has_many :lessons, :through => :participations
 
+  has_many :contracts
+
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
   after_create do
