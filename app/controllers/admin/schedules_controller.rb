@@ -49,7 +49,7 @@ class Admin::SchedulesController < Admin::ApplicationController
     day = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
     beginning_of_week, end_of_week = day.beginning_of_week(Schedule::FIRST_DAY_OF_WEEK), day.end_of_week(Schedule::FIRST_DAY_OF_WEEK)
     @dates = (beginning_of_week..end_of_week).to_a
-    @schedules = current_user.subordinates.map do |subordinate|
+    @schedules = current_user.subordinates.active.map do |subordinate|
       [subordinate,
        subordinate.weekly_schedules(beginning_of_week)]
     end
