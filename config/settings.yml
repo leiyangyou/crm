@@ -230,8 +230,8 @@
   { :action : false, :text : :admin_tab_contract_types, :url : { :controller : "admin/contract_types" }, :access: :contract_types  },
   { :action : false,  :text : :admin_tab_lockers,         :url : { :controller : "admin/lockers"        }, :access: :lockers },
   { :action : false,  :text : :admin_tab_membership_types,  :url : { :controller : "admin/membership_types" }, :access: membership_types },
-  { :action : false,  :text : :admin_tab_lessons,           :url : { :controller : "admin/lessons"          }, :access: :lessons },
- { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } }
+  { :action : false,  :text : :admin_tab_lessons,           :url : { :controller : "admin/lessons"          }, :access: :lessons }
+# { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } }
 #  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } }
 #  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
