@@ -21,7 +21,9 @@ User.class_eval do
 
   after_create :initialize_schedule
 
-  scope :ranked, includes(:user_rank).order('COALESCE(user_ranks.rank, 999999) asc')
+  scope :ranked, lambda { |type|
+    includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank, 999999) asc')
+  }
 
   scope :manageable_by, (lambda do |user|
     unless user.admin?

@@ -88,6 +88,12 @@ Til5::Application.routes.draw do
         get :preview
       end
     end
+
+    resources :user_ranks, :only => [:index] do
+      collection do
+        post :sort, :to => "user_ranks#sort", :as => "sort"
+      end
+    end
   end
 
   # The priority is based upon order of creation:

@@ -8,6 +8,7 @@ en-US:
   admin_tab_lockers: "Lockers"
   admin_tab_membership_types: "Membership Types"
   admin_tab_lessons: "Lessons"
+  admin_tab_user_ranks: "UPS"
   msg_require_manager: "You must be a manager to access this page"
   roles:
     operator: "Operator"

@@ -1,0 +1,14 @@
+= styles_for :user_ranks
+
+- [:trainer, :consultant].each do |role|
+  - user_ranks = instance_variable_get("@#{role}_ranks")
+
+  - if user_ranks.size > 0
+    .title
+      %span{:id => "reoder_#{role}_ranks_title"} #{t :"#{role}_ranks"}
+      = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+
+    %ul.list{:id => "#{role}_ranks"}= render :partial => "admin/user_ranks/user_rank", :collection => user_ranks
+    %br
+    &= sortable_element("#{role}_ranks", :url => sort_admin_user_ranks_path(:type => role))
+

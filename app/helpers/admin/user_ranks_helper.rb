@@ -1,0 +1,2 @@
+module Admin::UserRanksHelper
+end
