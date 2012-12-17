@@ -31,6 +31,11 @@ User.class_eval do
     end
   end)
 
+  scope :text_search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
+    where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(phone) LIKE upper(:s) OR upper(mobile) LIKE upper(:s)', :s => "#{query}%")
+  }
+
   def shifts
     roles= (self.roles.to_set & Set.new([:operator, :consultant, :trainer]))
     default_shifts = Setting["default_working_shifts"]
