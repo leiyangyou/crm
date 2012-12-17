@@ -33,6 +33,7 @@ Til5::Application.routes.draw do
   match 'test' => 'home#test'
 
   match 'welcome' => 'welcome#index'
+  match 'welcome/:id' =>'welcome#show'
   resources :contracts, :only => [:index, :create, :show] do
     member do
       post :sign, :to => "contracts#sign"

@@ -1,0 +1,7 @@
+unless @account
+  page.call "no_account_found_for", params[:id]
+else
+  page << "update_account(#{@account.to_json(:include => :assigned_to)})"
+  page << "update_membership(#{@account.membership.to_json(:include => :type)})"
+  page << "update_lessons(#{@account.lessons.to_json})"
+end
