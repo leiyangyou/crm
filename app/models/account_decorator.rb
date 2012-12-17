@@ -1,3 +1,13 @@
+Account._validators.each do |key, value|
+  if key == :name
+    value.each do |validator|
+      if validator.is_a? ActiveRecord::Validations::UniquenessValidator
+        validator.attributes.delete(:name)
+      end
+    end
+  end
+end
+
 Account.class_eval do
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
