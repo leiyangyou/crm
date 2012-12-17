@@ -22,50 +22,50 @@
               .info
                 %dl
                   %dt= t(:name)
-                  %dd 杨磊
-                  %dt= t(:sex)
-                  %dd 男
+                  %dd.name 杨磊
+                  %dt= t(:gender)
+                  %dd.gender 男
                   %dt= t(:age)
-                  %dd 25
+                  %dd.age 25
                   %dt= t(:phone)
-                  %dd 13901234567
+                  %dd.phone 13901234567
           #membership-block
             .info
               %dl
                 %dt= t(:membership_consultor)
-                %dd 杜思雨
+                %dd.name 杜思雨
                 %dt= t(:has_order_today)
-                %dd 没有预约
+                %dd.has_order 没有预约
                 %dt= t(:membership_type)
-                %dd 免费卡
-                %dt= t(:membership_age)
-                %dd 3年186天
-                %dt= t(:membership_due_date)
-                %dd 2012/12/23
+                %dd.membership_type 免费卡
+                %dt= t(:membership_duration)
+                %dd.membership_duration 3年186天
+                %dt= t(:membership_due_on)
+                %dd.membership_due_on 2012/12/23
                 %dt= t(:days_to_due_date)
-                %dd= 12
-                %dt= t(:last_visite_time)
-                %dd 2012/09/22
-                %dt= t(:days_since_last_visite)
-                %dd 1
+                %dd.membership_remaining_days 12
+                %dt= t(:last_visit_time)
+                %dd.last_visit_time 2012/09/22
+                %dt= t(:days_since_last_visit)
+                %dd.days_since_last_visit 1
         #right
           #lesson-block
             .info
               %dl
-                %dt= t(:lesson_consultor)
-                %dd Ray
+                %dt= t(:lesson_consultant)
+                %dd.consultant_name Ray
                 %dt= t(:has_order_today)
                 %dd 是, 10:00AM - 11:00AM
                 %dt= t(:lesson_type)
-                %dd 标准100次
+                %dd.lesson_type 标准100次
 
                 %dt= t(:used_times)
-                %dd= 10
+                %dd.lesson_used_times= 10
                 %dt= t(:surplus_times)
-                %dd= 90
+                %dd.lesson_surplus_times= 90
 
                 %dt= t(:last_training_time)
-                %dd 2012/09/21
-                %dt= t(:last_training_couch)
-                %dd Ray
+                %dd.last_training_time 2012/09/21
+                %dt= t(:last_training_trainer)
+                %dd.last_training_trainer Ray
 
