@@ -296,9 +296,6 @@ lead_source:
   - :walk_in
   - :telephone_in
   - :referral
-  - :campaign
-  - :cold_call
-  - :web
   - :other
 
 # Opportunity Stage.

@@ -30,6 +30,8 @@ Canard::Abilities.for(:general_manager) do
   can :manage, Schedule
   can :manage, Locker
   can :manage, UserRank
+  can :manage, Lead
+  can :manage, Account
 
   can :manage, User do |user|
     user.roles.all? do |role|

@@ -25,11 +25,20 @@ User.class_eval do
     includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank, 999999) asc')
   }
 
-  scope :manageable_by, (lambda do |user|
+  scope :manageable_by, lambda { |user|
     unless user.admin?
       where("#{role_mask_column} & :role_mask > 0 or #{role_mask_column} = 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
     end
-  end)
+  }
+
+  scope :available_between, lambda { |start_time, end_time|
+    range = DailySchedule::TimeRange.new(start_time, end_time).compact
+    default_range = DailySchedule::Utils.compact(Setting[:default_working_time])
+    joins(:schedule)
+    .joins(sanitize_sql_array(["left join daily_schedules on schedules.id = daily_schedules.schedule_id and daily_schedules.date = ?", start_time.to_date]))
+    .where("(ifnull(daily_schedules.working_time, ?) & ? = ?)", default_range, range, range)
+    .where("((ifnull(daily_schedules.slots, 0) ^ ?) & ? = ?)", range, range, range)
+  }
 
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip

@@ -1,7 +1,7 @@
 LeadsController.class_eval do
-
   def convert
-    @users = User.consultants.except(@current_user).ranked
+    now = Time.now
+    @users = User.consultants.except(@current_user).ranked("consultant").available_between(now, now + 30.minutes)
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my.order('name')
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
