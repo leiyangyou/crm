@@ -1,0 +1,11 @@
+%html
+  %head
+    = javascript_include_tag :application
+    = javascript_include_tag 'widget/card_widget'
+    = yield :javascript_includes
+    %script{:type => "text/javascript"}
+      jQuery(function(){
+      new CardReader(jQuery('#test-input'));
+      });
+  %body
+    %input#test-input{:type => :text}

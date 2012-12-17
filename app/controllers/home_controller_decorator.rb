@@ -1,4 +1,5 @@
 HomeController.class_eval do
+  layout false, :only => [:test]
   def get_activities(options = {})
     options[:asset]    ||= activity_asset
     options[:event]    ||= activity_event
@@ -17,6 +18,9 @@ HomeController.class_eval do
       @duration = @current_user.pref[:activity_duration] || "two_days"
       @all_users = User.manageable_by(@current_user).order("first_name, last_name")
     end
+  end
+
+  def test
   end
 
   private

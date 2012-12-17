@@ -30,6 +30,8 @@ Til5::Application.routes.draw do
     end
   end
 
+  match 'test' => 'home#test'
+
   match 'welcome' => 'welcome#index'
   resources :contracts, :only => [:index, :create, :show] do
     member do
