@@ -1,3 +1,3 @@
-require File.join(File.dirname(__FILE__), "/crm/has_contract")
+#require File.join(File.dirname(__FILE__), "/crm/contractable")
 
-ActiveRecord::Base.send :include, CRM::HasContract if defined?(ActiveRecord)
+#ActiveRecord::Base.send :include, CRM::Contractable::ActiveRecord if defined?(ActiveRecord)

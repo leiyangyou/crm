@@ -21,13 +21,28 @@ User.class_eval do
 
   after_create :initialize_schedule
 
-  scope :ranked, includes(:user_rank).order('COALESCE(user_rank.rank, 999999) asc')
+  scope :ranked, lambda { |type|
+    includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank, 999999) asc')
+  }
 
   scope :manageable_by, (lambda do |user|
     unless user.admin?
-      where("#{role_mask_column} & :role_mask > 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
+      where("#{role_mask_column} & :role_mask > 0 or #{role_mask_column} = 0 or users.id = :user_id", { :role_mask => mask_for(*user.manageable_roles), :user_id => user.id})
     end
   end)
+
+  scope :text_search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
+    where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(phone) LIKE upper(:s) OR upper(mobile) LIKE upper(:s)', :s => "#{query}%")
+  }
+
+  def shifts
+    roles= (self.roles.to_set & Set.new([:operator, :consultant, :trainer]))
+    default_shifts = Setting["default_working_shifts"]
+    roles.reduce(default_shifts['default']) do |ax, r|
+      ax + default_shifts[r]
+    end.uniq
+  end
 
   def assign_roles_by(roles, manager)
     manageable_roles = manager == self ? manager.self_assignable_roles : manager.manageable_roles
@@ -77,11 +92,29 @@ User.class_eval do
 
   def performance options = {}
     assignments = self.assignments
-    assignments = assignments.where(["created_at >?", since]) if since = options[:since]
-    assignments = assignments.where(:assignable_type => type) if type = options[:type]
+    if since = options[:since]
+      assignments = assignments.where(["created_at >= ?", since])
+    end
+
+    if til = options[:til]
+      assignments = assignments.where(["created_at < ?", til])
+    end
+
+    if type = options[:type]
+      assignments = assignments.where(:assignable_type => type)
+    end
+
     assignments.reduce(0) do |result, assignment|
       result + assignment.assignable.try(:assignable_value){0}
     end
+  end
+
+  def trainer_performance options = {}
+    performance options.merge(:type => "Participation")
+  end
+
+  def consultant_performance options = {}
+    performance options.merge(:type => "Membership")
   end
 
   private

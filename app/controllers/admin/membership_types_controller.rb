@@ -1,5 +1,7 @@
-class Admin::MembershipTypesController < ApplicationController
+class Admin::MembershipTypesController < Admin::ApplicationController
   before_filter "set_current_tab('admin/membership_types')", :only => [ :index, :show ]
+  skip_before_filter :require_admin_user
+  before_filter "require_manager(MembershipType)"
 
   load_resource
 

@@ -1,6 +1,6 @@
 Admin::UsersController.class_eval do
   skip_before_filter :require_admin_user
-  before_filter :require_manager
+  before_filter "require_manager(User)"
   authorize_resource
 
   def create

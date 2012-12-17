@@ -22,6 +22,16 @@ module Assignable
   end
 
   module InstanceMethods
+    def assigned_by assigner
+      return if self.assigner
+      assigner_id = case assigner
+                      when User then assigner.id
+                      when Integer then assigner
+                    end
+      assignment = Assignment.new
+      assignment.user_id = assigner_id
+      self.assignment = assignment
+    end
     def assignable_value
       0
     end

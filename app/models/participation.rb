@@ -7,6 +7,10 @@ class Participation < ActiveRecord::Base
 
   validates_presence_of :account_id, :lesson_id, :trainer_id
 
+
+  def self.from_contract contract
+  end
+
   def assignable_value
     self.lesson.try(:price){0}
   end

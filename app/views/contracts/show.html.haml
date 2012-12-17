@@ -1,7 +1,7 @@
 %table
   %tr
     %th= t(:contract_type)
-    %td= @contract.contract_template.contract_type.name
+    %td= t("view.contract.contracts.#{@contract.type.underscore.split("/").last}")
   %tr
     %th= t(:content)
     %td= @contract.content.html_safe

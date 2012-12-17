@@ -1,22 +1,29 @@
 class ContractsController < ApplicationController
   before_filter :require_user
 
-  layout false
+  load_resource :account, :only => [:new, :create]
 
-  load_and_authorize_resource :find_by => :contract_id
+  layout false, :only => [:preview]
 
-  # GET /contract_types/type_id/contracts/new
+  # GET /accounts/:account_id/contracts/new?type=:contract_type
   def new
-    @callback = params[:callback]
-    @contract_type = ContractType.find_by_url(params[:contract_type_id])
-    if @contract_type
-      @template = @contract_type.contract_templates.master
-      if @template
-        @contract = Contract.new
-        @contract.contract_template = @template
-        @contract.parameters_attributes = params
-      end
+    @account = Account.find(params[:account_id])
+    unless params[:contract_type]
+      render :text => "contract_type is required"
     end
+    contract_class = params[:contract_type].constantize
+    @contract = contract_class.new
+    @contract.account = @account
+  end
+
+  # GET /contracts
+  def index
+    @contracts = Contract.paginate(:page => params[:page])
+  end
+
+  # GET /contracts/:contract_id
+  def show
+    @contract = Contract.find_by_contract_id params[:id]
   end
 
   # POST /contracts/preview
@@ -24,12 +31,23 @@ class ContractsController < ApplicationController
     @contract = Contract.new(params[:contract])
   end
 
+  #POST /contracts/:id/sign
+  def sign
+    @contract = Contract.find_by_contract_id(params[:id])
+    @contract.sign if @contract
+  end
+
   # POST /contracts
   def create
-    @contract = Contract.new(params[:contract])
-    @callback = params[:callback]
-    respond_with(@contract) do
-      @contract.save
+    contract_type = params[:contract].delete(:type)
+    contract_class = contract_type.constantize
+    @contract = contract_class.new params[:contract]
+    @contract.account = @account
+    binding.pry
+    if @contract.save
+      redirect_to contracts_path
+    else
+      render :new
     end
   end
 

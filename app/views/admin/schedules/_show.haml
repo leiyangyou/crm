@@ -1,0 +1,11 @@
+.title_tools
+  =link_to_inline( :edit_schedules, edit_admin_schedules_path, :text => t(:edit_schedules))
+
+.title
+  %span#edit_schedules_title #{t :weekly_schedules, :first_day => @dates.first, :last_day => @dates.last}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+
+.remote#edit_schedules{ hidden}
+
+.list#schedules
+  =render :partial => "admin/schedules/schedules"

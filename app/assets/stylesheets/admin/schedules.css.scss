@@ -19,13 +19,14 @@
 }
 
 #schedules {
+  padding-top: 0;
   table {
     width: 100%;
+    border-top: none;
     border-collapse: collapse;
     border-spacing: 0;
   }
   td, th {
-    border: 1px solid #ccc;
     text-align: center;
   }
 }

@@ -5,16 +5,18 @@ module CRMTask
         options = args.extract_options!
         date = extract_date_from_options options
         date = date.beginning_of_day
-        User.find_each do |user|
-          performance = user.performance :date => date
-          daily_performance = UserDailyPerformance.new :date =>date, :performance =>performance
-          daily_performance.user = user
-          daily_performance.save
-        end
 
-        User.all.sort_by(&:order).each_with_index do |user, index|
-          user_rank = UserRank.find_or_create_by_user_id( user.id, :rank => index)
-          user_rank.save
+        [:trainer, :consultant].each do |role|
+          User.with_any_role(role).find_each do |user|
+            UserDailyPerformance.find_or_create_by_user_id_and_date_and_type(
+              user.id,
+              date,
+              role.to_s
+            ).update_attributes!(
+              {:performance => (user.send :"#{role}_performance", :since => date, :til => date + 1.day)},
+               :without_protection => true
+            )
+          end
         end
       end
 

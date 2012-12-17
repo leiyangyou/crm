@@ -1,5 +1,7 @@
 class Admin::LockersController < Admin::ApplicationController
   before_filter "set_current_tab('admin/lockers')", :only => [ :index, :show ]
+  skip_before_filter :require_admin_user
+  before_filter "require_manager(Locker)"
 
   load_resource
 

@@ -1,41 +1,45 @@
-require File.join(File.dirname(__FILE__), "/contract/parameters_assignment")
-require File.join(File.dirname(__FILE__), "/contract/contract_parameter")
+module ContractDecorator
+end
 class Contract < ActiveRecord::Base
-  has_one :contract_suspension
-  belongs_to :contract_template
-  belongs_to :contract_type
-  #belongs_to :offeree, :polymorphic => true
-  #belongs_to :created_by,
-  attr_accessible :content, :contract_id, :end_at, :parameters, :signed_at, :started_at, :status, :parameters_attributes, :contract_template_id
+  def self.contracts
+    @contracts ||= [Contracts::MembershipTransferContract, Contracts::MembershipTransferContract, Contracts::MembershipSuspendContract, Contracts::LessonContract, Contracts::LockerContract]
+  end
+
+  include ContractDecorator::ContractFields
+  belongs_to :account
+  attr_accessible :content, :contract_id, :finished_on, :parameters, :signed_at, :started_on, :status, :parameters_attributes, :type
   sortable :by => ["signed_at DESC", "started_at DESC", "end_at DESC", "created_at DESC"], :default => "created_at DESC"
-  validates_presence_of :content, :contract_id, :end_at, :parameters, :signed_at, :started_at
-  validates_presence_of :contract_template_id
-  include ParametersAssignment
+  validates_presence_of :contract_id, :finished_on, :parameters, :started_on
   uses_user_permissions
   has_paper_trail
-  include ContractParameter
-  contract_parameter :started_at, :end_at
+  module FieldTypes
+    DATE = "date"
+    STRING = "string"
+    NUMBER = "number"
+    TEXT = "text"
+  end
 
-  serialize :parameters, Contract::Params
+  serialize :parameters, Hash
   attr_accessor :parameters_attributes
 
-  state_machine :status, :initial => :inactive do
-    event :activate do
-      transition :inactive => :active
-    end
-
-    event :expire do
-      transition :active => :due
+  state_machine :status, :initial => :ready do
+    event :sign do
+      transition :ready => :signed
     end
 
     event :terminate do
-      transition :active => :terminated
+      transition :signed => :terminated
+    end
+
+    before_transition :to => :signed do |contract|
+      contract.signed_at = Time.now
+      contract.signed
     end
   end
 
-  before_validation :attribute_signed_at, :on => :create
   before_validation :generate_contract_id, :on =>:create
-  before_validation :generate_content
+  after_validation :generate_content
+  after_validation :generate_abstract
 
   def self.generate_contract_id
     "C#{SecureRandom.hex(6).upcase}"
@@ -43,8 +47,7 @@ class Contract < ActiveRecord::Base
 
 
   def parameters_attributes= attributes
-    self.parameters = Contract::Params.new
-    assign_parameters( attributes)
+    assign_fields attributes
   end
 
   def to_param
@@ -59,20 +62,29 @@ class Contract < ActiveRecord::Base
     self.contract_id = contract_id
   end
 
+  def generate_content
+    template = ContractTemplate.find_by_contract_type(self.class.to_s)
+    self.content = template ? template.generate_contract(self) : "Connot find template for '#{self.class.to_s}'"
+  end
+
   def parameters
     parameters = read_attribute(:parameters)
     return parameters if parameters
-    parameters = Contract::Param.new
+    parameters = {}
     write_attribute(:parameters, paramters)
     parameters
   end
 
-  def generate_content
-    parameters = self.parameters.merge(self.contract_parameters)
-    self.content = self.contract_template.generate_contract parameters
+  def generate_abstract
+    self.abstract = ""
   end
 
-  def attribute_signed_at
-    self.signed_at = Time.now
+  def signed
   end
 end
+require File.join(File.dirname(__FILE__), "contracts/lesson_contract")
+require File.join(File.dirname(__FILE__), "contracts/locker_contract")
+require File.join(File.dirname(__FILE__), "contracts/membership_contract")
+require File.join(File.dirname(__FILE__), "contracts/membership_suspend_contract")
+require File.join(File.dirname(__FILE__), "contracts/membership_transfer_contract")
+

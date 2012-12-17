@@ -1,16 +1,11 @@
-.title
-  %span#schedule #{t :weekly_schedules, :first_day => @dates.first, :last_day => @dates.last}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-.list#schedules
-  %table
+%table
+  %tr
+    %th
+    - @dates.each do |date|
+      %th #{date.strftime("%a %m/%d")}
+  - @schedules.each do |user, schedules|
     %tr
-      %th
-      - @dates.each do |date|
-        %th #{date.strftime("%a %m/%d")}
-    - @schedules.each do |user, schedules|
-      %tr
-        %th= link_to "#{user.full_name} #{"#{user.mobile}" if user.mobile}", url_for(user)
-        - schedules.each do |schedule|
-          %td
-            = link_to schedule.readable_working_time, user_path(user, :date => schedule.date.strftime("%Y-%m-%d"))
+      %th= link_to "#{user.full_name} #{"(#{user.mobile})" if user.mobile}", url_for(user)
+      - schedules.each do |schedule|
+        %td
+          = link_to schedule.readable_working_time, user_path(user, :date => schedule.date.strftime("%Y-%m-%d"))

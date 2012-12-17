@@ -1,0 +1,14 @@
+.title_tools
+  = link_to_inline(:create_contract_template, new_admin_contract_template_path, :text => t("create_contract_template"))
+
+.title
+  %span#create_contract_template_title #{t("contract_templates")}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+.remote#create_contract_template{hidden}
+
+.list#contract_templates
+  - if @contract_templates.any?
+    = render :partial => "admin/contract_templates/contract_template", :collection => @contract_templates
+  - else
+    = render "shared/empty"
+
