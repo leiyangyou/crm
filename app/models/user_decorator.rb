@@ -45,6 +45,10 @@ User.class_eval do
     where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(phone) LIKE upper(:s) OR upper(mobile) LIKE upper(:s)', :s => "#{query}%")
   }
 
+  def available_between?(start_time, end_time)
+    schedule.daily_schedules.available?(DailySchedule::TimeRange(start_time, end_time))
+  end
+
   def shifts
     roles= (self.roles.to_set & Set.new([:operator, :consultant, :trainer]))
     default_shifts = Setting["default_working_shifts"]
@@ -78,13 +82,6 @@ User.class_eval do
 
   def weekly_schedules beginning_of_week
     self.schedule.weekly_schedules( beginning_of_week)
-  end
-
-  def available date, time_range
-    User.include(:schedule).select{|user|
-      daily_schedule = user.schedule.schedule_for(date)
-      daily_schedule.available? time_range
-    }
   end
 
   def add_appointment( appointment)

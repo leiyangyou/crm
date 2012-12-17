@@ -30,4 +30,22 @@ LeadsController.class_eval do
       end
     end
   end
+
+  protected
+  def load_consultants
+    @consultants = User.active.consultants.ranked("consultant")
+  end
+
+  def load_assignable_consultants
+    now = Time.now
+    available_consultants = @consultants.available_between(now, now + 30.minutes)
+
+    @assignable_consultants = if can?(:assign_any_consultants, Lead)
+      @consultants
+    elsif can?(:assign_available_consultants, Lead)
+      available_consultants
+    elsif can?(:assign_self, Lead)
+      [@current_user]
+    end
+  end
 end
