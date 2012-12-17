@@ -3,6 +3,10 @@ class Admin::ContractTemplatesController < Admin::ApplicationController
 
   load_resource :contract_template
   layout "contracts", :only => [:preview]
+
+  skip_before_filter :require_admin_user
+  before_filter "require_manager(ContractTemplate)"
+
   # GET /contract_types/1/contract_templates
   # AJAX
   def index

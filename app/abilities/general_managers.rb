@@ -26,6 +26,11 @@ Canard::Abilities.for(:general_manager) do
   can :manage, [:operator, :operator_manager, :consultant, :consultant_manager, :trainer, :trainer_manager, :general_manager]
   cannot :self_assign_role, :general_manager
 
+  can :manage, Lesson
+  can :manage, Schedule
+  can :manage, Locker
+  can :manage, UserRank
+
   can :manage, User do |user|
     user.roles.all? do |role|
       can? :manage, role

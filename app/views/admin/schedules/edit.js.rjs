@@ -1,0 +1,11 @@
+page.call "crm.flip_form", :edit_schedules
+
+unless params[:cancel].true?
+  page[:edit_schedules].replace_html :partial => "edit"
+  page.call "crm.set_title", :edit_schedules, t(:edit_weekly_schedules, :first_day => @dates.first, :last_day => @dates.last)
+  page[:schedules].hide
+else
+  page[:schedules].show
+  page.call "crm.set_title", :edit_schedules, t(:weekly_schedules, :first_day => @dates.first, :last_day => @dates.last)
+end
+

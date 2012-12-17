@@ -24,6 +24,9 @@ Canard::Abilities.for(:trainer_manager) do
 
   can :manage, :something
   can :manage, :trainer
+  can :manage, Lesson
+  can :manage, Schedule
+  can :manage, UserRank, :type => "trainer"
   cannot :self_assign_role, :trainer_manager
 
   can :manage, User do |user|

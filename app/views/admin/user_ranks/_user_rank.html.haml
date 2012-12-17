@@ -1,0 +1,40 @@
+%li.highlight.position[user_rank]
+  - user = user_rank.user
+
+  - if user.awaits_approval?
+    .strip.signed_up #{t :user_signed_up}
+  - elsif user.suspended?
+    .strip.suspended #{t :user_suspended}
+  - elsif user.admin?
+    .strip.admin #{t :user_admin}
+  - else
+    .strip.active #{t :active}
+
+  = avatar_for(user, :size => :medium, :width => 30, :height => 30 )
+
+  .indentfull
+    .tools
+    %span.black #{link_to(h(user.full_name), user)} (#{user.username})
+    %tt
+      = "- #{h(user.title)}" unless user.title.blank?
+      = " " + t(:at) + " " + h(user.company) unless user.company.blank?
+
+      %span.black= "|"
+      - if user.last_request_at && user.login_count > 0
+        = t('pluralize.login', user.login_count)
+        %span.black= "|"
+
+      - if user.roles.size > 0
+        = user.roles.map do |role| t(:"roles.#{role}") end.join(", ")
+        %span.black= "|"
+
+      - if user.awaits_approval?
+        %b.cool #{t :user_awaits_approval}
+      - elsif user.last_request_at
+        %span.cool #{t(:last_seen, time_ago_in_words(user.last_request_at))}
+      - else
+        %span.warn #{t :user_never_logged_in}
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = "#{t :rank}: #{user_rank.rank + 1}"
+      %span.black= "|"
+      = "#{t :weekly_performance}: #{user_rank.weekly_performance}"

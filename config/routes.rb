@@ -41,7 +41,11 @@ Til5::Application.routes.draw do
   end
 
   resources :users do
+    collection do
+      post :redraw, :to => "users#redraw"
+    end
     member do
+      post :redraw, :to => "users#redraw"
       post :add_appointment, :to =>"users#add_appointment"
       put :add_appointment, :to => "users#add_appointment"
       get :new_appointment, :to => "users#new_appointment"
@@ -57,9 +61,12 @@ Til5::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :schedules, :except => [:new, :edit, :update, :create, :destroy] do
-      get 'weekly/:year-:month-:day', :on => :collection, :action => :weekly, :as => :weekly
-      resources :slots
+    resources :schedules, :only => [:index] do
+      collection do
+        get ':year-:month-:day', :action => :show, :as => :show
+        put ':year-:month-:day', :action => :update, :as => :update
+        get ':year-:month-:day/edit', :action => :edit, :as => :edit
+      end
     end
 
     resources :membership_types, :only => [:index, :new, :edit, :update, :create, :destroy]
@@ -77,6 +84,12 @@ Til5::Application.routes.draw do
     resources :contract_templates do
       member do
         get :preview
+      end
+    end
+
+    resources :user_ranks, :only => [:index] do
+      collection do
+        post :sort, :to => "user_ranks#sort", :as => "sort"
       end
     end
   end

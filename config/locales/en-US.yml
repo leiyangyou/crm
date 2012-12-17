@@ -5,17 +5,22 @@ en-US:
   tab_staff: "Staff"
   admin_tab_schedules: "Schedules"
   admin_tab_contract_types: "Contract Types"
+  admin_tab_lockers: "Lockers"
+  admin_tab_membership_types: "Membership Types"
+  admin_tab_lessons: "Lessons"
+  admin_tab_user_ranks: "UPS"
   msg_require_manager: "You must be a manager to access this page"
   roles:
     operator: "Operator"
     operator_manager: "Operator Manager"
-    consultant: "Consultant"
-    consultant_manager: "Consultant Manager"
     trainer: "Personal Trainer"
     trainer_manager: "Personal Trainer Manager"
     general_manager: "General Manager"
+    consultant: 'Member Consultant'
+    consultant_manager: 'Member Consultant Manager'
     admin: "Admin"
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
+  edit_weekly_schedules: "Edit schedules between %{first_day} and %{last_day}"
   activerecord:
     errors:
       models:
@@ -24,8 +29,18 @@ en-US:
             base:
               user:
                 error:
-                  unavailable: "Unavailable during %{time}"
+                  unavailable: "Only available during %{working_time}"
                   not_working: "Not working during %{time}"
+        daily_schedule:
+          attributes:
+            base:
+              error:
+                conflict_with_appointments: "Schedule for %{user} conflicts with appointment(s) %{appointments} on %{date}"
+        lessons:
+          attributes:
+            trainer:
+              error:
+                no_trainer: "A valid trainer must be specified"
   view:
     contract:
       contracts:
@@ -46,6 +61,7 @@ en-US:
     lesson:
       price: "Price"
       times: "Times"
+      trainer: "Personal Trainer"
     welcome:
       title: "OZone Swap Card"
   create_contract_type: "Create Contract Type"
@@ -55,3 +71,16 @@ en-US:
   add_template: "Add Template"
   contract_templates: "Contract Templates"
   create_contract_template: "Create Contract Template"
+  walk_in: "Walk In"
+  telephone_in: "Telephone In"
+  not_working: "Not Working"
+  appointments: "Appointments"
+  select_week: "Select Week"
+  edit_schedules: "Edit Schedules"
+  save_schedules: "Save Schedules"
+  lessons: "Lessons"
+  lesson_small: "lesson"
+  create_lesson: "Create lesson"
+  price: "Price"
+  times: "Times"
+  trainer: "Personal Trainer"

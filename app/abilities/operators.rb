@@ -22,4 +22,5 @@ Canard::Abilities.for(:operator) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+  can :assign, :locker
 end

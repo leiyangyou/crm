@@ -15,3 +15,7 @@
       %td
         .label.req= t(:times) + ":"
         = f.text_field :times
+    %tr
+      %td
+        .label.req= t(:trainer) + ":"
+        = f.collection_select :trainer_id, User.trainers, :id, :full_name

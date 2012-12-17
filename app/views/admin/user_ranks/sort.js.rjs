@@ -1,0 +1,3 @@
+role = params[:type]
+page[:"#{role}_ranks"].replace_html :partial => "user_rank", :collection => instance_variable_get("@#{role}_ranks")
+page << sortable_element_js("#{role}_ranks", :url => sort_admin_user_ranks_path(:type => role))

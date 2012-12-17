@@ -26,6 +26,9 @@ Canard::Abilities.for(:operator_manager) do
   can :manage, :operator
   cannot :self_assign_role, :operator_manager
 
+  can :manage, Schedule
+  can :manage, Locker
+
   can :manage, User do |user|
     user.roles.all? do |role|
       can? :manage, role
