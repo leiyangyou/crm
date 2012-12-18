@@ -27,6 +27,7 @@ Canard::Abilities.for(:user) do
   can :create, :all
   can :manage, entities, :access => 'Public'
   can :manage, entities + [Task], :user_id => user.id
+  can :manage, entities + [Task], :assigned_to => user.id
 
   entities.each do |klass|
     permissions = user.permissions.where(:asset_type => klass.name)

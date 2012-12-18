@@ -44,9 +44,17 @@ User.class_eval do
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(phone) LIKE upper(:s) OR upper(mobile) LIKE upper(:s)', :s => "#{query}%")
   }
+  scope :active, lambda {
+    where("suspended_at is null")
+  }
+
+  def full_description
+    now = Time.now
+    "#{full_name}#{' - ' + I18n.t(:not_available) unless available_between?(now, now + 30.minutes)}"
+  end
 
   def available_between?(start_time, end_time)
-    schedule.daily_schedules.available?(DailySchedule::TimeRange(start_time, end_time))
+    schedule.schedule_for_today.working_and_available?(DailySchedule::TimeRange.new(start_time, end_time))
   end
 
   def shifts

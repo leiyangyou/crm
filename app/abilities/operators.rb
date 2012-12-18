@@ -22,5 +22,9 @@ Canard::Abilities.for(:operator) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
-  can :assign, :locker
+  can :index, Lead
+  cannot :reassign_consultant, Lead
+  cannot :convert, Lead
+  cannot :reject, Lead
+  cannot :destroy, Lead
 end

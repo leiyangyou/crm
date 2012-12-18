@@ -84,3 +84,6 @@ en-US:
   price: "Price"
   times: "Times"
   trainer: "Personal Trainer"
+  not_available: "unavailable"
+  beijing: "Beijing"
+  china: "China"

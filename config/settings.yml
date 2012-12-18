@@ -289,8 +289,17 @@ lead_status:
 lead_status_color:
   :new       : Silver
   :contacted : Turquoise
+  :delayed : Salmon
   :converted : Lime
   :rejected  : OrangeRed
+
+account_status_color:
+  :pending : Silver
+  :suspended : Orchid
+  :active : Lime
+  :delayed : Salmon
+  :expired : OrangeRed
+  :transfered : PaleGoldenRod
 
 lead_source:
   - :walk_in
@@ -366,3 +375,6 @@ default_working_shifts:
   :consultant : ["9:00-17:00", "9:00-14:00", "13:00-18:00"]
   :trainer : ["8:00-12:00", "12:00-18:00", "18:00-24:00"]
   :default: ["8:00-24:00"]
+
+club_name:
+ "Ozone"

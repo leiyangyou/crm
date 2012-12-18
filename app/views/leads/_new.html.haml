@@ -7,6 +7,8 @@
 
   = render "leads/top_section",    :f => f
   = render "leads/status",         :f => f
+  = render "leads/contact",         :f => f
+  = render "leads/permissions",    :f => f, :edit => true
 
   .buttonbar
     - if Setting.compound_address

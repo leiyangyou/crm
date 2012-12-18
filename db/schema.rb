@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217044327) do
+ActiveRecord::Schema.define(:version => 20121218192418) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -32,23 +32,38 @@ ActiveRecord::Schema.define(:version => 20121217044327) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",             :limit => 64, :default => "",       :null => false
-    t.string   "access",           :limit => 8,  :default => "Public"
-    t.string   "website",          :limit => 64
-    t.string   "toll_free_phone",  :limit => 32
-    t.string   "phone",            :limit => 32
-    t.string   "fax",              :limit => 32
+    t.string   "name",                :limit => 64, :default => "",       :null => false
+    t.string   "access",              :limit => 8,  :default => "Public"
+    t.string   "website",             :limit => 64
+    t.string   "toll_free_phone",     :limit => 32
+    t.string   "phone",               :limit => 32
+    t.string   "fax",                 :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.string   "email",            :limit => 64
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.string   "email",               :limit => 64
     t.string   "background_info"
-    t.integer  "rating",                         :default => 0,        :null => false
-    t.string   "category",         :limit => 32
+    t.integer  "rating",                            :default => 0,        :null => false
+    t.string   "category",            :limit => 32
     t.text     "subscribed_users"
+    t.integer  "trainer_id"
+    t.integer  "gender"
+    t.string   "nationality"
+    t.string   "identification"
+    t.date     "dob"
+    t.string   "work_phone"
+    t.string   "emergency_contact_1"
+    t.string   "emergency_contact_2"
+    t.string   "card_number"
+    t.string   "company"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "zipcode"
+    t.integer  "lead_id"
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"
+  add_index "accounts", ["lead_id"], :name => "index_accounts_on_lead_id"
   add_index "accounts", ["user_id", "name", "deleted_at"], :name => "index_accounts_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "activities", :force => true do |t|

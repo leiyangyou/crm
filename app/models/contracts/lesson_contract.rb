@@ -1,9 +1,8 @@
 module Contracts
   class LessonContract < Contract
-    parameter_fields do
-      number :lesson_id, :required => true
-      number :trainer_id, :required => true
-      number :assigner_id, :required => true
+    serialize_attributes do
+      integer :lesson_id, :required => true
+      integer :trainer_id, :required => true
     end
 
     def lesson_name
@@ -22,9 +21,6 @@ module Contracts
       @trainer ||= User.find_by_id(self.trainer_id)
     end
 
-    def assigner
-      @assigner ||= User.find_by_id(self.assigner_id)
-    end
 
     def generate_abstract
       self.abstract = [lesson_name, trainer_name].compact.join(",")
@@ -39,7 +35,7 @@ module Contracts
       participation.lesson = lesson
       participation.times = lesson.times
       participation.trainer = trainer
-      participation.assigned_by self.assigner
+      participation.assigned_by self.trainer
       self.save if participation.save
     end
   end

@@ -1,7 +1,7 @@
 module Contracts
   class MembershipTransferContract < Contract
-    parameter_fields do
-      number :target_id, :required => true
+    serialize_attributes do
+      integer :target_id, :required => true
     end
 
     def target

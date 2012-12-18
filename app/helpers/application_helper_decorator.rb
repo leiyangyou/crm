@@ -21,4 +21,12 @@ ApplicationHelper.class_eval do
     end
     content_tag(:p, nil, :id => "flash", :style => "display:none;")
   end
+
+  #----------------------------------------------------------------------------
+  def non_collapsible_subtitle(id, text = id.to_s.split("_").last.capitalize)
+    content_tag("div",
+                "<small>#{ hidden ? "&#9658;" : "&#9660;" }</small>&nbsp;#{text}".html_safe,
+                :class => 'subtitle'
+    )
+  end
 end

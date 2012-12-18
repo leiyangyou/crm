@@ -1,5 +1,4 @@
 class Membership < ActiveRecord::Base
-  include Assignable
   belongs_to :account
   belongs_to :consultant, :class_name => 'User'
   belongs_to :type, :class_name => "MembershipType", :foreign_key => "type_id"
@@ -15,7 +14,7 @@ class Membership < ActiveRecord::Base
 
   after_find :check_expiration
 
-  scope :transfer_acceptable, where(:status => ['expired', 'transferred', 'expired'])
+  scope :transfer_acceptable, where(:status => ['expired', 'transferred'])
 
   state_machine :status, :initial => :expired do
     event :state_transfer do
@@ -35,15 +34,6 @@ class Membership < ActiveRecord::Base
     end
 
     after_transition :active => any, :do => :accumulate_membership_duration
-  end
-
-  def _transfer params
-    target_membership = Membership.find(params[:membership_state][:parameters_attributes][:target_id])
-    self.update_attributes(params[:membership])
-    self.state_transfer
-    target_membership.accept_transfer(self)
-    self.finished_on = Date.today
-    self.new_membership_state(params[:membership_state])
   end
 
   def transfer contract
@@ -89,13 +79,10 @@ class Membership < ActiveRecord::Base
     self.state_expire
   end
 
-  def self.create_or_select_for(account, params)
+  def self.create_for(account, params)
     if params
       membership = account.membership
       if membership
-        if membership.should_accumulate_membership_duration?
-          membership.duration += membership.type.duration if membership.type #accumulate the previous membership
-        end
         membership.update_attributes(params)
       else
         membership = Membership.new(params)
@@ -137,9 +124,6 @@ class Membership < ActiveRecord::Base
     %w{active suspended transferred}.include?(self.status)
   end
 
-  def assignable_value
-    self.type.try(:price){0}
-  end
 
   protected
   def new_membership_state params = {}

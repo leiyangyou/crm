@@ -1,8 +1,8 @@
 module Contracts
   class MembershipSuspendContract < Contract
-    parameter_fields do
-      date :started_on, :required => true
-      date :finished_on, :required => true
+    serialize_attributes do
+      time :started_on, :required => true
+      time :finished_on, :required => true
     end
 
     def signed

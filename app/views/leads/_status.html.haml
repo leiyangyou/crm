@@ -10,20 +10,19 @@
       %tr
         %td
           .label.top #{t :assigned_to}:
-          = user_select(:lead)
+          - if !edit || can?(:reassign_consultant, @lead)
+            = scoped_users_select(:lead, @assignable_consultants)
+          - else
+            .value= @lead.assignee.full_name
         %td= spacer
         %td
           .label.top #{t :status}:
-          = f.select :status, lead_status_codes_for(@lead), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
+          - if @lead.status != 'converted'
+            = f.select :status, lead_status_codes_for(@lead), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
+          - else
+            .value{:style => 'padding-top:6px'} #{@lead.status}
+
         %td= spacer
         %td
           .label.top #{t :rating}:
           = rating_select "lead[rating]", { :id => :lead_rating, :selected => @lead.rating, :style => "width:160px" }
-      %tr
-        %td
-          .label #{t :source}:
-          - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
-            = f.select :source, Setting.unroll(:lead_source), { :selected => :campaign }, { :style => "width:160px;", :disabled => true }
-            = hidden_field_tag "lead[source]", "campaign"
-          - else
-            = f.select :source, Setting.unroll(:lead_source), { :selected => (@lead.source || "other").to_sym }, { :style => "width:160px" }

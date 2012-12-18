@@ -1,9 +1,9 @@
 module Contracts
   class LockerContract < Contract
-    parameter_fields do
+    serialize_attributes do
       string :identifier, :required => true
-      date :start_date, :required => true
-      date :due_date, :required => true
+      time :start_date, :required => true
+      time :due_date, :required => true
     end
 
     def locker

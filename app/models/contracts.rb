@@ -1,0 +1,4 @@
+module Contracts
+
+end
+

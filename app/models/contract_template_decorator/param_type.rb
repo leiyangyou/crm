@@ -103,4 +103,20 @@ class ContractTemplateDecorator::ParamType
       /^[1-9][0-9]*$/ =~ value
     end
   end
+
+  class DecimalType < ContractTemplateDecorator::ParamType
+    name :decimal
+
+    def convert string_value, default_value=BigDecimal.new(0)
+      begin
+        BigDecimal.new(string_value)
+      rescue Exception
+        default_value
+      end
+    end
+
+    def validate value
+      /^[1-9][0-9]*(\.[0-9]*)?$/ =~ value
+    end
+  end
 end

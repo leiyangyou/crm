@@ -368,7 +368,7 @@ zh-CN:
   #----------------------------------------------------------------------------
   convert: 转换
   convert_lead: 转换线索
-  convert_lead_permissions_intro: 联系人权限将会从被转换的线索中复制。以后可修改。
+  convert_lead_permissions_intro: 会员权限将会从被转换的线索中复制。以后可修改。
   convert_lead_text: 转换线索 %{value} 将会使其变成一个与现有或新建账号关联的联系人，线索状态自动设为已转换。
   create_lead: 创建线索
   create_opp_for_contact: 可以为 %{value} 联系人创建一个机会，需指定名称、当前阶段、预计结束日期、销售可能性、线索数量、折扣。

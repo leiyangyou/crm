@@ -1,0 +1,24 @@
+- edit ||= false
+= non_collapsible_subtitle :account_basic_info,  t(:basic_info)
+
+.section
+  %small#account_basic_info
+    = t(:intro, t(:account_basic_info_small)) unless edit
+  #account_basic_info
+    %table
+      %tr
+        %td
+          .label.req= t(:gender) +":"
+          = f.select :gender, [[t(:male), 0], [t(:female), 1]]
+        %td=spacer
+        %td
+          .label=t(:dob)+":"
+          = f.text_field :dob, :autocomplete => 'off'
+      %tr
+        %td
+          .label= t(:nationality)
+          = f.text_field :nationality
+        %td=spacer
+        %td
+          .label= t(:identification)
+          = f.text_field :identification

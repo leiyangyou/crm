@@ -21,5 +21,8 @@ Canard::Abilities.for(:trainer) do
   #   can :update, Article, :published => true
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-
+  cannot :manage, Lead
+  cannot :convert, Lead
+  cannot :reject, Lead
+  cannot :destroy, Lead
 end

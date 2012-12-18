@@ -375,7 +375,7 @@ en-US:
   #----------------------------------------------------------------------------
   convert: Convert
   convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  convert_lead_permissions_intro: Account permissions will be copied from the lead being converted. You can change contact permissions later.
   convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   create_lead: Create Lead
   create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.

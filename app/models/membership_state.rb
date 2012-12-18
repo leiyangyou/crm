@@ -1,12 +1,14 @@
 module MembershipStateDecorator
 end
+
 class MembershipState < ActiveRecord::Base
   include MembershipStateDecorator::ParametersHelper
+  include Assignable
   module TYPES
     ACTIVE = "active"
     SUSPENDED = "suspended"
     TRANSFERRED = "transferred"
-    TERMINATED = "terminate"
+    TERMINATED = "terminated"
     ALL = [ACTIVE, SUSPENDED, TRANSFERRED, TERMINATED]
   end
   belongs_to :membership
@@ -35,6 +37,14 @@ class MembershipState < ActiveRecord::Base
 
   type TYPES::TERMINATED do
     parameter :reason, String
+  end
+
+  def assignable_value
+    if self.respond_to?(:type_id)
+      MembershipType.find_by_id(self.type_id).try(:price) || 0
+    else
+      0
+    end
   end
 
   def parameters_attributes= new_attributes

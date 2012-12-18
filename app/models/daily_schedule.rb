@@ -21,6 +21,10 @@ class DailySchedule < ActiveRecord::Base
     (compacted_time_range ^ self.slots) & compacted_time_range == compacted_time_range
   end
 
+  def working_and_available? time_range
+    working?(time_range) && available?(time_range)
+  end
+
   def take time_range
     self.slots = self.slots | time_range.compact
     self.save

@@ -21,5 +21,8 @@ Canard::Abilities.for(:consultant) do
   #   can :update, Article, :published => true
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-
+  cannot :assign_any_consultant, Lead
+  cannot :reassign_consultant, Lead
+  cannot :destroy, Lead
+  cannot :new, Lead
 end

@@ -13,6 +13,14 @@
         %td
           .label #{t :gender}:
           = f.select :gender, [[t(:male), 0], [t(:female), 1]]
+        %td= spacer
+        %td
+          .label #{t :source}:
+          - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
+            = f.select :source, Setting.unroll(:lead_source), { :selected => :campaign }, { :style => "width:160px;", :disabled => true }
+            = hidden_field_tag "lead[source]", "campaign"
+          - else
+            = f.select :source, Setting.unroll(:lead_source), { :selected => (@lead.source || "other").to_sym }, { :style => "width:160px" }
       %tr
         %td
           .label #{t :email}:

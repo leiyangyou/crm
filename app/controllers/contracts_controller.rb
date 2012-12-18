@@ -43,7 +43,6 @@ class ContractsController < ApplicationController
     contract_class = contract_type.constantize
     @contract = contract_class.new params[:contract]
     @contract.account = @account
-    binding.pry
     if @contract.save
       redirect_to contracts_path
     else

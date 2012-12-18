@@ -20,6 +20,9 @@ Til5::Application.routes.draw do
       get :participate, :as => :new_participation, :to => "accounts#new_participation"
       put :participate, :as => :participate, :to => "accounts#participate"
     end
+    collection do
+      get :options, :to => "accounts#options"
+    end
     resources :contracts, :only => [:new, :create]
   end
 

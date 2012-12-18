@@ -5,6 +5,7 @@
     %title= t(:crm_admin_page)
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
+    = stylesheet_link_tag "overrides"
     = stylesheet_link_tag :print, :media => 'print'
     = yield :stylesheet_links
     %style= yield :styles

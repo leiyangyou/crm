@@ -1,11 +1,25 @@
 LeadsController.class_eval do
+  before_filter :load_consultants, :only => [:new, :edit, :convert, :promote]
+  before_filter :load_assignable_consultants, :only => [:new, :edit, :convert, :promote]
+
   def convert
-    now = Time.now
-    @users = User.consultants.except(@current_user).ranked("consultant").available_between(now, now + 30.minutes)
-    @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-    @accounts = Account.my.order('name')
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
-    @membership = Membership.new
+    @account = Account.new(
+      :user => @current_user,
+      :name => @lead.full_name,
+      :access => "Lead",
+      :assigned_to => @lead.assigned_to
+    )
+
+    address = @lead.business_address
+
+    @contract = Contracts::MembershipContract.new(
+      :gender => @lead.gender,
+      :phone => @lead.mobile,
+      :email => @lead.email,
+      :street1 => address.street1,
+      :street2 => address.street2,
+      :zipcode => address.zipcode
+    )
 
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Lead.my.find_by_id($1) || $1.to_i
@@ -15,36 +29,35 @@ LeadsController.class_eval do
   end
 
   def promote
-    @users = User.except(@current_user)
-    @account, @opportunity, @contact, @membership= @lead.promote(params)
-    @accounts = Account.my.order('name')
-    @stage = Setting.unroll(:opportunity_stage)
+    error_free = false
+
+    ActiveRecord::Base.transaction do
+      @account, @contract= @lead.promote(params)
+      error_free = @account.errors.empty? && @contract.errors.empty?
+      raise ActiveRecord::Rollback unless error_free
+    end
 
     respond_with(@lead) do |format|
-      if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
+      if error_free
         @lead.convert
         update_sidebar
       else
-        format.json { render :json => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
+        errors = @account.errors.to_a + @contract.errors.to_a
+        format.json { render :json => errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => errors, :status => :unprocessable_entity }
       end
     end
   end
 
   protected
   def load_consultants
-    @consultants = User.active.consultants.ranked("consultant")
+    @consultants ||= User.active.consultants.ranked("consultant")
   end
 
   def load_assignable_consultants
-    now = Time.now
-    available_consultants = @consultants.available_between(now, now + 30.minutes)
-
-    @assignable_consultants = if can?(:assign_any_consultants, Lead)
+    @assignable_consultants ||= if can?(:assign_any_consultant, @lead)
       @consultants
-    elsif can?(:assign_available_consultants, Lead)
-      available_consultants
-    elsif can?(:assign_self, Lead)
+    elsif can?(:assign_self, @lead)
       [@current_user]
     end
   end

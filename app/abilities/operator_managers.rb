@@ -30,6 +30,7 @@ Canard::Abilities.for(:operator_manager) do
   can :manage, Locker
   can :manage, Lead
   can :manage, Account
+  cannot :convert, Lead
 
   can :manage, User do |user|
     user.roles.all? do |role|
