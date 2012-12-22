@@ -2,7 +2,15 @@
   %head
     = stylesheet_link_tag :welcome
     = javascript_include_tag :application
+    = javascript_include_tag :moment
     = javascript_include_tag :welcome
+  %script{type: "text/javascript"}
+    (function($){
+    $(function(){
+    $('#membership-block').slideUp();
+    $('#lesson-block').slideUp();
+    })})(jQuery)
+
   %body
     #container
       #header
@@ -10,7 +18,7 @@
         %span.system-name Swap Card
         #member-id
       #top
-        %ul#recommend-actions
+        -#%ul#recommend-actions
           %li.first= "Member fee discount"
           %li= "Course fee discount"
       #content
@@ -21,53 +29,53 @@
                 = image_tag 'default_avatar_128_128.jpg', :width => 128, :height => 128
               .info
                 %dl
-                  %dt= t(:name)
-                  %dd.name 杨磊
-                  %dt= t(:gender)
-                  %dd.gender 男
-                  %dt= t(:age)
-                  %dd.age 25
-                  %dt= t(:phone)
-                  %dd.phone 13901234567
+                  %dt= t(:"view.welcome.name")
+                  %dd.name Nobody
+                  %dt= t(:"view.welcome.gender")
+                  %dd.gender None
+                  %dt= t(:"view.welcome.age")
+                  %dd.age 18
+                  %dt= t(:"view.welcome.phone")
+                  %dd.phone 1380000000
           #membership-block
             .info
               %dl
-                %dt= t(:membership_status)
+                %dt= t(:"view.welcome.membership_status")
                 %dd.membership_status 正常
-                %dt= t(:membership_consultant)
+                %dt= t(:"view.welcome.membership_consultant")
                 %dd.membership_consultant 杜思雨
-                /%dt= t(:has_order_today)
+                /%dt= t(:"view.welcome.has_order_today")
                 /%dd.has_order 没有预约
-                %dt= t(:membership_type)
+                %dt= t(:"view.welcome.membership_type")
                 %dd.membership_type 免费卡
-                %dt= t(:membership_duration)
+                %dt= t(:"view.welcome.membership_duration")
                 %dd.membership_duration 3年186天
-                %dt= t(:membership_finished_on)
+                %dt= t(:"view.welcome.membership_finished_on")
                 %dd.membership_finished_on 2012/12/23
-                %dt= t(:days_to_due_date)
-                %dd.membership_remaining_days 12
-                %dt= t(:last_visit_time)
+                %dt= t(:"view.welcome.days_before_due_date")
+                %dd.days_before_due_date 12
+                %dt= t(:"view.welcome.last_visit_time")
                 %dd.last_visit_time 2012/09/22
-                %dt= t(:days_since_last_visit)
+                %dt= t(:"view.welcome.days_since_last_visit")
                 %dd.days_since_last_visit 1
         #right
           #lesson-block
             .info
               %dl
-                %dt= t(:lesson_trainer)
+                %dt= t(:"view.welcome.lesson_trainer")
                 %dd.trainer_name Ray
-                /%dt= t(:has_order_today)
+                /%dt= t(:"view.welcome.has_order_today)
                 /%dd 是, 10:00AM - 11:00AM
-                %dt= t(:lesson_type)
+                %dt= t(:"view.welcome.lesson_type")
                 %dd.lesson_type 标准100次
 
-                %dt= t(:used_times)
+                %dt= t(:"view.welcome.used_times")
                 %dd.lesson_used_times= 10
-                %dt= t(:surplus_times)
+                %dt= t(:"view.welcome.surplus_times")
                 %dd.lesson_surplus_times= 90
 
-                /%dt= t(:last_training_time)
+                /%dt= t(:"view.welcome.last_training_time)
                 /%dd.last_training_time 2012/09/21
-                /%dt= t(:last_training_trainer)
+                /%dt= t(:"view.welcome.last_training_trainer)
                 /%dd.last_training_trainer Ray
 

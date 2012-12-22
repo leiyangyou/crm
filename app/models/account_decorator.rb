@@ -22,6 +22,12 @@ Account.class_eval do
 
   has_many :contracts
 
+  has_many :account_visits do
+    def last
+      where(['`created_at` < ?', Time.now.beginning_of_day]).order('created_at DESC').first
+    end
+  end
+
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
   after_create do
@@ -67,6 +73,10 @@ Account.class_eval do
 
   def create_or_update_membership(params = {})
     Membership.create_for(self, params)
+  end
+
+  def last_visit_time
+    self.account_visits.last.try(:created_at)
   end
 
 end

@@ -49,18 +49,39 @@
       $user_info_block.find('.phone').html(account.phone || "&nbsp;")
       $user_info_block.find('.gender').html(account.gender || "&nbsp;")
       $user_info_block.find('.phone').html(account.phone || "&nbsp;")
+
+      $membership_block =  $('#membership-block')
+      last_visit_time = account.last_visit_time
+      days_since_last_visit = 0
+      if last_visit_time
+        m = moment(account.last_visit_time)
+        last_visit_time = m.format("YYYY/MM/DD")
+        days_since_last_visit = moment.duration(moment().milliseconds() - m.milliseconds()).days()
+      else
+        last_visit_time = "&nbsp;"
+      $membership_block.find('.last_visit_time').html(last_visit_time)
+      $membership_block.find('.days_since_last_visit').html(days_since_last_visit)
+
       console.log(account)
     update_membership = (membership)->
       console.log(membership)
       $membership_block =  $('#membership-block')
-      $membership_block.attr('class', membership.status)
-      $membership_block.find('.membership_status').html(membership.status)
-      $membership_block.find('.membership_duration').html(membership.duration)
+      $membership_block.slideUp()
+      $membership_block.attr('class', membership.status || "&nbps;")
+      $membership_block.find('.membership_status').html(membership.status || "&nbsp;")
+      $membership_block.find('.membership_duration').html(membership.duration || "&nbsp;")
       $membership_block.find('.membership_consultant').html((membership.consultant && membership.consultant.name) || "&nbsp;")
+      finished_on = "&nbsp;"
+      days_before_due_date = 0
       if membership.type
-        $membership_block.find('.membership_finished_on', membership.finished_on)
-      else
-        $membership_block.find('.membership_type').html('&nbsp;')
+        if membership.finished_on
+          m = moment(membership.finished_on)
+          finished_on = m.format("YYYY/MM/DD")
+          days_before_due_date = moment.duration(moment().milliseconds() - m.milliseconds).days()
+      $membership_block.find('.membership_type').html(membership.type || '&nbsp;')
+      $membership_block.find('.membership_finished_on').html(finished_on)
+      $membership_block.find('.days_before_due_date').html(days_before_due_date)
+      $membership_block.slideDown()
     update_lessons = (participations) ->
       console.log(participations)
       $lesson_block = $('#lesson-block')
