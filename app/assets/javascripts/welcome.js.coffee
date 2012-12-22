@@ -45,13 +45,34 @@
       alert("cannot find account for '#{account_id}'")
     update_account = (account)->
       $user_info_block = $('#user-info-block')
-      $user_info_block.find('.name').html(account.name)
-      $user_info_block.find('.phone').html(account.phone)
+      $user_info_block.find('.name').html(account.name || "&nbsp;")
+      $user_info_block.find('.phone').html(account.phone || "&nbsp;")
+      $user_info_block.find('.gender').html(account.gender || "&nbsp;")
+      $user_info_block.find('.phone').html(account.phone || "&nbsp;")
       console.log(account)
     update_membership = (membership)->
       console.log(membership)
-    update_lessons = (lessons) ->
-      console.log(lessons)
+      $membership_block =  $('#membership-block')
+      $membership_block.attr('class', membership.status)
+      $membership_block.find('.membership_status').html(membership.status)
+      $membership_block.find('.membership_duration').html(membership.duration)
+      $membership_block.find('.membership_consultant').html((membership.consultant && membership.consultant.name) || "&nbsp;")
+      if membership.type
+        $membership_block.find('.membership_finished_on', membership.finished_on)
+      else
+        $membership_block.find('.membership_type').html('&nbsp;')
+    update_lessons = (participations) ->
+      console.log(participations)
+      $lesson_block = $('#lesson-block')
+      $lesson_block.slideUp()
+      if participations && participations.size() > 0
+        participation = participations[0]
+        if participation.trainer
+          $lesson_block.find('.trainer_name').html(participation.trainer.username)
+        $lesson_block.find('.lesson_type').html(participation.lesson.name)
+        $lesson_block.find('.userd_times').html(participation.lesson.times - participations.times)
+        $lesson_block.find('.surplus_times').html(participation.times)
+        $lesson_block.slideDown()
     $.extend(exporter, {
       no_account_found_for: no_account_found_for
       update_account: update_account
