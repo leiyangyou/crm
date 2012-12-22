@@ -2,8 +2,7 @@
   *display: inline; /* IE7 inline-block hack */
   *zoom: 1;
   display: inline-block;
-  position: relative;
-  left: -16px;
+  position: absolute;
   width: 16px;
   height: 16px;
   background-image: image-url('app_window_black_icon.png');

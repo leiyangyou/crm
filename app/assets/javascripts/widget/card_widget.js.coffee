@@ -2,9 +2,14 @@
   class CardReaderTrigger
     constructor: (target)->
       @$target = $(target)
+      position = @$target.position()
+      margin_left = parseInt(@$target.css('margin-left'))
+      margin_top = parseInt(@$target.css('margin-top'))
+      width = parseInt(@$target.outerWidth())
       @$icon = $('<a class="card-reader-icon"></a>')
       @$icon.click(@iconClicked)
       @$target.after(@$icon.hide())
+      @$icon.css({top: position.top + margin_top, left: position.left + width - 16 - margin_left})
       @shown = false
     iconClicked: (event) =>
       @$target.trigger('card_reader.icon_clicked', @$target)
@@ -82,7 +87,7 @@
     keydown: (event)=>
       which = event.which
       if which == 8 || which == 27 #backspace/or esc
-        CardReaderDialog.clear()
+        CardReaderDialog.instance.clear()
       else if which == 13 #enter
         CardReaderDialog.instance.ok()
       else if CardReader.isValidInput(which)

@@ -1,3 +1,9 @@
+= content_for :after_head do
+  = javascript_include_tag "widget/card_widget"
+  = stylesheet_link_tag "widget/card_widget"
+
+-#%script{type:"text/javascript"}
+  (function($){$(function(){new CardReader($('#contract_identification'))})})(jQuery)
 %h1= @contract.type
 #create_contract
   = render :partial => "form"
