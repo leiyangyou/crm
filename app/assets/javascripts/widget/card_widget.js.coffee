@@ -2,7 +2,7 @@
   class CardReaderTrigger
     constructor: (target)->
       @$target = $(target)
-      @$icon = $('<a class="card-reader-icon">****</a>')
+      @$icon = $('<a class="card-reader-icon"></a>')
       @$icon.click(@iconClicked)
       @$target.after(@$icon.hide())
       @shown = false
@@ -21,6 +21,11 @@
     constructor: ()->
       @$dialog = $('#card-reader-dialog').dialog(
         autoOpen: false
+        height: 80
+        width: 300
+        draggable: false
+        resizable: false
+        dialogClass: "card-reader"
       )
       @$dialog.on( "dialogclose",  @closed)
     ok: ()=>
@@ -87,7 +92,7 @@
       @trigger.show()
 
   CardReader.isValidInput = (input)->
-    (input>= 65 && input<= 90 ) || (input >= 97 && input <= 122)
+    (input >= 48 && input <= 57) || (input >= 65 && input <= 90 ) || (input >= 97 && input <= 122)
   $(()->
     CardReaderDialog.createDialog()
     CardReaderDialog.instance = new CardReaderDialog

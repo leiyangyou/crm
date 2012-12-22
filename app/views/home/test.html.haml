@@ -2,6 +2,8 @@
   %head
     = javascript_include_tag :application
     = javascript_include_tag 'widget/card_widget'
+    = stylesheet_link_tag :application
+    = stylesheet_link_tag 'widget/card_widget'
     = yield :javascript_includes
     %script{:type => "text/javascript"}
       jQuery(function(){
