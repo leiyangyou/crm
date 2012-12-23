@@ -11,7 +11,10 @@ end
 Account.class_eval do
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s) OR upper(mobile) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")
+    where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")
+  }
+  scope :state, lambda { |filters|
+    includes(:membership).where('`memberships`.`status` IN (?)', filters)
   }
 
   has_one :membership

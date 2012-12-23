@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222083652) do
+ActiveRecord::Schema.define(:version => 20121223073806) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -509,8 +509,9 @@ ActiveRecord::Schema.define(:version => 20121222083652) do
     t.integer  "lesson_id"
     t.integer  "trainer_id"
     t.integer  "times"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "contract_id"
   end
 
   add_index "participations", ["account_id"], :name => "index_participations_on_account_id"

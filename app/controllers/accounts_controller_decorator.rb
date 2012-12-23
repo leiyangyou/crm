@@ -70,4 +70,22 @@ AccountsController.class_eval do
     @participation = Participation.find_by_account_id_and_lesson_id(@account.id, @lesson.id)
     @participation.detroy
   end
+
+  def filter
+    session[:accounts_filter] = params[:states]
+    @accounts = get_accounts(:page => 1)
+    render :index
+  end
+
+  private
+  def get_data_for_sidebar
+    @account_state_total = Hash[
+        Setting[:account_status].map do |key|
+          [key, Account.my.joins(:membership).where(['`memberships`.`status` = ?', key]).count]
+        end
+    ]
+    categorized = @account_state_total.values.sum
+    @account_state_total[:all] = Account.my.count
+    #@account_state_total[:other] = @account_state_total[:all] - categorized
+  end
 end

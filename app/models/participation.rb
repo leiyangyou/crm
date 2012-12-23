@@ -3,6 +3,7 @@ class Participation < ActiveRecord::Base
   belongs_to :account
   belongs_to :lesson
   belongs_to :trainer, :class_name => "User"
+  belongs_to :contract
   attr_accessible :account_id, :lesson_id, :trainer_id, :times
 
   validates_presence_of :account_id, :lesson_id, :trainer_id

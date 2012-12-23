@@ -286,6 +286,14 @@ lead_status:
   - :converted
   - :rejected
 
+account_status:
+  - :pending
+  - :suspended
+  - :active
+  - :delayed
+  - :expired
+  - :transfered
+
 lead_status_color:
   :new       : Silver
   :contacted : Turquoise
