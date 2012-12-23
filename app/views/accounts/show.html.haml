@@ -17,4 +17,6 @@
 
   = render :partial => "memberships/states", :locals => {:object => @account.membership}
 
+  = render :partial => "account_surveys", :locals => {:object => @account}
+
   = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

@@ -19,6 +19,8 @@ Til5::Application.routes.draw do
       post :resume
       get :participate, :as => :new_participation, :to => "accounts#new_participation"
       put :participate, :as => :participate, :to => "accounts#participate"
+      get :survey, :as => :new_survey, :to => "accounts#new_survey"
+      post :survey, :as => :survey, :to => "accounts#survey"
     end
     collection do
       get :options, :to => "accounts#options"

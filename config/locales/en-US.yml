@@ -42,6 +42,11 @@ en-US:
               error:
                 no_trainer: "A valid trainer must be specified"
   view:
+    account:
+      new_survey: "New Survey"
+    account_survey:
+      take: "Take"
+      view: "View"
     contract:
       contracts:
         lesson_contract: "Lesson"

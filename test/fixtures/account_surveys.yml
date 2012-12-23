@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account: 
+  survey: 
+  response_set: 
+
+two:
+  account: 
+  survey: 
+  response_set: 

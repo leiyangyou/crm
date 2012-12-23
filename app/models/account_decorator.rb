@@ -31,6 +31,8 @@ Account.class_eval do
     end
   end
 
+  has_many :account_surveys
+
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
   after_create do

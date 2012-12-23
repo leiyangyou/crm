@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223073806) do
+ActiveRecord::Schema.define(:version => 20121223110402) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(:version => 20121223073806) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
+
+  create_table "account_surveys", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "survey_id"
+    t.integer  "response_set_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "account_surveys", ["account_id", "survey_id"], :name => "index_account_surveys_on_account_id_and_survey_id", :unique => true
+  add_index "account_surveys", ["account_id"], :name => "index_account_surveys_on_account_id"
+  add_index "account_surveys", ["response_set_id"], :name => "index_account_surveys_on_response_set_id"
+  add_index "account_surveys", ["survey_id"], :name => "index_account_surveys_on_survey_id"
 
   create_table "account_visits", :force => true do |t|
     t.integer  "account_id"
@@ -480,6 +493,7 @@ ActiveRecord::Schema.define(:version => 20121223073806) do
 
   add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"
   add_index "memberships", ["consultant_id"], :name => "index_memberships_on_consultant_id"
+  add_index "memberships", ["status"], :name => "index_memberships_on_status"
   add_index "memberships", ["type_id"], :name => "index_memberships_on_type_id"
 
   create_table "opportunities", :force => true do |t|

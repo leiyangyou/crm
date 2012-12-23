@@ -1,0 +1,10 @@
+%br
+%div.subtitle_tools
+  = link_to_inline("new_survey", new_survey_account_path(object), :text => t("view.account.new_survey"))
+.subtitle#new_survey_title= t(:surveys)
+.remote#new_survey{:style =>"display:none;"}
+
+.list#surveys
+  - if object.account_surveys.any?
+    = render :partial => "account_survey", :collection =>object.account_surveys
+

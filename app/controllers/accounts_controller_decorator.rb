@@ -77,6 +77,19 @@ AccountsController.class_eval do
     render :index
   end
 
+  def new_survey
+    @account = Account.find(params[:id])
+    completed_survey_ids = @account.account_surveys.map(&:survey_id)
+    @surveys = Survey.all.reject{|survey| completed_survey_ids.include?(survey.id)}
+  end
+
+  def survey
+    @account = Account.find(params[:id])
+    @survey = Survey.find(params[:account_survey][:survey_id])
+    @response_set = ResponseSet.create(:survey => @survey )
+    @account_survey = AccountSurvey.create(:survey => @survey, :account => @account, :response_set => @response_set)
+  end
+
   private
   def get_data_for_sidebar
     @account_state_total = Hash[
