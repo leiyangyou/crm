@@ -34,7 +34,7 @@ User.class_eval do
   scope :available_between, lambda { |start_time, end_time|
     range = DailySchedule::TimeRange.new(start_time, end_time).compact
     default_range = DailySchedule::Utils.compact(Setting[:default_working_time])
-    joins(:schedule)
+    .joins(:schedule)
     .joins(sanitize_sql_array(["left join daily_schedules on schedules.id = daily_schedules.schedule_id and daily_schedules.date = ?", start_time.to_date]))
     .where("(ifnull(daily_schedules.working_time, ?) & ? = ?)", default_range, range, range)
     .where("((ifnull(daily_schedules.slots, 0) ^ ?) & ? = ?)", range, range, range)

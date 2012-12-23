@@ -12,7 +12,7 @@
         %tr
           %td
             .label= t(:trainer)
-            = p.collection_select :trainer_id, User.trainers.ranked, :id, :full_name,
+            = p.collection_select :trainer_id, User.trainers.ranked('trainer'), :id, :full_name,
               {:include_blank => ""},
               { :"data-placeholder" => t(:myself), :style => "width:160px" }
           %td
