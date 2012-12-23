@@ -82,18 +82,36 @@
       $membership_block.find('.membership_finished_on').html(finished_on)
       $membership_block.find('.days_before_due_date').html(days_before_due_date)
       $membership_block.slideDown()
+    LESSON_TEMPLATE =
+      """
+      <div class="lesson-block">
+        <div class="info">
+          <dl>
+            <dt>Trainer</dt>
+            <dd class="trainer_name"></dd>
+            <dt>Lesson Type</dt>
+            <dd class="lesson_type"></dd>
+            <dt>Used Times</dt>
+            <dd class="lesson_used_times"></dd>
+            <dt>Surplus Times</dt>
+            <dd class="lesson_surplus_times"></dd>
+          </dl>
+        </div>
+      </div>
+      """
     update_lessons = (participations) ->
-      console.log(participations)
-      $lesson_block = $('#lesson-block')
-      $lesson_block.slideUp()
+      $right = $('#right')
+      $right.html('')
       if participations && participations.size() > 0
-        participation = participations[0]
-        if participation.trainer
-          $lesson_block.find('.trainer_name').html(participation.trainer.username)
-        $lesson_block.find('.lesson_type').html(participation.lesson.name)
-        $lesson_block.find('.userd_times').html(participation.lesson.times - participations.times)
-        $lesson_block.find('.surplus_times').html(participation.times)
-        $lesson_block.slideDown()
+        participations.forEach((participation)->
+          $lesson_block = $(LESSON_TEMPLATE).hide().appendTo($right)
+          if participation.trainer
+            $lesson_block.find('.trainer_name').html(participation.trainer.username)
+          $lesson_block.find('.lesson_type').html(participation.lesson.name)
+          $lesson_block.find('.lesson_used_times').html(participation.lesson.times - participation.times)
+          $lesson_block.find('.lesson_surplus_times').html(participation.times || "0")
+          $lesson_block.slideDown()
+        )
     $.extend(exporter, {
       no_account_found_for: no_account_found_for
       update_account: update_account

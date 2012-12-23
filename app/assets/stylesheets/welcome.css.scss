@@ -109,7 +109,7 @@ body{
     }
     #right {
       margin-left: 410px;
-      #lesson-block {
+      .lesson-block {
         @include block;
         @include info_list( 150px);
       }

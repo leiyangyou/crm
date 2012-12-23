@@ -7,6 +7,10 @@ class Participation < ActiveRecord::Base
 
   validates_presence_of :account_id, :lesson_id, :trainer_id
 
+  default_scope do
+    order('created_at DESC')
+  end
+
 
   def self.from_contract contract
   end
