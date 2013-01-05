@@ -1,0 +1,10 @@
+%h3= t(@contract_type)
+= form_for [account, contract], :url => (update_membership_state_account_path(account, contract)), :method => :put, :remote => true do |f|
+  = link_to_close edit_membership_state_account_path(account)
+  = error_messages_for contract, :object_name => t('contract')
+  = render "#{contract.type.underscore}", :f => f
+
+  .buttonbar
+    = f.submit t :save_contract
+    == #{t :or}
+    = link_to_cancel edit_membership_state_account_path(account)

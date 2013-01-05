@@ -1,0 +1,7 @@
+if @contract.valid?
+  page['memberships'].replace :partial => "memberships/states", :locals => {:object => @account.membership}
+else
+  page['edit_membership_state'].visual_effect :shake, :duration =>0.25, :distance => 6
+  page[:flash].replace_html @contract.errors.full_messages.join(", ")
+  page.call "crm.flash", :warning
+end

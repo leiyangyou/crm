@@ -48,19 +48,24 @@ AccountsController.class_eval do
     @account.membership.resume params[:account]
   end
 
-  def new_membership_state
+  def edit_membership_state
     @account = Account.find(params[:id])
-    @contract_type = 'renew'
+    @contract_type = params[:contract]
     case @contract_type
       when 'renew'
-        @contract = Contracts::MembershipContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+        @contract = Contracts::MembershipContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
       when 'suspend'
-        @contract = Contracts::MembershipSuspendContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+        @contract = Contracts::MembershipSuspendContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
       when 'resume'
 
       when 'transfer'
-        @contract = Contracts::MembershipTransferContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+        @contract = Contracts::MembershipTransferContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
     end
+  end
+
+  def update_membership_state
+    edit_membership_state
+    @contract.update_attributes(params[:"contracts_#{@contract.type_name}"])
   end
 
   def new_participation

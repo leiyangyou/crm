@@ -2,7 +2,7 @@
   .strip{:class => account.status} #{t account.status}
 
   %ul.tools
-    = hook(:account_tools_before, self, :account => account)
+    -#= hook(:account_tools_before, self, :account => account)
 
     - if can?(:update, account)
       %li= link_to_edit(account)

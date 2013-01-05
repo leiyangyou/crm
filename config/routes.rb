@@ -21,8 +21,8 @@ Til5::Application.routes.draw do
       put :participate, :as => :participate, :to => "accounts#participate"
       get :survey, :as => :new_survey, :to => "accounts#new_survey"
       post :survey, :as => :survey, :to => "accounts#survey"
-      get :new_membership_state
-      post :membership_state
+      get :edit_membership_state
+      put :update_membership_state
     end
     collection do
       get :options, :to => "accounts#options"
