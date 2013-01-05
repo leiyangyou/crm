@@ -1,10 +1,27 @@
-%br
+#memberships
+  %br
+  %div.subtitle_tools
+    - if @account.contracts.membership_contracts.unsigned.count == 0
+      - if @account.suspended?
+        = link_to_inline("new_membership_state", new_membership_state_account_path(@account, :contract => "resume"), :text => t("resume"))
 
-.subtitle
-  = t(:versions)
-.log#states
+      - if @account.expired?
+        = link_to_inline("new_membership_state", new_membership_state_account_path(@account, :contract => "renew"), :text => t("renew"))
+
+      - if @account.active?
+        = link_to_inline("new_membership_state", new_membership_state_account_path(@account, :contract => "suspend"), :text => t("suspend"))
+        = link_to_inline("new_membership_state", new_membership_state_account_path(@account, :contract => "transfer"), :text => t("transfer"))
+
+  .subtitle#new_membership_state_title= t(:membership)
+  .remote#new_membership_state{:style =>"display:none;"}
+
   .list#states
-    - object.membership_states.each do |membership_state|
+    - unsigned_contracts = @account.contracts.membership_contracts.unsigned.order("created_at desc")
+
+    - unsigned_contracts.each do |contract|
+      = render :partial => 'contracts/contract', :locals => {:contract => contract}
+
+    - object.membership_states.order("created_at desc").each do |membership_state|
       %li{:class =>membership_state.state_type}
         %span.type.strip
           = "#{t("view.membership_states.state.#{membership_state.state_type}")}"

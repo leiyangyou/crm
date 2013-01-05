@@ -6,6 +6,7 @@
     = f.error_messages :object_name => t('account')
 
     = render "accounts/top_section",  :f => f, :edit => true
+    = render "accounts/basic_info", :f => f, :edit => true
     = render "accounts/contact_info", :f => f, :edit => true
     = render "fields/groups",  :f => f, :edit => true
     = render "accounts/permissions",  :f => f, :edit => true

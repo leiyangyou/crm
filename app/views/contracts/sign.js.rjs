@@ -1,9 +1,8 @@
 id = dom_id(@contract)
 if @contract.signed?
-  page[id].replace :partial => "contract", :collection => [@contract], :as => :contract
-  page[id].visual_effect :highlight, :duration => 1.5
+  page['memberships'].replace :partial => "memberships/states", :locals => {:object => @account.membership}
 else
   page[id].visual_effect :shake, :duration =>0.25, :distance => 6
-  page[:flash].replace_html t("view.contract.errors.sign_contract_error")
-  page.call "crm_flash", :warning
+  page[:flash].replace_html @contract.errors.full_messages.join(", ")
+  page.call "crm.flash", :warning
 end

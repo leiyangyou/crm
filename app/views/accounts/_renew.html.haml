@@ -1,0 +1,11 @@
+#renew_membership.remote
+  = simple_form_for(@contract, :url => do_renew_account_path(@account), :html => one_submit_only(:account), :remote => true) do |f|
+    = link_to_close renew_account_path(@account)
+    = f.error_messages :object_name => t('contract')
+
+    = render "contracts/membership_contract", :f => f
+
+    .buttonbar
+      = f.submit t(:save_contract), :onclick => "crm.clear_all_hints()"
+      #{t :or}
+      = link_to_cancel renew_account_path(@account)

@@ -5,7 +5,7 @@
       = f.collection_select :lesson_id, Lesson.all, :id, :name
     %td
       .label.top.req= t("trainer") + ":"
-      = f.collection_select :trainer_id, User.trainers.ranked(:trainer), :id, :name
+      = f.collection_select :trainer_id, trainers, :id, :name
   %tr
     %td
       .label.req= t("assigner") + ":"

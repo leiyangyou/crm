@@ -10,8 +10,8 @@
       %tr
         %td
           .label.top #{t :assigned_to}:
-          - if !edit || can?(:reassign_consultant, @lead)
-            = scoped_users_select(:lead, @assignable_consultants)
+          - if !edit || can?(:update_consultant, @lead)
+            = scoped_users_select(:lead, assignable_consultants)
           - else
             .value= @lead.assignee.full_name
         %td= spacer

@@ -81,12 +81,12 @@ ActiveRecord::Schema.define(:version => 20121223110402) do
     t.string   "street2"
     t.string   "zipcode"
     t.integer  "lead_id"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"
-  add_index "accounts", ["card_number"], :name => "index_accounts_on_card_number"
   add_index "accounts", ["lead_id"], :name => "index_accounts_on_lead_id"
-  add_index "accounts", ["trainer_id"], :name => "index_accounts_on_trainer_id"
   add_index "accounts", ["user_id", "name", "deleted_at"], :name => "index_accounts_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "activities", :force => true do |t|
@@ -436,8 +436,8 @@ ActiveRecord::Schema.define(:version => 20121223110402) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "start_date"
-    t.date     "due_date"
+    t.date     "started_on"
+    t.date     "finished_on"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -735,7 +735,7 @@ ActiveRecord::Schema.define(:version => 20121223110402) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|
-    t.time     "date"
+    t.date     "date"
     t.integer  "user_id"
     t.integer  "performance"
     t.datetime "created_at",  :null => false

@@ -16,7 +16,7 @@
 
     #people{ hidden }
       %div{ :style => "padding: 6px 0px 0px 20px" }
-        - for user in @consultants
+        - for user in consultants
           .check_box
             -# Preserve state of the checkboxes if the form gets redrawn on errors.
             = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s), :id => "user_#{user.id}", :id => "user_#{user.id}"

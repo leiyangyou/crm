@@ -10,7 +10,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
       end
       if account.expired?
         result << view.content_tag(:li) do
-          view.link_to_renewal(account)
+          view.link_to_renew(account)
         end
       end
       if account.active?
@@ -23,7 +23,7 @@ class AccountCallback < FatFreeCRM::Callback::Base
       end
     else
       result << view.content_tag(:li) do
-        view.link_to_renewal(account)
+        view.link_to_renew(account)
       end
     end
     result

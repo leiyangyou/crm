@@ -1,18 +1,37 @@
+- edit ||= false
+
 = hook(:account_top_section, self, :f => f) do
   .section
     %table
       %tr
-        %td(colspan="5")
-          .label.top.req #{t :name}:
-          = f.text_field :name, :style => "width:500px"
-      %tr
         %td
-          .label #{t :assigned_to}:
-          = user_select(:account)
+          .label.top.req #{t :first_name}:
+          = f.text_field :first_name
         %td= spacer
         %td
-          .label #{t :rating}:
-          = rating_select "account[rating]", { :id => :account_rating, :selected => @account.rating, :style => "width:160px" }
+          .label.top{ :class => "#{Setting.require_last_names ? 'req' : ''}" } #{t :last_name}:
+          = f.text_field :last_name
+      %tr
+        %td{:colspan => 3}
+          %table
+            %tr
+              %td
+                .label #{t :assigned_to}:
+                - if !edit || can?(:update_consultant, @account)
+                  = scoped_users_select(:account, assignable_consultants, :full_description, :assigned_to, :style => "width:160px")
+                - else
+                  .value= @account.assignee.full_name
+              %td= spacer
+              %td
+                .label #{t :trainer}:
+                - if !edit || can?(:update_trainer, @account)
+                  = scoped_users_select(:account, assignable_trainers, :full_description, :trainer_id, :style => "width:160px")
+                - else
+                  .value= @account.trainer.full_name
+              %td= spacer
+              %td
+                .label #{t :rating}:
+                = rating_select "account[rating]", { :id => :account_rating, :selected => @account.rating, :style => "width:160px" }
 
       = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
 

@@ -1,19 +1,35 @@
 AccountsHelper.class_eval do
-  def link_to_renewal account
-    link_to( t(:renewal), new_account_contract_path(account, :contract_type => Contracts::MembershipContract.to_s),
-             :target => "_blank"
-    )
+  def trainers
+    @trainers ||= User.active.trainers.ranked("trainer")
   end
-  def link_to_suspend account
-    link_to( t(:suspend), new_account_contract_path(account, :contract_type => Contracts::MembershipSuspensionContract.to_s),
-             :target => "_blank"
+
+  def assignable_trainers
+    @assignable_trainers ||= if can?(:assign_any_trainer, @account)
+      trainers
+    elsif can?(:assign_self_as_a_trainer, @account)
+      [@current_user]
+    end
+  end
+
+  def link_to_renew model
+    name = (params[:klass_name] || model.class.name).underscore.downcase
+    link_to(t(:renew),
+            params[:url] || send(:"renew_#{name}_path", model),
+            :remote  => true,
+            :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
     )
   end
 
+  def link_to_suspend account
+    #link_to( t(:suspend), new_account_contract_path(account, :contract_type => Contracts::MembershipSuspensionContract.to_s),
+    #         :target => "_blank"
+    #)
+  end
+
   def link_to_transfer account
-    link_to( t(:transfer), new_account_contract_path(account, :contract_type => Contracts::MembershipTransferContract.to_s),
-             :target => "_blank"
-    )
+    #link_to( t(:transfer), new_account_contract_path(account, :contract_type => Contracts::MembershipTransferContract.to_s),
+    #         :target => "_blank"
+    #)
   end
 
   def link_to_resume account

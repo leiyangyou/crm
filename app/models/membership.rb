@@ -26,7 +26,7 @@ class Membership < ActiveRecord::Base
     event :state_resume do
       transition :suspended => :active
     end
-    event :state_renewal do
+    event :state_renew do
       transition all => :active
     end
     event :state_expire do
@@ -66,12 +66,13 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def renewal contract
+  def renew contract
     self.started_on = contract.started_on
     membership_type = contract.membership_type
     self.finished_on = self.started_on + membership_type.duration
     self.contract_id = contract.contract_id
-    self.state_renewal
+    self.type_id = contract.type_id
+    self.state_renew
     self.new_membership_state
   end
 
@@ -101,7 +102,8 @@ class Membership < ActiveRecord::Base
     self.started_on = Date.today
     self.finished_on = Date.today + remain
     self.contract_id = contract_id
-    self.state_renewal
+    self.type_id = contract.type_id
+    self.state_renew
     self.new_membership_state
     self.save
   end
@@ -144,7 +146,7 @@ class Membership < ActiveRecord::Base
     if state.respond_to? :type_id
       state.type_id = self.type_id
     end
-    state.save
+    state.save!
     state
   end
 

@@ -5,9 +5,31 @@
         %td
           .label.req= t(:type) + ":"
           = f.collection_select :type_id, MembershipType.all, :id, :name
-        %td=spacer(16)
+        %td=spacer
         %td
           .label.req= t(:started_on) + ":"
           = f.text_field :started_on, :autocomplete => 'off'
-= render :partial => 'accounts/basic_info', :locals => {:f => f}
-= render :partial => 'accounts/contact_info', :locals => {:f => f}
+      %tr
+        %td
+          .label= t(:registration_fee) + ":"
+          = f.text_field :registration_fee
+        %td=spacer
+        %td
+          .label= t(:membership_fee) + ":"
+          = f.text_field :membership_fee
+      %tr
+        %td
+          .label= t(:discount) + ":"
+          = f.text_field :discount
+        %td=spacer
+        %td
+          .label= t(:advance_payment) + ":"
+          = f.text_field :advance_payment
+      %tr
+        %td
+          .label= t(:total_price) + ":"
+          = f.text_field :total_price
+        %td=spacer
+        %td
+          .label= t(:down_payment) + ":"
+          = f.text_field :down_payment

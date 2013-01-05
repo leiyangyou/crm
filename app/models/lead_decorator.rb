@@ -7,9 +7,9 @@ Lead.class_eval do
   }
 
   def promote params
-    account     = Account.create_or_select_for(self, params, params[:users])
-    membership = Contracts::MembershipContract.create_for(account, params[:contracts_membership_contract])
+    account     = Account.create_or_select_for(self, params[:account], params[:users])
+    contract = Contracts::MembershipContract.create_for(account, params[:contracts_membership_contract])
 
-    [account, membership]
+    [account, contract]
   end
 end

@@ -1,6 +1,6 @@
 #suspend_membership.remote
   %h3 Suspend Membership for #{account.name}
-  = form_for account, :url =>promote_suspend_account_path(account), :remote => true do |f|
+  = form_for account, :url => do_suspend_account_path(account), :remote => true do |f|
     = link_to_close suspend_account_path(account)
     .section
       = f.fields_for(account.membership) do |m|

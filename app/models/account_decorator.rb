@@ -43,30 +43,7 @@ Account.class_eval do
 
   belongs_to :trainer, :class_name => "User", :foreign_key => "trainer_id"
 
-  def self.create_or_select_for(model, params, users)
-    if model.account
-      account = model.account
-    else
-      contract_params = params[:contracts_membership_contract]
-
-      account = Account.new(params[:account])
-      account.name = model.full_name
-      [
-        :gender, :dob, :nationality, :identification, :phone, :work_phone, :company,
-        :emergency_contact_1, :emergency_contact_2, :email,
-        :street1, :street2, :zipcode
-      ].each do |attribute|
-        account.send :"#{attribute}=", contract_params[attribute]
-      end
-      model.account = account
-      if account.access != "Lead" || model.nil?
-        account.save_with_permissions(users)
-      else
-        account.save_with_model_permissions(model)
-      end
-    end
-    account
-  end
+  before_save :update_name
 
   def participate_lesson params
     participation = Participation.new params[:participation]
@@ -84,4 +61,16 @@ Account.class_eval do
     self.account_visits.last.try(:created_at)
   end
 
+  def status
+     if membership
+       membership.status
+     else
+       "non_member"
+      end
+  end
+
+  protected
+  def update_name
+    self.name = "#{self.first_name} #{self.last_name}"
+  end
 end

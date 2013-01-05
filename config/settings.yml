@@ -285,6 +285,7 @@ lead_status:
   - :contacted
   - :converted
   - :rejected
+  - :delayed
 
 account_status:
   - :pending
@@ -308,6 +309,7 @@ account_status_color:
   :delayed : Salmon
   :expired : OrangeRed
   :transfered : PaleGoldenRod
+  :non_member : Turquoise
 
 lead_source:
   - :walk_in

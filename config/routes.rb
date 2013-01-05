@@ -10,22 +10,28 @@ Til5::Application.routes.draw do
 
   resources :accounts do
     member do
-      get :renewal
-      put :promote_renewal
+      get :renew
+      put :do_renew
       get :suspend
-      put :promote_suspend
+      put :do_suspend
       get :transfer
-      put :promote_transfer
+      put :do_transfer
       post :resume
       get :participate, :as => :new_participation, :to => "accounts#new_participation"
       put :participate, :as => :participate, :to => "accounts#participate"
       get :survey, :as => :new_survey, :to => "accounts#new_survey"
       post :survey, :as => :survey, :to => "accounts#survey"
+      get :new_membership_state
+      post :membership_state
     end
     collection do
       get :options, :to => "accounts#options"
     end
-    resources :contracts, :only => [:new, :create]
+    resources :contracts, :only => [:edit, :update, :show] do
+      member do
+        post :sign, :to => "contracts#sign"
+      end
+    end
   end
 
 

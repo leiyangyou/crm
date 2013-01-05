@@ -45,6 +45,10 @@ class Contract < ActiveRecord::Base
     where("contracts.status = ?", 'ready')
   }
 
+  def type_name
+    "#{type.underscore.match(/\/(.+)/)[1]}"
+  end
+
   def self.generate_contract_id
     "C#{SecureRandom.hex(6).upcase}"
   end

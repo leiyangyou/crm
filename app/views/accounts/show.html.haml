@@ -2,8 +2,9 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
-  = link_to_function(t(:delete) + '?', confirm_delete(@account))
+  = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit))
+  - if false
+    = link_to_function(t(:delete) + '?', confirm_delete(@account))
 .title#edit_account_title= h(@account.name)
 
 %div#edit_account{ hidden }
@@ -12,11 +13,12 @@
 = render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_account_bottom, self) do
+  = render :partial => "memberships/states", :locals => {:object => @account.membership}
 
   = render :partial => "lessons", :locals => {:object => @account}
 
-  = render :partial => "memberships/states", :locals => {:object => @account.membership}
-
   = render :partial => "account_surveys", :locals => {:object => @account}
+
+  = render :partial => "tasks/tasks", :locals => {:object => @account}
 
   = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

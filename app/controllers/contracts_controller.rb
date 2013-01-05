@@ -31,9 +31,21 @@ class ContractsController < ApplicationController
     @contract = Contract.new(params[:contract])
   end
 
+  def edit
+    @contract = Contract.find_by_contract_id(params[:id])
+    @account = Account.find(params[:account_id])
+  end
+
+  def update
+    @contract = Contract.find_by_contract_id(params[:id])
+    @account = Account.find(params[:account_id])
+    @contract.update_attributes(params["contracts_#{@contract.type_name}"])
+  end
+
   #POST /contracts/:id/sign
   def sign
     @contract = Contract.find_by_contract_id(params[:id])
+    @account = Account.find(params[:account_id])
     @contract.sign if @contract
   end
 

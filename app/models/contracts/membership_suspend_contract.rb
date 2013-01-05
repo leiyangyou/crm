@@ -7,7 +7,7 @@ module Contracts
 
     def signed
       membership = account.membership
-      membership.renewal self
+      membership.renew self
     end
   end
 end

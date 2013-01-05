@@ -1,21 +1,16 @@
 AccountsController.class_eval do
+  helper :leads
 
-  def renewal
-    @users = User.consultants.except(@current_user).ranked
+  def renew
     @account = Account.find(params[:id])
-    @membership_state = MembershipState.new :state_type => MembershipState::TYPES::ACTIVE
+    @contract = Contracts::MembershipContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
   end
 
-  def promote_renewal
+  def do_renew
     @account = Account.find(params[:id])
-    @membership_state = @account.membership.renewal params[:account]
+    @contract = Contracts::MembershipContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+    @contract.update_attributes(params[:contracts_membership_contract])
     respond_with(@account)
-  end
-
-  def sign_contract
-  end
-
-  def promote_sign_contract
   end
 
   def transfer
@@ -26,7 +21,7 @@ AccountsController.class_eval do
     respond_with(@account)
   end
 
-  def promote_transfer
+  def do_transfer
     @account = Account.find(params[:id])
     @membership_state = @account.membership.transfer params[:account]
     @target_account = Membership.find(@membership_state.target_id).account
@@ -42,7 +37,7 @@ AccountsController.class_eval do
     respond_with(@account)
   end
 
-  def promote_suspend
+  def do_suspend
     @account = Account.find(params[:id])
     @membership_state = @account.membership.suspend params[:account]
     respond_with(@account)
@@ -51,6 +46,21 @@ AccountsController.class_eval do
   def resume
     @account = Account.find(params[:id])
     @account.membership.resume params[:account]
+  end
+
+  def new_membership_state
+    @account = Account.find(params[:id])
+    @contract_type = 'renew'
+    case @contract_type
+      when 'renew'
+        @contract = Contracts::MembershipContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+      when 'suspend'
+        @contract = Contracts::MembershipSuspendContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+      when 'resume'
+
+      when 'transfer'
+        @contract = Contracts::MembershipTransferContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+    end
   end
 
   def new_participation

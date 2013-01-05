@@ -1,10 +1,5 @@
 %li.highlight[account]
-  - if account.contracts.membership_contracts.unsigned.count > 0
-    .strip{:class => "pending"} #{t :pending}
-  - elsif membership = account.membership
-    .strip{:class => membership.status} #{t(membership.status)}
-  - else
-    .strip{:style => "color: gray;"} #{t :nonmember}
+  .strip{:class => account.status} #{t account.status}
 
   %ul.tools
     = hook(:account_tools_before, self, :account => account)
@@ -12,7 +7,7 @@
     - if can?(:update, account)
       %li= link_to_edit(account)
 
-    - if can?(:destroy, account)
+    - if false && can?(:destroy, account)
       %li= link_to_delete(account)
 
   .indent

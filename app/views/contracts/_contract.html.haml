@@ -10,9 +10,6 @@
     %tt
       %span.contract_id= link_to contract.contract_id, contract_path(contract)
     %dt
-      %span.account_title= t("view.contract.account") + ":"
-      %span.account= link_to contract.account.name, contract.account
-      |
       %span.started_on= contract.started_on
       %span -
       %span.finished_on= contract.finished_on

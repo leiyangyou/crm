@@ -3,6 +3,6 @@ if @account.valid? && @account.membership.valid?
   page[id].replace :partial => "account", :collection => [@account]
   page[id].visual_effect :highlight, :duration => 1.0
 else
-  page[id].replace_html :partial => "renewal"
+  page[id].replace_html :partial => "renew"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
 end

@@ -1,6 +1,6 @@
 #transfer_membership.remote
   %h3 Transfer Membership for #{account.name}
-  = form_for account, :url => promote_transfer_account_path(account), :remote => true do |f|
+  = form_for account, :url => do_transfer_account_path(account), :remote => true do |f|
     = link_to_close suspend_account_path(account)
     .section
       %table
