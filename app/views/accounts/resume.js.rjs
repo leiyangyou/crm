@@ -1,4 +1,7 @@
-id = dom_id(@account)
-
-page[id].replace :partial => "account", :collection => [@account]
-page[id].visual_effect :highlight, :duration => 1.0
+if @account.errors.empty? && @account.membership.errors.empty? && flash[:warning].nil?
+  page[:memberships].replace_html :partial => "memberships/states", :locals => {:object => @account.membership}
+  page[:memberships].visual_effect :highlight, :duration => 1.5
+else
+  page[:flash].replace_html @account.errors.full_messages.join(", ") + @account.membership.errors.full_messages.join(", ") + flash[:warning]
+  page.call "crm.flash", :warning
+end

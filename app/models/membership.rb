@@ -64,13 +64,17 @@ class Membership < ActiveRecord::Base
 
   def resume params
     self.state_resume
-    current_state = self.current_state
-    last_suspend_state = current_state.find_last_state MembershipState::TYPES::SUSPENDED
     last_active_state = current_state.find_last_state MembershipState::TYPES::ACTIVE
-    if last_suspend_state && last_active_state
-      remaining_date = last_suspend_state.remaining_date || 0
-      self.started_on = Date.today
-      self.finished_on = self.started_on + remaining_date
+    if last_active_state
+      self.contract_id = last_active_state.contract_id #use the contract from the last active_state
+      suspend_state = self.current_state
+      if suspend_state && last_active_state
+        remaining_date = suspend_state.remaining_date || 0
+        self.started_on = Date.today
+        self.finished_on = self.started_on + remaining_date
+        self.new_membership_state
+      end
+      self.save
     end
   end
 

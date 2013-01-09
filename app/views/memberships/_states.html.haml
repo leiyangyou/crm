@@ -3,7 +3,7 @@
   %div.subtitle_tools
     - if @account.contracts.membership_contracts.unsigned.count == 0
       - if @account.suspended?
-        = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "resume"), :text => t("resume"))
+        = link_to(t("resume"), resume_account_path(@account), :remote => true, :method => :post)
 
       - if @account.expired?
         = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "renew"), :text => t("renew"))
