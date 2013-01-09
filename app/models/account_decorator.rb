@@ -17,6 +17,8 @@ Account.class_eval do
     includes(:membership).where('`memberships`.`status` IN (?)', filters)
   }
 
+  validates_presence_of :nationality, :gender, :card_number, :identification
+
   has_one :membership
 
   has_many :participations
