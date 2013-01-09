@@ -16,13 +16,13 @@
           = f.text_field :dob, :autocomplete => 'off'
       %tr
         %td
-          .label= t(:nationality)
+          .label.req= t(:nationality)
           = f.text_field :nationality
         %td=spacer
         %td
-          .label= t(:identification)
+          .label.req= t(:identification)
           = f.text_field :identification
       %tr
         %td
-          .label= t(:card_number)
+          .label.req= t(:card_number)
           = f.text_field :card_number
