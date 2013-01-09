@@ -57,6 +57,13 @@ en-US:
       signed_at: "Singed At"
       sign: "Sign"
       edit: "Edit"
+    contract_templates:
+      contracts:
+        membership_contract: 'Membership Contract'
+        membership_transfer_contract: 'Membership Transfer Contract'
+        membership_suspend_contract: 'Membership Suspend Contract'
+        lesson_contract: 'Lesson Contract'
+        locker_contract: 'Locker Contract'
     membership_states:
       state:
         active: "Active"
@@ -85,10 +92,23 @@ en-US:
       lesson_type: "Lesson Type"
       used_times: "Used Times"
       surplus_times: "Surplus Times"
+  model:
+    locker:
+      identity: "Locker Number"
   create_contract_type: "Create Contract Type"
   contract_types: "Contract Types"
   description: "Description"
   name: "Name"
+  basic_info: "Basic Information"
+  gender: "Gender"
+  male: "Male"
+  female: "Female"
+  dob: "Date of Birth"
+  nationality: "Nationality"
+  identification: "ID"
+  work_phone: "Work Phone"
+  emergency_contact_1: "Emergency Contact 1"
+  emergency_contact_2: "Emergency Contact 2"
   add_template: "Add Template"
   contract_templates: "Contract Templates"
   create_contract_template: "Create Contract Template"
@@ -109,3 +129,35 @@ en-US:
   beijing: "Beijing"
   china: "China"
   card_number: "Card Number"
+  pending: 'Pending'
+  admin_tab_tags: 'Tag'
+  admin_tab_contract_templates: "Contract Templates"
+  contract_template_small: "Contract Templates"
+  contract_type: "Contract Type"
+  template: "Template"
+  format: "Format"
+  locker: "Locker"
+  lockers: "Lockers"
+  locker_small: "Locker"
+  create_locker: "Create Locker"
+  membership_type: "Membership Type"
+  membership_types: "Membership Types"
+  membership_type_small: "Membership Type"
+  crate_memebership_type: "Create Membership Type"
+  create_a_new: "Create a new"
+  duration: "Duration"
+  transferable: "Transferable"
+  suspendable: "Suspendable"
+  terminatable: "Terminatable"
+  save_membership_type: "Save"
+  create_membership_type: "Create Membership Type"
+  to_xls: "export to xls"
+  to_csv: "export to csv"
+  to_rss: "export to rss"
+  to_atom: "export to atom"
+  delayed: "Delayed"
+  suspended: "Suspended"
+  active: "Active"
+  expired: "Expired"
+  transfered: "Transfered"
+  total_accounts: "Total"

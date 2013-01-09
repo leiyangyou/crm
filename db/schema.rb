@@ -438,8 +438,8 @@ ActiveRecord::Schema.define(:version => 20130109072447) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "start_date"
-    t.date     "due_date"
+    t.date     "started_on"
+    t.date     "finished_on"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -737,7 +737,7 @@ ActiveRecord::Schema.define(:version => 20130109072447) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|
-    t.time     "date"
+    t.date     "date"
     t.integer  "user_id"
     t.integer  "performance"
     t.datetime "created_at",  :null => false

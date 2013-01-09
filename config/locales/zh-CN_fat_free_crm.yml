@@ -17,9 +17,9 @@ zh-CN:
   #----------------------------------------------------------------------------
   tab_dashboard: 摘要
   tab_tasks: 任务
-  tab_campaigns: 战役
+  tab_campaigns: 营销
   tab_leads: 线索 
-  tab_accounts: 账号
+  tab_accounts: 会员
   tab_contacts: 联系人
   tab_opportunities: 机会
 
@@ -41,10 +41,10 @@ zh-CN:
   cold_call: 冷电话 
   conference: 会议
   online: 在线营销
-  referral: 转来
+  referral: 推荐
   self: 自己产生
   web: 网站
-  word_of_mouth: 口头
+  word_of_mouth: 听说
   other: 其它
 
   prospecting: 展望
@@ -57,7 +57,7 @@ zh-CN:
   lost: 结束／输
 
   call: 电话
-  email: Email
+  email: 电子邮件
   follow_up: 跟进
   lunch: 午餐
   meeting: 会议
@@ -109,11 +109,11 @@ zh-CN:
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^请指定战役名称"
+              missing_campaign_name: "^请指定营销名称"
             ends_on:
-              dates_not_in_sequence: "^请确认战役开始日期在结束日期之前"
+              dates_not_in_sequence: "^请确认营销开始日期在结束日期之前"
             access:
-              share_campaign: "^请指定可以共享战役的用户"
+              share_campaign: "^请指定可以共享营销的用户"
         contact:
           attributes:
             first_name:
@@ -129,7 +129,7 @@ zh-CN:
             last_name:
               missing_last_name: "^请指定用户的姓"
             access:
-              share_lead: "^请指定可以共享Lead的用户"
+              share_lead: "^请指定可以共享线索的用户"
         opportunity:
           attributes:
             name:
@@ -169,7 +169,7 @@ zh-CN:
   msg_account_not_approved: 你的账号还未被批准
   msg_asset_deleted: "%{value} 已经被删除"
   msg_asset_not_available: 这个 %{value} 已不存在
-  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
+  msg_asset_not_authorized: 没有被授权查看这个视图 %{value}. # TODO
   msg_assets_not_available: 这个 %{value} 不存在
   msg_asset_rejected: "%{value} 已被拒绝"
   msg_bad_image_file: "^^不能将此图片上传或改变大小"
@@ -178,7 +178,7 @@ zh-CN:
   msg_cant_do: "不能 %{action} %{asset} 因为它已经不存在"
   msg_email_not_found: 未找到用户使用此邮件地址
   msg_enter_new_password: 请输入新密码
-  msg_goodbye: 您已退出，感谢您使用 Fat Free CRM!
+  msg_goodbye: 您已退出，感谢您使用 til5!
   msg_invalid_password: "^^请输入正确密码"
   msg_invalig_login: 用户名或密码错
   msg_last_login: 您上次登录是在 %{value}.
@@ -189,8 +189,8 @@ zh-CN:
   msg_password_updated: 密码更新成功
   msg_pwd_instructions_sent: 重置密码方法已经发出，请检查您的邮件
   msg_require_admin: 必须是管理员才能使用本页
-  msg_successful_signup: 成功申请，欢迎您使用 Fat Free CRM!
-  msg_welcome: 欢迎使用 Fat Free CRM!
+  msg_successful_signup: 成功申请，欢迎您使用 til5!
+  msg_welcome: 欢迎使用 til5!
 
   # Options.
   #----------------------------------------------------------------------------
@@ -302,43 +302,43 @@ zh-CN:
   actual_performance: 实际效益
   budget: 预算
   budget_label: 预算(¥)
-  campaign: 战役
-  campaign_and_leads: 战役与领导
-  campaign_small: 战役
-  campaign_summary: 战役摘要
-  campaign_targets: 战役目标
-  campaigns: 战役
-  campaigns_options: 战役选项
-  campaigns_small: 战役
+  campaign: 营销
+  campaign_and_leads: 营销与线索
+  campaign_small: 营销
+  campaign_summary: 营销摘要
+  campaign_targets: 营销目标
+  campaigns: 营销
+  campaigns_options: 营销选项
+  campaigns_small: 营销
   conversion: 转换
   conversion_label: 转换比率(%)
   conversion_number: "%{value} 转换" 
-  create_campaign: 创建战役
+  create_campaign: 创建营销
   end_date: 结束日期
   finished_on: 完成于 %{value}
   finishes_in: 用 %{value} 完成
   no_start_date: 未指定开始日期
   number_of_leads: 线索数
   objectives: 目标
-  objectives_help: 请指定目标线索数、机会转换率、目标收入、战役预算，这些数据帮助跟踪实际战役产出。
-  objectives_small: 战役目标
+  objectives_help: 请指定目标线索数、机会转换率、目标收入、营销预算，这些数据帮助跟踪实际营销产出。
+  objectives_small: 营销目标
   revenue: 收入
   revenue_label: 收入(¥)
   revenue_number: "收入%{value}"
-  save_campaign: 保存战役
+  save_campaign: 保存营销
   start_date: 开始日期
   started_ago: 开始于 %{value} 之前
   starts_in: 开始了 %{value}
   starts_today: 今天开始!
   target: 目标
-  total_campaigns: 战役总数
+  total_campaigns: 营销总数
   was_supposed_to_finish: 预计完成于 %{value}
   was_supposed_to_start: 预计开始于 %{time_ago} 之前，在 %{start_date}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: 其它
-  blog: Website/Blog
+  blog: 网站和博客
   contact: 联系人
   contact_small: 联系人
   contacts: 联系人
@@ -374,9 +374,9 @@ zh-CN:
   create_opp_for_contact: 可以为 %{value} 联系人创建一个机会，需指定名称、当前阶段、预计结束日期、销售可能性、线索数量、折扣。
   lead: 线索
   lead_info_small: 线索联系人
-  lead_permissions_intro_private: 默认从战役复制权限或设为私有。以后可修改。
-  lead_permissions_intro_public: 默认从战役复制权限或设为公有。以后可修改。
-  lead_permissions_intro_shared: 默认从战役复制权限或设为与特定用户分享。以后可修改。
+  lead_permissions_intro_private: 默认从营销复制权限或设为私有。以后可修改。
+  lead_permissions_intro_public: 默认从营销复制权限或设为公有。以后可修改。
+  lead_permissions_intro_shared: 默认从营销复制权限或设为与特定用户分享。以后可修改。
   lead_small: 线索
   lead_status_small: 线索状态
   lead_summary: 线索摘要
@@ -480,7 +480,7 @@ zh-CN:
   recent_activity: 最近行为
   recent_activity_options: 最近行为选项
   subject_account: 账号
-  subject_campaign: 战役
+  subject_campaign: 营销
   subject_contact: 联系人
   subject_lead: 线索
   subject_opportunity: 机会
@@ -532,12 +532,12 @@ zh-CN:
   about: 关于
   about_dev_group: 开发者讨论组
   about_features: 特性与bugs
-  about_ffc: 关于 Fat Free CRM
-  about_ffc_resources: Fat Free CRM 资源 (在新窗口打开)
-  about_ffc_version: Fat Free CRM 版本
+  about_ffc: 关于 til5
+  about_ffc_resources: til5 资源 (在新窗口打开)
+  about_ffc_version: til5 版本
   about_home_page: 主页
   about_project_page: 项目页
-  about_thank_you: 感谢使用Fat Free CRM! 希望使用愉快.
+  about_thank_you: 感谢使用til5! 希望使用愉快.
   about_twitter: Twitter 更新
   about_user_group: 用户讨论组
   admin: 管理
@@ -560,8 +560,8 @@ zh-CN:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: 返回 Fat Free CRM
-  crm_admin_page: Fat Free CRM 管理
+  back_to_crm: 返回 til5
+  crm_admin_page: til5 管理
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------

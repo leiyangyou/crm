@@ -1,0 +1,163 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+zh-CN:
+  tab_staff: "员工"
+  admin_tab_schedules: "日程"
+  admin_tab_contract_types: "合同类型"
+  admin_tab_lockers: "衣柜"
+  admin_tab_membership_types: "会员类型"
+  admin_tab_lessons: "私教课"
+  admin_tab_user_ranks: "UPS排班"
+  msg_require_manager: "只有经理可以访问这个页面"
+  roles:
+    operator: "运营"
+    operator_manager: "运营经理"
+    trainer: "教练"
+    trainer_manager: "教练经理"
+    general_manager: "店长"
+    consultant: '会籍顾问'
+    consultant_manager: '会籍顾问经理'
+    admin: "系统管理员"
+  weekly_schedules: "日程安排从 %{first_day} 到 %{last_day}"
+  edit_weekly_schedules: "编辑日程安排从 %{first_day} 到 %{last_day}"
+  activerecord:
+    errors:
+      models:
+        appointment:
+          attributes:
+            base:
+              user:
+                error:
+                  unavailable: "不在 %{working_time}"
+                  not_working: "不在工作中 %{time}"
+        daily_schedule:
+          attributes:
+            base:
+              error:
+                conflict_with_appointments: " %{user} 日程安排与预约 %{date} %{appointments} 冲突"
+        lessons:
+          attributes:
+            trainer:
+              error:
+                no_trainer: "必须指定一个有效的教练"
+  view:
+    account:
+      new_survey: "新建问卷调查"
+    account_survey:
+      take: "参加"
+      view: "查看"
+    contract:
+      contracts:
+        lesson_contract: "私教课合同"
+        membership_contract: "会籍合同"
+        membership_suspend_contract: "暂停"
+        membership_transfer_contract: "转让"
+      account: "会员"
+      signed_at: "入会时间"
+      sign: "正式入会"
+      edit: "编辑"
+    contract_templates:
+      contracts:
+        membership_contract: '会籍合同'
+        membership_transfer_contract: '会籍转让合同'
+        membership_suspend_contract: '会籍暂停合同'
+        lesson_contract: '私教课合同'
+        locker_contract: '衣柜合同'
+    membership_states:
+      state:
+        active: "正常"
+        suspended: "暂停"
+        transferred: "转让"
+        terminated: "终止"
+    lesson:
+      price: "价格"
+      times: "时间"
+      trainer: "教练"
+    welcome:
+      title: "OZone 卡"
+      name: "姓名"
+      gender: "性别"
+      age: "年龄"
+      phone: "电话"
+      membership_status: "会员状态"
+      membership_consultant: "会籍顾问"
+      membership_type: "类型"
+      membership_duration: "有效期"
+      membership_finished_on: "终止时间"
+      days_before_due_date: "保留天数"
+      last_visit_time: "上次刷卡时间"
+      days_since_last_visit: "距离上次刷卡天数"
+      lesson_trainer: "教练"
+      lesson_type: "课程类型"
+      used_times: "已使用课时"
+      surplus_times: "剩余课时"
+  model:
+    locker:
+      identity: "衣柜号码"
+  create_contract_type: "创建合同类型"
+  contract_types: "合同类型"
+  description: "描述"
+  name: "姓名"
+  basic_info: "基本信息"
+  gender: "性别"
+  male: "男"
+  female: "女"
+  dob: "出生日期"
+  nationality: "国籍"
+  identification: "身份证"
+  work_phone: "工作电话"
+  emergency_contact_1: "紧急联系人一"
+  emergency_contact_2: "紧急联系人二"
+  add_template: "添加模板"
+  contract_templates: "合同模板"
+  create_contract_template: "创建合同模板"
+  walk_in: "到店来访WI"
+  telephone_in: "电话TI"
+  not_working: "不在工作中"
+  appointments: "预约"
+  select_week: "选择星期"
+  edit_schedules: "编辑日程安排"
+  save_schedules: "保存日程安排"
+  lessons: "私教课"
+  lesson_small: "私教课"
+  create_lesson: "创建私教课"
+  price: "价格"
+  times: "次数"
+  trainer: "教练"
+  not_available: "不在"
+  beijing: "北京"
+  china: "中国"
+  card_number: "卡号"
+  pending: '暂停'
+  admin_tab_tags: "标签"
+  admin_tab_contract_templates: "合同模板"
+  contract_template_small: "合同模版"
+  contract_type: "合同类型"
+  template: "合同模板内容"
+  format: "模板格式类型"
+  locker: "衣柜"
+  lockers: "衣柜"
+  locker_small: "衣柜"
+  create_locker: "创建衣柜"
+  membership_type: "会员类型"
+  membership_types: "会员类型"
+  membership_type_small: "会员类型"
+  crate_memebership_type: "创建会员类型"
+  create_a_new: "创建一个新的"
+  duration: "天数"
+  transferable: "可转让"
+  suspendable: "可暂停"
+  terminatable: "可终止"
+  save_membership_type: "保存会员类型"
+  create_membership_type: "创建会员类型"
+  to_xls: "导出为xls文件"
+  to_csv: "导出为csv文件"
+  to_rss: "导出为rss文件"
+  to_atom: "导出为atom文件"
+  delayed: "继续跟进"
+  suspended: "暂停"
+  active: "正常"
+  expired: "已过期"
+  transfered: "已转让"
+  total_accounts: "合计"
