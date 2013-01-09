@@ -23,6 +23,8 @@ Til5::Application.routes.draw do
       post :survey, :as => :survey, :to => "accounts#survey"
       get :edit_membership_state
       put :update_membership_state
+      get :new_locker
+      post :create_locker
     end
     collection do
       get :options, :to => "accounts#options"

@@ -4,22 +4,23 @@
   - else
     .strip{:class => "overdue"} #{t(:overdue)}
 
-  .tools
-    - if locker.occupied?
-      = link_to_restore locker
-    - if locker.available?
-      = link_to_rent locker
+  -#.tools
+  -#  - if locker.occupied?
+  -#    = link_to_restore locker
+  -#  - if locker.available?
+  -#    = link_to_rent locker
 
   .indent
-    = link_to(locker.identifier, locker)
+    = locker.identifier
     %tt
     - if locker.occupied?
       %dt
-        - account = locker.locker_rent.account
-        = link_to account.name, account
-        |
+        - unless @account
+          - account = locker.locker_rent.account
+          = link_to account.name, account
+          |
         %span{:class => "#{locker.overdue? ? "overdue": ""}"}
-          = locker.locker_rent.start_date.to_date
+          = locker.locker_rent.started_on.to_date
           -
-          = locker.locker_rent.due_date.to_date
+          = locker.locker_rent.finished_on.to_date
 

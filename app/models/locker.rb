@@ -14,5 +14,9 @@ class Locker < ActiveRecord::Base
     end
   end
 
+  scope :available, lambda {
+    where(:status => "available")
+  }
+
   delegate :overdue?, :to => :locker_rent, :allow_nil => true
 end

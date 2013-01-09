@@ -34,6 +34,7 @@ Account.class_eval do
   end
 
   has_many :account_surveys
+  has_many :locker_rents
 
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
