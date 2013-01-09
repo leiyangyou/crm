@@ -1,5 +1,8 @@
 = styles_for :lead
 
+= content_for :after_head do
+  = include_card_widget
+
 .title_tools
   - if can?(:new, :lead)
     = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead)) << " | "

@@ -32,7 +32,8 @@ else # <----------------------------------------  Show [Convert Lead] form.
 
   page.call "crm.init_chosen_fields"
   page.call "crm.my_date_select_popup", "contracts_membership_contract_started_on"
-  page.call "crm.my_date_select_popup", "contracts_membership_contract_dob"
+  #page.call "crm.my_date_select_popup", "contracts_membership_contract_dob"
+  page << "new CardReader('#account_card_number')"
 
   hook(:convert_lead_rjs, self, :page => page)
 end

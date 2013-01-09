@@ -29,4 +29,11 @@ ApplicationHelper.class_eval do
                 :class => 'subtitle'
     )
   end
+
+  def include_card_widget
+    %Q{
+    #{javascript_include_tag "widget/card_widget"}
+    #{stylesheet_link_tag "widget/card_widget"}
+    }.html_safe
+  end
 end
