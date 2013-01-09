@@ -1,5 +1,8 @@
 = styles_for :account
 
+= content_for :after_head do
+  = include_card_widget
+
 .title_tools
   = link_to_inline(:create_account, new_account_path, :text => t(:create_account)) << " | "
   - if Setting.advanced_search_enabled
