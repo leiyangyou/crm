@@ -8,6 +8,8 @@ LeadsHelper.class_eval do
       consultants
     elsif can?(:assign_self_as_a_consultant, @lead)
       [@current_user]
+    else
+      []
     end
   end
 

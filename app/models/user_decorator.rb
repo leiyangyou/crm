@@ -24,7 +24,7 @@ User.class_eval do
   validates_uniqueness_of :card_number
 
   scope :ranked, lambda { |type|
-    includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank, 999999) asc')
+    includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank_override, 999999) asc')
   }
 
   scope :manageable_by, lambda { |user|

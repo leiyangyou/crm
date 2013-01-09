@@ -57,4 +57,4 @@ group :development do
   gem 'pry-rails'
 end
 
-gem 'serializable_attributes'
+gem 'serializable_attributes', :path => "vendor/gems/serializable_attributes-1.1.1"
