@@ -68,7 +68,7 @@ class Membership < ActiveRecord::Base
     suspend_state.save!
   end
 
-  def resume params
+  def resume params = {}
     self.state_resume
     last_active_state = current_state.find_last_state MembershipState::TYPES::ACTIVE
     if last_active_state
@@ -85,16 +85,20 @@ class Membership < ActiveRecord::Base
   end
 
   def renew contract
-    self.started_on = contract.started_on
-    membership_type = contract.membership_type
-    self.finished_on = self.started_on + membership_type.duration
-    self.contract_id = contract.contract_id
-    self.type_id = contract.type_id
-    self.state_renew
-    self.new_membership_state
+    if self.active?
+
+    elsif self.expred?
+      self.started_on = contract.started_on
+      membership_type = contract.membership_type
+      self.finished_on = self.started_on + membership_type.duration
+      self.contract_id = contract.contract_id
+      self.type_id = contract.type_id
+      self.state_renew
+      self.new_membership_state
+    end
   end
 
-  def expire params
+  def expire params = {}
     self.state_expire
   end
 
@@ -135,8 +139,12 @@ class Membership < ActiveRecord::Base
   end
 
   def check_expiration
-    if self.active? && self.finished_on < Date.today
-      self.state_expire
+    if self.finished_on < Date.today
+      if self.active?
+        self.expire
+      elsif self.suspended?
+        self.resume
+      end
     end
   end
 
