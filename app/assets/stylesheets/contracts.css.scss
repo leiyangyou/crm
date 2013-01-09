@@ -4,10 +4,7 @@
 @import "compass/reset";
 @import "compass";
 
-#preview {
+body {
   margin: auto;
   width: 595px;
-  code {
-    border-bottom: 1px solid black;
-  }
 }

@@ -89,7 +89,7 @@ class ContractTemplate < ActiveRecord::Base
       value = contract.respond_to?(name.to_sym) ? contract.send(name.to_sym) : nil
       unless value
         type = ContractTemplateDecorator::ParamType.get_type_by_name type
-        length = (params[:length] || type.default_length).to_i
+        length = (attributes[:length] || type.default_length).to_i
         value = "_" * length
       end
       value.to_s

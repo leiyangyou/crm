@@ -3,7 +3,7 @@ class ContractsController < ApplicationController
 
   load_resource :account, :only => [:new, :create]
 
-  layout false, :only => [:preview]
+  layout false, :only => [:show]
 
   # GET /accounts/:account_id/contracts/new?type=:contract_type
   def new

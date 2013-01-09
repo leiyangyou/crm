@@ -44,4 +44,4 @@
             = "#{membership_state.reason}"
         %span.contract
           - if membership_state.contract_id
-            = link_to membership_state.contract_id, contract_path(:id => membership_state.contract_id)
+            = link_to membership_state.contract_id, contract_path(:id => membership_state.contract_id, :format => 'pdf')
