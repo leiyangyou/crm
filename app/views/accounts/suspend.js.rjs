@@ -1,9 +1,7 @@
-id = dom_id(@account)
+page.call "crm.flip_form", :edit_membership_state
 
 unless params[:cancel].true?
-  page.call "crm.highlight_off", id
-  page.call "crm.hide_form", :create_account
-  page[id].replace_html :partial => "suspend", :locals => {:account => @account, :membership => @membership, :membership_suspension => @membership_suspension}
-else
-  page[id].replace :partial =>"account", :collection => [@account]
+  page[:edit_membership_state].replace_html :partial => "suspend", :locals => {:account => @account, :membership => @membership, :membership_suspension => @membership_suspension}
+  page.call "crm.my_date_select_popup", "account_membership_started_on"
+  page.call "crm.my_date_select_popup", "account_membership_finished_on"
 end

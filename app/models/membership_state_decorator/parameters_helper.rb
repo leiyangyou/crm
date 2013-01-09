@@ -114,7 +114,7 @@ module MembershipStateDecorator
 
       def parameter( name, type, options = {})
         raise 'parameter should be put in the block of type' unless @current_type
-        parameter_descriptor = ParameterDescriptor.new(name.to_s, type, options[:required] || true)
+        parameter_descriptor = ParameterDescriptor.new(name.to_s, type, options[:required].nil? ? true : options[:required])
         @parameters_descriptor.add_parameter( @current_type, parameter_descriptor)
       end
     end
