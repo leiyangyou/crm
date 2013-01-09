@@ -29,6 +29,7 @@ class MembershipState < ActiveRecord::Base
   type TYPES::SUSPENDED do
     parameter :started_on, Date
     parameter :finished_on, Date
+    parameter :remaining_date, Integer, :required => false
   end
 
   type TYPES::TRANSFERRED do

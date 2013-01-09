@@ -12,7 +12,7 @@
           = f.select :gender, [[t(:male), 0], [t(:female), 1]]
         %td=spacer
         %td
-          .label=t(:dob)+":"
+          .label.req= t(:dob)+":"
           = f.text_field :dob, :autocomplete => 'off'
       %tr
         %td

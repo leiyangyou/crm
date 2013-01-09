@@ -34,6 +34,7 @@ class Membership < ActiveRecord::Base
     end
 
     after_transition :active => any, :do => :accumulate_membership_duration
+
   end
 
   def transfer contract
@@ -45,24 +46,35 @@ class Membership < ActiveRecord::Base
     self.new_membership_state
   end
 
-  def suspend contract
-    self.started_on = contract.started_on
-    self.finished_on = contract.finished_on
-    self.contract_id = contract.contract_id
+  def suspend params
+    membership_params = params[:membership] || {}
+    self.update_attributes( [:started_on, :finished_on, :contract_id].reduce({}){|r, e| r[e] = membership_params[e]; r})
     self.state_suspend
-    self.new_membership_state
+    suspend_state = self.new_membership_state
+    last_active_state = suspend_state.find_last_state MembershipState::TYPES::ACTIVE
+
+    #save the remaining date of last active state to the current suspend state
+    remaining_date = 0
+    if last_active_state
+      remaining_date = (last_active_state.finished_on - last_active_state.started_on) - (Date.today - last_active_state.started_on)
+    end
+    suspend_state.remaining_date = remaining_date
+    suspend_state.save!
   end
 
   def resume params
     self.state_resume
-    current_state = self.current_state
-    last_suspend_state = current_state.find_last_state MembershipState::TYPES::SUSPENDED
     last_active_state = current_state.find_last_state MembershipState::TYPES::ACTIVE
-    if last_suspend_state && last_active_state
-      duration = last_active_state.started_on - last_suspend_state.started_on
-      remain = self.type.duration - duration
-      self.started_on = Date.today
-      self.finished_on = self.started_on + remain
+    if last_active_state
+      self.contract_id = last_active_state.contract_id #use the contract from the last active_state
+      suspend_state = self.current_state
+      if suspend_state && last_active_state
+        remaining_date = suspend_state.remaining_date || 0
+        self.started_on = Date.today
+        self.finished_on = self.started_on + remaining_date
+        self.new_membership_state
+      end
+      self.save
     end
   end
 
