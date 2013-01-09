@@ -5,4 +5,5 @@
     = link_to t("view.account_survey.view"), view_my_survey_path(:survey_code => account_survey.survey.access_code, :response_set_code => account_survey.response_set.access_code), :target => "_blank"
   .account_survey
     %span.black= account_survey.survey.title
+    %span - #{account_survey.updated_at.to_date}
 
