@@ -45,4 +45,8 @@ AccountsHelper.class_eval do
     )
     check_box_tag("states[]", state, checked, :id => state, :onclick => onclick)
   end
+
+  def scoped_account_select(model, accounts, description_field, method, options = {})
+    collection_select model, method, accounts, :id, description_field, {}, options
+  end
 end

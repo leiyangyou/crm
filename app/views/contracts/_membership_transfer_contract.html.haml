@@ -3,3 +3,21 @@
     %table
       %tr
         %td
+          .label.top.req= t(:card_number) + ":"
+          = f.text_field :card_number, :value => @account.card_number, :readonly => true
+      %tr
+        %td
+          .label.req= t(:target) + ":"
+          = scoped_account_select("contracts_membership_transfer_contract", Account.all, :name, :target_id)
+        %td
+          .label.req= t(:transfer_fee) + ":"
+          = f.text_field :transfer_fee
+      %tr
+        %td
+          .label.req= t(:source_contract_finished_on) + ":"
+          = f.text_field :source_contract_finished_on
+        %td
+          .label.req= t(:target_contract_started_on) + ":"
+          = f.text_field :target_contract_started_on
+
+

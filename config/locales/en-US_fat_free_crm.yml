@@ -140,6 +140,12 @@ en-US:
               missing_last_name: "^Please specify last name."
             access:
               share_lead: "^Please specify users to share the lead with."
+        contracts/membership_transfer_contract:
+          attributes:
+            target_id:
+              cannot_find_target: "cannot find target with target_id: '%{target_id}'"
+            source_contract_finished_on:
+              out_of_range: "source contract can only finished before '%{finished_on}'"
         opportunity:
           attributes:
             name:
