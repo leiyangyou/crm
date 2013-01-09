@@ -2,4 +2,5 @@ page.call "crm.flip_form", :edit_membership_state
 
 unless params[:cancel].true?
   page[:edit_membership_state].replace_html :partial => "edit_membership_state", :locals => {:account => @account, :contract => @contract}
+  page.call "crm.init_chosen_fields"
 end

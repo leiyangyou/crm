@@ -1,8 +1,8 @@
-id = dom_id(@account)
-if @account.valid? && @account.membership.valid?
-  page[id].replace :partial => "account", :collection => [@account]
-  page[id].visual_effect :highlight, :duration => 1.0
+if @account.errors.empty? && @account.membership.errors.empty?
+  page[:memberships].replace_html :partial => "memberships/states", :locals => {:object => @account.membership}
+  page[:memberships].visual_effect :highlight, :duration => 1.5
 else
-  page[id].replace_html :partial => "suspend"
-  page[id].visual_effect :shake, :duration => 0.25, :distance => 0
+  page[:edit_membership_state].replace_html :partial => "suspend"
+  page[:edit_membership_state].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:account_membership_started_on].focus
 end

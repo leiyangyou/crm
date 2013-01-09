@@ -1,6 +1,10 @@
 id = dom_id(@contract)
 if @contract.signed?
-  page['memberships'].replace :partial => "memberships/states", :locals => {:object => @account.membership}
+  if @contract.contract_type == :membership
+    page['memberships'].replace :partial => "memberships/states", :locals => {:object => @account.membership}
+  elsif @contract.contract_type == :locker
+    page['lockers_container'].replace :partial => "accounts/account_lockers", :locals => {:object => @account}
+  end
 else
   page[id].visual_effect :shake, :duration =>0.25, :distance => 6
   page[:flash].replace_html @contract.errors.full_messages.join(", ")

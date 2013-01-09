@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
   end
 
   def show
-    @account = Account.find_by_name(params[:id])
+    @account = Account.text_search(params[:id]).first
     @account.account_visits << AccountVisit.new if @account
   end
 

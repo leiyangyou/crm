@@ -41,9 +41,18 @@ class Contract < ActiveRecord::Base
     ])
   }
 
+  scope :locker_contracts, lambda {
+    where(:type => "Contracts::LockerContract")
+  }
+
   scope :unsigned, lambda {
     where("contracts.status = ?", 'ready')
   }
+
+
+  def contract_type
+    :membership
+  end
 
   def type_name
     "#{type.underscore.match(/\/(.+)/)[1]}"

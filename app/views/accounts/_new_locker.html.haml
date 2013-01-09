@@ -1,0 +1,11 @@
+#new_locker.remote
+  = simple_form_for(@contract, :url => create_locker_account_path(@account), :html => one_submit_only(:account), :remote => true) do |f|
+    = link_to_close new_locker_account_path(@account)
+    = f.error_messages :object_name => t('contract')
+
+    = render "contracts/locker_contract", :f => f
+
+    .buttonbar
+      = f.submit t(:save_contract), :onclick => "crm.clear_all_hints()"
+      #{t :or}
+      = link_to_cancel new_locker_account_path(@account)

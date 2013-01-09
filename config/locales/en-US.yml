@@ -31,6 +31,10 @@ en-US:
                 error:
                   unavailable: "Only available during %{working_time}"
                   not_working: "Not working during %{time}"
+        membership_state:
+          attributes:
+            parameters:
+              parameter_is_required: "parameter '%{name}' is required for membership_state with type '%{type}'"
         daily_schedule:
           attributes:
             base:

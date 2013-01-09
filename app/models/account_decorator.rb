@@ -11,13 +11,13 @@ end
 Account.class_eval do
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")
+    where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s) OR upper(card_number) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")
   }
   scope :state, lambda { |filters|
     includes(:membership).where('`memberships`.`status` IN (?)', filters)
   }
 
-  validates_presence_of :nationality, :gender, :card_number, :identification
+  validates_presence_of :nationality, :gender, :card_number, :identification, :dob
 
   has_one :membership
 
@@ -34,6 +34,7 @@ Account.class_eval do
   end
 
   has_many :account_surveys
+  has_many :locker_rents
 
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
@@ -51,7 +52,7 @@ Account.class_eval do
 
   belongs_to :trainer, :class_name => "User", :foreign_key => "trainer_id"
 
-  before_save :update_name
+  before_validation :update_name
 
   def participate_lesson params
     participation = Participation.new params[:participation]

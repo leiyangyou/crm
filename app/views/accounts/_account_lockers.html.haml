@@ -1,0 +1,14 @@
+%br
+%div.subtitle_tools
+  = link_to_inline("new_locker", new_locker_account_path(object), :text => t("view.account.new_locker"))
+.subtitle#new_locker_title= t(:lockers)
+.remote#new_locker{:style =>"display:none;"}
+
+.list#lockers
+  - unsigned_contracts = @account.contracts.locker_contracts.unsigned.order("created_at desc")
+
+  - unsigned_contracts.each do |contract|
+    = render :partial => 'contracts/contract', :locals => {:contract => contract}
+
+  - if object.locker_rents.any?
+    = render :partial => "account_locker", :collection =>object.locker_rents
