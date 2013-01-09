@@ -66,7 +66,6 @@
       @$target = $(target)
       @initializeTarget()
     initializeTarget: ()->
-      @trigger = new CardReaderTrigger @$target
       @$target.hover(@mouseIn)
       @$target.bind('card_reader.icon_clicked', @start)
       @$target.bind('card_reader.dialog_closed', @dialogClosed)
@@ -94,7 +93,10 @@
         CardReaderDialog.instance.append(String.fromCharCode(which))
       event.preventDefault()
     mouseIn: (event)=>
-      @trigger.show()
+      @getTrigger().show()
+    getTrigger: ()->
+      @trigger = new CardReaderTrigger(@$target) unless @trigger
+      @trigger
 
   CardReader.isValidInput = (input)->
     (input >= 48 && input <= 57) || (input >= 65 && input <= 90 ) || (input >= 97 && input <= 122)

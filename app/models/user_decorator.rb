@@ -21,6 +21,8 @@ User.class_eval do
 
   after_create :initialize_schedule
 
+  validates_uniqueness_of :card_number
+
   scope :ranked, lambda { |type|
     includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank, 999999) asc')
   }

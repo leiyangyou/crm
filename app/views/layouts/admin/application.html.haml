@@ -16,6 +16,7 @@
 
     %script{:type => "text/javascript"}= yield :javascript
     = csrf_meta_tag
+    = yield :after_head
 
   %body.admin
     = render "layouts/admin/header"

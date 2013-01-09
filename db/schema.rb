@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223110402) do
+ActiveRecord::Schema.define(:version => 20130109072447) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -792,8 +792,10 @@ ActiveRecord::Schema.define(:version => 20121223110402) do
     t.datetime "suspended_at"
     t.string   "single_access_token"
     t.integer  "roles_mask",                        :default => 0
+    t.string   "card_number"
   end
 
+  add_index "users", ["card_number"], :name => "index_users_on_card_number", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
