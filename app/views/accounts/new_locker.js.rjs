@@ -2,5 +2,7 @@ page.call "crm.flip_form", :new_locker
 
 unless params[:cancel].true?
   page[:new_locker].replace :partial => "new_locker", :locals => {:account => @account, :contract =>@contract}
+  page.call 'crm.my_date_select_popup', 'contracts_locker_contract_started_on'
+  page.call 'crm.my_date_select_popup', 'contracts_locker_contract_finished_on'
 else
 end

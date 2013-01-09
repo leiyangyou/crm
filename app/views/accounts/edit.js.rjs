@@ -30,6 +30,7 @@ else # <----------------------------------------  Show [Edit Account] form.
     page.call "crm.flip_form", :edit_account
     page.call "crm.set_title", :edit_account, "#{t :edit} #{@account.name}"
   end
+  page.call 'crm.my_date_select_popup', 'account_dob'
   page << "new CardReader('#account_card_number')"
   page[:account_name].focus
 
