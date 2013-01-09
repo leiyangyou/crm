@@ -2,7 +2,7 @@ class Admin::ContractTemplatesController < Admin::ApplicationController
   before_filter "set_current_tab('admin/contract_templates')", :only => [ :index, :show ]
 
   load_resource :contract_template
-  layout "contracts", :only => [:preview]
+  layout "admin/contracts", :only => [:preview]
 
   skip_before_filter :require_admin_user
   before_filter "require_manager(ContractTemplate)"

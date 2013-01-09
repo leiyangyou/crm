@@ -31,29 +31,26 @@ end
 
 module SerializableAttributes
   class String
-    def klass
-     ::String
+    def type
+      :string
     end
   end
   class Integer
-    def klass
-      ::Integer
+    def type
+      :integer
     end
   end
   class Float
-    def klass
-      ::Float
+    def type
+      :float
     end
   end
   class Boolean
-    def klass
-      ::Boolean
+    def type
+      :boolean
     end
   end
   class Time
-    def klass
-      ::Time
-    end
     def type
       :datetime
     end
@@ -69,8 +66,8 @@ module SerializableAttributes
       end
     end
     def encode(input) input ? input.to_s("%Y-%m-%d"): nil end
-    def klass
-      ::Date
+    def type
+      :date
     end
   end
 

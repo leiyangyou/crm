@@ -9,7 +9,7 @@
       @$icon = $('<a class="card-reader-icon"></a>')
       @$icon.click(@iconClicked)
       @$target.after(@$icon.hide())
-      @$icon.css({top: position.top + margin_top, left: position.left + width - 16 - margin_left})
+      @$icon.css({top: position.top + margin_top + 4, left: position.left + width - 20 - margin_left})
       @shown = false
     iconClicked: (event) =>
       @$target.trigger('card_reader.icon_clicked', @$target)
@@ -99,7 +99,7 @@
       @trigger
 
   CardReader.isValidInput = (input)->
-    (input >= 48 && input <= 57) || (input >= 65 && input <= 90 ) || (input >= 97 && input <= 122)
+    (input >= 48 && input <= 57)
   $(()->
     CardReaderDialog.createDialog()
     CardReaderDialog.instance = new CardReaderDialog
