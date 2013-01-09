@@ -56,8 +56,6 @@ AccountsController.class_eval do
         @contract = Contracts::MembershipContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
       when 'suspend'
         @contract = Contracts::MembershipSuspendContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
-      when 'resume'
-
       when 'transfer'
         @contract = Contracts::MembershipTransferContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
     end

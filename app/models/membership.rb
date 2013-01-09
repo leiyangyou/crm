@@ -39,11 +39,17 @@ class Membership < ActiveRecord::Base
 
   def transfer contract
     target = contract.target
-    target_membership = target.membership
-    self.state_transfer
-    target_membership.accept_transfer(contract)
-    self.finished_on = contract.started_on
-    self.new_membership_state
+    if target
+      target_membership = target.membership
+      self.state_transfer
+      target_membership.accept_transfer(contract, self)
+      self.finished_on = contract.source_contract_finished_on
+      self.new_membership_state
+      true
+    else
+      logger.error("Cannot find account for target_id: '#{contract.target_id}'")
+    end
+    false
   end
 
   def suspend params
@@ -106,7 +112,7 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def accept_transfer(contract)
+  def accept_transfer(contract, source_membership)
     source_account = contract.account
     membership = source_account.membership
     remain = membership.finished_on - Date.today

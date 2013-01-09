@@ -1,0 +1,10 @@
+#footer
+  = image_tag "iconset_attribution.png"
+  Icons from the 
+  = link_to 'Gentleface Mono Icon Set', "http://gentleface.com/free_icon_set.html"
+
+  - unless tabless_layout?
+    \|
+    = link_to(t(:about_ffc), "#", :title => t(:about_ffc), :onclick => "Modalbox.show($('about'), { title: this.title }); return false;")
+%br
+= render "layouts/about"
