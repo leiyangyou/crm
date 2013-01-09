@@ -1,0 +1,35 @@
+.section
+  #locker_contract
+    %table
+      %tr
+        %td
+          .label.req= t(:locker) + ":"
+          = f.collection_select :identifier, Locker.available, :identifier, :identifier
+        %td=spacer
+        %td
+          .label.req= t(:started_on) + ":"
+          = f.text_field :started_on, :autocomplete => 'off'
+        %td=spacer
+        %td
+          .label.req= t(:finished_on) + ":"
+          = f.text_field :finished_on, :autocomplete => 'off'
+      %tr
+        %td
+          .label= t(:deposit) + ":"
+          = f.text_field :deposit
+        %td=spacer
+        %td
+          .label= t(:rent) + ":"
+          = f.text_field :rent
+        %td=spacer
+        %td
+          .label= t(:amount) + ":"
+          = f.text_field :amount
+      %tr
+        %td
+          .label= t(:amount_paid) + ":"
+          = f.text_field :amount_paid
+        %td=spacer
+        %td
+          .label= t(:amount_owed) + ":"
+          = f.text_field :amount_owing

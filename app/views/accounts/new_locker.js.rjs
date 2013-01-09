@@ -1,0 +1,6 @@
+page.call "crm.flip_form", :new_locker
+
+unless params[:cancel].true?
+  page[:new_locker].replace :partial => "new_locker", :locals => {:account => @account, :contract =>@contract}
+else
+end

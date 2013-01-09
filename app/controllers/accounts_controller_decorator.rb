@@ -103,6 +103,18 @@ AccountsController.class_eval do
     @account_survey = AccountSurvey.create(:survey => @survey, :account => @account, :response_set => @response_set)
   end
 
+  def new_locker
+    @account = Account.find(params[:id])
+    @contract = Contracts::LockerContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
+  end
+
+  def create_locker
+    @account = Account.find(params[:id])
+    @contract = Contracts::LockerContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
+    @contract.update_attributes(params[:contracts_locker_contract])
+    respond_with(@account)
+  end
+
   private
   def get_data_for_sidebar
     @account_state_total = Hash[
