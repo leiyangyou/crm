@@ -21,6 +21,6 @@
           |
         %span{:class => "#{locker.overdue? ? "overdue": ""}"}
           = locker.locker_rent.started_on.to_date
-          -
+          \-
           = locker.locker_rent.finished_on.to_date
 
