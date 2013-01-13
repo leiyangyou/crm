@@ -5,6 +5,9 @@
     - Setting.account_status_color.each do |key, value|
       li.account .#{key} { background:#{value}; }
 
+  - if models.include?(:membership_state)
+    li.membership_state.current_state .strip{ background-color: lime;}
+
   - if models.include?(:campaign)
     - Setting.campaign_status_color.each do |key, value|
       li.campaign .#{key} { background:#{value}; }
