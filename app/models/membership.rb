@@ -113,6 +113,7 @@ class Membership < ActiveRecord::Base
   def expire
     self.state_expire
     self.started_on = Date.today
+    self.finished_on = nil
     new_state = self.to_state
     self.new_state( new_state)
     self.save
