@@ -37,6 +37,10 @@ class Membership < ActiveRecord::Base
 
   end
 
+  def can_renew?
+    (self.active? || self.expired?) && !self.current_state.future_state
+  end
+
   def transfer contract
     target = contract.target
     if target

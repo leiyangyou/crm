@@ -11,7 +11,8 @@
       - if @account.active?
         = link_to_inline("edit_membership_state", suspend_account_path(@account), :text => t("suspend"))
         = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "transfer"), :text => t("transfer"))
-        = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "renew"), :text => t("renew"))
+        - if object.can_renew?
+          = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "renew"), :text => t("renew"))
 
   .subtitle#edit_membership_state_title= t(:membership)
   .remote#edit_membership_state{:style =>"display:none;"}
