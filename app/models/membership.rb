@@ -44,8 +44,8 @@ class Membership < ActiveRecord::Base
       self.started_on = contract.source_contract_finished_on
       self.state_transfer
       new_state = self.to_state
+      new_state.target_id = contract.target_id
       target_membership.accept_transfer(contract)
-      binding.pry
       self.new_state new_state
       binding.pry
     else
@@ -118,7 +118,7 @@ class Membership < ActiveRecord::Base
       self.state_expire
       self.started_on = Date.today
       new_state = self.to_state
-      self.new_stat( new_state)
+      self.new_state( new_state)
     end
     self.save
   end
@@ -140,26 +140,33 @@ class Membership < ActiveRecord::Base
   def accept_transfer(contract)
     active_state, state = self.extract_states_from_transfer_contract contract
     if self.active?
-      binding.pry
       self.add_future_state(state)
     else
-      binding.pry
       if state.started_on > Date.today
         self.add_future_state(state)
       else
         self.from_state(state)
       end
     end
-    binding.pry
     current_state = active_state
-    #if any future state move to the new one
+    started_on = state.finished_on #use to make all the state to join together
+    #if any active future state move to the new one
     while( future_state = current_state.future_state)
-      logger.info("move state '#{future_state.id}' to membership '#{self.id}'")
-      future_state.membership = self
-      self.add_future_state(future_state)
+      if future_state.state_type == MembershipState::TYPES::ACTIVE
+        logger.info("move state: '#{future_state}' to membership '#{self.id}'")
+        duration = future_state.finished_on - future_state.started_on
+        future_state.started_on = started_on
+        future_state.finished_on = started_on + duration
+        future_state.membership = self
+        self.add_future_state(future_state)
+
+        started_on = future_state.finished_on
+      else #remove any none-active states
+        future_state.destroy
+        logger.info("remove state: '#{future_state}'")
+      end
       current_state = future_state
     end
-    binding.pry
     self.save
   end
 
@@ -258,13 +265,11 @@ class Membership < ActiveRecord::Base
     preceding_state = current_state.lastest_future_state
     # if the state will not start on the date the preceding state will be finished
     # add an extra expired state between the two states
-    binding.pry
     if preceding_state.finished_on < state.started_on
       expire_state = MembershipState.new
       expire_state.state_type = MembershipState::TYPES::EXPIRED
       expire_state.started_on = preceding_state.finished_on
       expire_state.finished_on = state.started_on
-      binding.pry
       preceding_state = self.add_future_state expire_state
     end
     state.last_state = preceding_state
@@ -311,7 +316,6 @@ class Membership < ActiveRecord::Base
       raise 'no proper active state to transfer' unless active_state
     end
     remaining_days = (active_state.finished_on - active_state.started_on) - (Date.today - active_state.started_on)
-    binding.pry
     state = MembershipState.new
     state.state_type = MembershipState::TYPES::ACTIVE
     state.contract_id = contract.contract_id
