@@ -71,11 +71,11 @@ Account.class_eval do
   end
 
   def status
-     if membership
-       membership.status
-     else
-       "non_member"
-      end
+    if membership
+      membership.status
+    else
+      "non_member"
+    end
   end
 
   protected

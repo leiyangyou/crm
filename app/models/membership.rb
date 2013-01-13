@@ -51,12 +51,10 @@ class Membership < ActiveRecord::Base
       new_state.target_id = contract.target_id
       target_membership.accept_transfer(contract)
       self.new_state new_state
-      binding.pry
     else
       logger.error("Cannot find account for target_id: '#{contract.target_id}'")
     end
     self.save
-    binding.pry
   end
 
   def suspend params
@@ -113,17 +111,10 @@ class Membership < ActiveRecord::Base
   end
 
   def expire
-    current_state = self.current_state
-    if(future_state = current_state.future_state)
-      if future_state.started_on <= Date.today
-        self.from_state future_state
-      end
-    else
-      self.state_expire
-      self.started_on = Date.today
-      new_state = self.to_state
-      self.new_state( new_state)
-    end
+    self.state_expire
+    self.started_on = Date.today
+    new_state = self.to_state
+    self.new_state( new_state)
     self.save
   end
 
@@ -184,18 +175,19 @@ class Membership < ActiveRecord::Base
 
   def check_expiration
     if self.finished_on && self.finished_on < Date.today
-      if self.active?
-        self.expire
-      elsif self.suspended?
-        self.resume
+      if( future_state = self.current_state.future_state)
+        future_state.membership = self #avoid infinite invoking on after_find
+        self.from_state( future_state)
       else
-        if( future_state = self.current_state.future_state)
-          self.new_state( future_state)
+        if self.active?
+          self.expire
+        elsif self.suspended?
+          self.resume
         else
           self.finished_on = nil
         end
-        self.save
       end
+      self.save
     end
   end
 
@@ -231,11 +223,18 @@ class Membership < ActiveRecord::Base
       raise "trying to add a state belongs to another membership( id: #{state.membership.id} to the membership( id: #{self.id})"
     end
     self.status = state.state_type
-    self.started_on = state.started_on
-    self.finished_on = state.finished_on
-    self.contract_id = state.contract_id
-    self.type_id = state.type_id
+    [:started_on, :finished_on, :type_id, :contract_id].each do |method|
+      if state.respond_to? method
+        self.send(:"#{method}=", state.send(:"#{method}"))
+      else
+        self.send(:"#{method}=", nil)
+      end
+    end
+    last_state = self.current_state
+    state.last_state = last_state
+    state.save
     self.current_state = state
+    state
   end
 
   protected
