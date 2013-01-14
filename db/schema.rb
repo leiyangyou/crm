@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109072447) do
+ActiveRecord::Schema.define(:version => 20130113142715) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -438,8 +438,8 @@ ActiveRecord::Schema.define(:version => 20130109072447) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "started_on"
-    t.date     "finished_on"
+    t.date     "start_date"
+    t.date     "due_date"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -462,10 +462,14 @@ ActiveRecord::Schema.define(:version => 20130109072447) do
     t.integer  "last_state_id"
     t.integer  "membership_id"
     t.text     "parameters"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "future_state_id"
+    t.date     "started_on"
+    t.date     "finished_on"
   end
 
+  add_index "membership_states", ["future_state_id"], :name => "index_membership_states_on_future_state_id"
   add_index "membership_states", ["last_state_id"], :name => "index_membership_states_on_last_state_id"
   add_index "membership_states", ["membership_id"], :name => "index_membership_states_on_membership_id"
 
@@ -485,12 +489,13 @@ ActiveRecord::Schema.define(:version => 20130109072447) do
     t.integer  "account_id"
     t.date     "started_on"
     t.date     "finished_on"
-    t.integer  "duration",      :default => 0
+    t.integer  "duration",         :default => 0
     t.string   "status"
     t.string   "contract_id"
     t.integer  "consultant_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "current_state_id"
   end
 
   add_index "memberships", ["account_id"], :name => "index_memberships_on_account_id"

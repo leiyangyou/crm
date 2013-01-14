@@ -71,6 +71,7 @@ en-US:
     membership_states:
       state:
         active: "Active"
+        expired: "Expired"
         suspended: "Suspended"
         transferred: "Transferred"
         terminated: "Terminated"

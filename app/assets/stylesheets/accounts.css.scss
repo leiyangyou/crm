@@ -1,0 +1,7 @@
+#membership_states.list {
+  li.active {
+    &.current_state {
+      background-color: lime;
+    }
+  }
+}

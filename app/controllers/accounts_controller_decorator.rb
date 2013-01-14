@@ -45,7 +45,7 @@ AccountsController.class_eval do
 
   def resume
     @account = Account.find(params[:id])
-    @account.membership.resume params[:account]
+    @account.membership.resume
   end
 
   def edit_membership_state

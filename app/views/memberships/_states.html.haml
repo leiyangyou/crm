@@ -11,18 +11,21 @@
       - if @account.active?
         = link_to_inline("edit_membership_state", suspend_account_path(@account), :text => t("suspend"))
         = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "transfer"), :text => t("transfer"))
+        - if object.can_renew?
+          = link_to_inline("edit_membership_state", edit_membership_state_account_path(@account, :contract => "renew"), :text => t("renew"))
 
   .subtitle#edit_membership_state_title= t(:membership)
   .remote#edit_membership_state{:style =>"display:none;"}
 
+  - current_state = object.current_state
   .list#membership_states
     - unsigned_contracts = @account.contracts.membership_contracts.unsigned.order("created_at desc")
 
     - unsigned_contracts.each do |contract|
       = render :partial => 'contracts/contract', :locals => {:contract => contract}
 
-    - object.membership_states.order("created_at desc").each do |membership_state|
-      %li{:class =>membership_state.state_type}
+    - object.membership_states.order("started_on desc, created_at desc").each do |membership_state|
+      %li{:class =>"membership_state #{membership_state.state_type} #{membership_state == current_state ? "current_state" : "" }"}
         %span.type.strip
           = "#{t("view.membership_states.state.#{membership_state.state_type}")}"
         %span.created_at
@@ -33,6 +36,11 @@
               = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
             %span.range
               = "#{membership_state.started_on} - #{membership_state.finished_on}"
+          - when MembershipState::TYPES::EXPIRED
+            %span.range
+              = "#{membership_state.started_on}"
+              - if membership_state.finished_on
+                = "- #{membership_state.finished_on}"
           - when MembershipState::TYPES::SUSPENDED
             %span.range
               = "#{membership_state.started_on} - #{membership_state.finished_on}"
