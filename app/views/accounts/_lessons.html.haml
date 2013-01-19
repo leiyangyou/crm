@@ -1,9 +1,13 @@
-%br
-%div.subtitle_tools
-  = link_to_inline("new_lesson", new_participation_account_path(object), :text => t("new_lesson"))
-.subtitle#new_lesson_title= t(:lessons)
-.remote#new_lesson{:style =>"display:none;"}
+#lessons
+  %br
+  %div.subtitle_tools
+    = link_to_inline("new_lesson", new_participation_account_path(object), :text => t("new_lesson"))
+  .subtitle#new_lesson_title= t(:lessons)
+  .remote#new_lesson{:style =>"display:none;"}
 
-.list#participations
-  - if object.participations.any?
-    = render :partial =>"participations/participation", :collection => object.participations ,:as => :participation
+  .list#participations
+    - unsigned_contracts = @account.contracts.lesson_contracts.unsigned.order("created_at DESC")
+    - unsigned_contracts.each do |contract|
+      = render :partial => "contracts/contract", :locals => {:contract => contract}
+    - if object.participations.any?
+      = render :partial =>"participations/participation", :collection => object.participations ,:as => :participation

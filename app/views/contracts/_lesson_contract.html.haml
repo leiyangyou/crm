@@ -1,12 +1,23 @@
 %table
   %tr
     %td
-      .label.top.req= t("lesson") + ":"
+      .label.top.req= t("view.contract.lesson_contract.started_on") + ":"
+      = f.text_field :started_on
+    %td
+      .label.top.req= t("view.contract.lesson_contract.finished_on") + ":"
+      = f.text_field :finished_on
+  %tr
+    %td
+      .label.req= t("view.contract.lesson_contract.lesson") + ":"
       = f.collection_select :lesson_id, Lesson.all, :id, :name
     %td
-      .label.top.req= t("trainer") + ":"
+      .label.req= t("view.contract.lesson_contract.trainer") + ":"
       = f.collection_select :trainer_id, trainers, :id, :name
   %tr
+    %td
+      .label.req= t("view.contract.lesson_contract.tuition_fee") + ":"
+      = f.text_field :tuition_fee
+  -#%tr
     %td
       .label.req= t("assigner") + ":"
       = f.collection_select :assigner_id, User.all, :id, :name

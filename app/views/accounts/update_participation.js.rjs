@@ -1,0 +1,10 @@
+if @contract.valid?
+  page['lessons'].replace :partial => "lessons", :locals => {:object => @account}
+else
+  page['new_lesson'].replace_html :partial => "new_participation", :locals => {:account => @account, :contract => @contract}
+  page['new_lesson'].visual_effect :shake, :duration => 0.25, :distance => 6
+  page.call 'crm.my_date_select_popup', 'contracts_lesson_contract_started_on'
+  page.call 'crm.my_date_select_popup', 'contracts_lesson_contract_finished_on'
+  #page[:flash].replace_html @contract.errors.full_messages.join(', ')
+  #page.call "crm.flash", :warning
+end

@@ -1,8 +1,10 @@
 page.call "crm.flip_form", :new_lesson
 
 unless params[:cancel].true?
-  page[:new_lesson].replace_html :partial => "new_participation", :locals => {:account => @account, :participation =>@participation}
+  page[:new_lesson].replace_html :partial => "new_participation", :locals => {:account => @account, :contract => @contract}
   page.call "crm.set_title", :new_lesson, t(:new_lesson)
+  page.call 'crm.my_date_select_popup', 'contracts_lesson_contract_started_on'
+  page.call 'crm.my_date_select_popup', 'contracts_lesson_contract_finished_on'
 else
   page.call "crm.set_title", :new_lesson, t(:lessons)
 end

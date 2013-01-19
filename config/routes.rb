@@ -18,7 +18,7 @@ Til5::Application.routes.draw do
       put :do_transfer
       post :resume
       get :participate, :as => :new_participation, :to => "accounts#new_participation"
-      put :participate, :as => :participate, :to => "accounts#participate"
+      put :participate, :as => :update_participation, :to => "accounts#update_participation"
       get :survey, :as => :new_survey, :to => "accounts#new_survey"
       post :survey, :as => :survey, :to => "accounts#survey"
       get :edit_membership_state

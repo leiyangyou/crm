@@ -57,6 +57,12 @@ en-US:
         membership_contract: "Membership"
         membership_suspend_contract: "Suspend"
         membership_transfer_contract: "Transfer"
+      lesson_contract:
+        started_on: "Started On"
+        finished_on: "Finished On"
+        lesson: "Lesson"
+        trainer: "Trainer"
+        tuition_fee: "Tuition Fee"
       account: "Account"
       signed_at: "Singed At"
       sign: "Sign"

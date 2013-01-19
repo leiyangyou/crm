@@ -41,6 +41,10 @@ class Contract < ActiveRecord::Base
     ])
   }
 
+  scope :lesson_contracts, lambda {
+    where(:type =>["Contracts::LessonContract"])
+  }
+
   scope :locker_contracts, lambda {
     where(:type => "Contracts::LockerContract")
   }
