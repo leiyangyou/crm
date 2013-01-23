@@ -1,30 +1,9 @@
-%h3 New Lesson
-= form_for account, :url => participate_account_path(account), :remote => true do |f|
-  = link_to_close participate_account_path(account)
-  .section
-    %table
-      = f.fields_for(@participation) do |p|
-        = p.hidden_field :account_id
-        %tr
-          %td
-            .label.top.req= t(:lesson)
-            = p.collection_select :lesson_id, Lesson.all, :id, :name
-        %tr
-          %td
-            .label= t(:trainer)
-            = p.collection_select :trainer_id, User.trainers.ranked('trainer'), :id, :full_name,
-              {:include_blank => ""},
-              { :"data-placeholder" => t(:myself), :style => "width:160px" }
-          %td
-            .label.req= t(:assigner)
-            = p.fields_for :assignment_attributes do |a|
-              = a.collection_select :user_id, User.all, :id, :username,
-                {:prompt =>true},
-                { :"data-placeholder" => t(:myself), :style => "width:160px" }
-
-
+%h3= t(Contracts::LessonContract.to_s.underscore)
+= form_for [account, contract], :url => update_participation_account_path(account), :method => :put, :remote => true do |f|
+  = link_to_close new_participation_account_path(account)
+  = error_messages_for contract, :object_name => t('contract')
+  = render "contracts/lesson_contract", :f => f
   .buttonbar
     = f.submit t(:new), :id => :new_lesson_submit
     or
-    = link_to_cancel participate_account_path(account)
-
+    = link_to_cancel new_participation_account_path(account)

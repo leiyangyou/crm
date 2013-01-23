@@ -1,7 +1,13 @@
 module Contracts
   class LessonContract < Contract
+
+    belongs_to :lesson
+    belongs_to :trainer, :class_name => "User", :foreign_key => :trainer_id
+    validates_presence_of :lesson, :trainer
+
     serialize_attributes do
       integer :lesson_id, :required => true
+      integer :tuition_fee, :required => true
       integer :trainer_id, :required => true
     end
 
@@ -9,18 +15,13 @@ module Contracts
       lesson && lesson.name
     end
 
-    def lesson
-      @lesson ||= Lesson.find_by_id(self.lesson_id)
-    end
-
     def trainer_name
       trainer && trainer.name
     end
 
-    def trainer
-      @trainer ||= User.find_by_id(self.trainer_id)
+    def contract_type
+      :lesson
     end
-
 
     def generate_abstract
       self.abstract = [lesson_name, trainer_name].compact.join(",")

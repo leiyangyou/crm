@@ -68,8 +68,13 @@ AccountsController.class_eval do
 
   def new_participation
     @account = Account.find(params[:id])
-    @participation = Participation.new
-    @participation.account = @account
+    @contract = Contracts::LessonContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
+  end
+
+  def update_participation
+    @account = Account.find(params[:id])
+    @contract = Contracts::LessonContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
+    @contract.update_attributes(params[:contracts_lesson_contract])
   end
 
   def participate
