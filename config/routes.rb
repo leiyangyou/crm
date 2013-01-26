@@ -29,6 +29,12 @@ Til5::Application.routes.draw do
     collection do
       get :options, :to => "accounts#options"
     end
+    resources :lessons do
+      member do
+        get :transfer, :as => :new_lesson_transfer, :to => "accounts#new_lesson_transfer"
+        put :transfer, :as => :update_lesson_transfer, :to => "accounts#update_lesson_transfer"
+      end
+    end
     resources :contracts, :only => [:edit, :update, :show] do
       member do
         post :sign, :to => "contracts#sign"

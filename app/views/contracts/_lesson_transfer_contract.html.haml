@@ -1,0 +1,16 @@
+- lesson = @participation.lesson
+.section
+  #lesson_transfer_contract
+    %table
+      %tr
+        %td
+          .label.top.req=t(:"view.contract.lesson_transfer_contract.lesson") + ":"
+          %div= lesson.name
+        %td
+          .label.top.req= t(:"view.contract.lesson_transfer_contract.target") + ":"
+          = scoped_account_select("contracts_lesson_transfer_contract", Account.all, :name, :target_id)
+      %tr
+        %td
+          .label.req=t(:"view.contract.lesson_transfer_contract.transfer_fee") + ":"
+          = f.text_field :transfer_fee
+

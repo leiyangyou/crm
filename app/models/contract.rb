@@ -4,7 +4,8 @@ class Contract < ActiveRecord::Base
                     Contracts::MembershipTransferContract,
                     Contracts::MembershipSuspendContract,
                     Contracts::LessonContract,
-                    Contracts::LockerContract]
+                    Contracts::LockerContract,
+                    Contracts::LessonTransferContract]
   end
 
   belongs_to :account
@@ -43,6 +44,10 @@ class Contract < ActiveRecord::Base
 
   scope :lesson_contracts, lambda {
     where(:type =>["Contracts::LessonContract"])
+  }
+
+  scope :lesson_transfer_contracts, lambda {
+    where(:type =>["Contracts::LessonTransferContract"])
   }
 
   scope :locker_contracts, lambda {

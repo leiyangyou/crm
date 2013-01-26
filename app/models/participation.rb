@@ -8,6 +8,12 @@ class Participation < ActiveRecord::Base
 
   validates_presence_of :account_id, :lesson_id, :trainer_id
 
+  state_machine :status, :initial => :normal do
+    event :transfer do
+      transition :normal => :transferred
+    end
+  end
+
   default_scope do
     order('created_at DESC')
   end

@@ -6,4 +6,11 @@ module ParticipationsHelper
              :remote => true
     )
   end
+
+  def link_to_transfer participation
+    link_to( t(:transfer), new_lesson_transfer_account_lesson_path(participation.account, participation.lesson),
+             :method => :get,
+             :remote => true
+    )
+  end
 end
