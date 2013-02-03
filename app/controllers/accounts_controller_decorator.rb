@@ -89,23 +89,6 @@ AccountsController.class_eval do
     @participation.detroy
   end
 
-  def new_lesson_transfer
-    @account = Account.find(params[:account_id])
-    @lesson = Lesson.find(params[:id])
-    @participation = Participation.find_by_account_id_and_lesson_id(@account.id, @lesson.id)
-    @contract = Contracts::LessonTransferContract.find_or_initialize_by_account_id_and_signed_at(@account.id, nil)
-    @contract.account = @account
-    @contract.lesson = @lesson
-    @contract.trainer_id = @participation.trainer_id
-    @contract.times = @participation.times
-    @contract.participation = @participation
-  end
-
-  def update_lesson_transfer
-    new_lesson_transfer
-    @contract.update_attributes(params[:contracts_lesson_transfer_contract])
-  end
-
   def filter
     session[:accounts_filter] = params[:states]
     @accounts = get_accounts(:page => 1)

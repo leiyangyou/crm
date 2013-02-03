@@ -18,6 +18,8 @@ class Participation < ActiveRecord::Base
     order('created_at DESC')
   end
 
+  scope :normal, where(:status => "normal")
+
 
   def self.from_contract contract
   end

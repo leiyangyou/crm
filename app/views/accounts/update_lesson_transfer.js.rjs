@@ -1,6 +1,0 @@
-if @contract.valid?
-  page['lessons'].replace :partial => "lessons", :locals => {:object => @account}
-else
-  page['new_lesson_transfer'].replace_html :partial => "new_lesson_transfer", :locals => {:account => @account, :contract => @contract}
-  page['new_lesson_transfer'].visual_effect :shake, :duration => 0.25, :distance => 6
-end

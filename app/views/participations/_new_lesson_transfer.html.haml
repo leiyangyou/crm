@@ -1,0 +1,10 @@
+.remote
+  %h3= t(Contracts::LessonTransferContract.to_s.underscore)
+  = form_for [account, contract], :url => new_lesson_transfer_participation_path(participation), :method => :put, :remote => true do |f|
+    = link_to_close new_lesson_transfer_participation_path(participation)
+    = error_messages_for contract, :object_name => t("contract")
+    = render "contracts/lesson_transfer_contract", :f => f
+    .buttonbar
+      = f.submit t(:new), :id => :new_lesson_transfer
+      or
+      = link_to_cancel new_lesson_transfer_participation_path(participation)

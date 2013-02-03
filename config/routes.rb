@@ -29,12 +29,6 @@ Til5::Application.routes.draw do
     collection do
       get :options, :to => "accounts#options"
     end
-    resources :lessons do
-      member do
-        get :transfer, :as => :new_lesson_transfer, :to => "accounts#new_lesson_transfer"
-        put :transfer, :as => :update_lesson_transfer, :to => "accounts#update_lesson_transfer"
-      end
-    end
     resources :contracts, :only => [:edit, :update, :show] do
       member do
         post :sign, :to => "contracts#sign"
@@ -46,6 +40,8 @@ Til5::Application.routes.draw do
   resources :participations, :only => [:destroy] do
     member do
       post :attend
+      get :transfer, :as => :new_lesson_transfer, :to => "participations#new_lesson_transfer"
+      put :transfer, :as => :update_lesson_transfer, :to => "participations#update_lesson_transfer"
     end
   end
 

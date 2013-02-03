@@ -10,5 +10,9 @@
     - unsigned_contracts = @account.contracts.lesson_contracts.unsigned.order("created_at DESC")
     - unsigned_contracts.each do |contract|
       = render :partial => "contracts/contract", :locals => {:contract => contract}
-    - if object.participations.any?
-      = render :partial =>"participations/participation", :collection => object.participations ,:as => :participation
+    - unsigned_contracts = @account.contracts.lesson_transfer_contracts.unsigned.order("created_at DESC")
+    - unsigned_contracts.each do |contract|
+      = render :partial => "contracts/contract", :locals => {:contract => contract}
+    - participations = object.participations.normal
+    - if participations
+      = render :partial =>"participations/participation", :collection => participations ,:as => :participation
