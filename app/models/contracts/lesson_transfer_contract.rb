@@ -26,7 +26,6 @@ class Contracts::LessonTransferContract < Contract
     participation.times = self.participation.times
     participation.trainer_id = trainer.id
     participation.contract_id = self.contract_id
-    binding.pry
     participation.save
     self.participation.transfer
   end
