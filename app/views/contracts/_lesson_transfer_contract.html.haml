@@ -8,7 +8,7 @@
           %div= lesson.name
         %td
           .label.top.req= t(:"view.contract.lesson_transfer_contract.target") + ":"
-          = scoped_account_select("contracts_lesson_transfer_contract", Account.all, :name, :target_id)
+          = scoped_account_select("contracts_lesson_transfer_contract", Account.all.reject{|a| a == @account}, :name, :target_id)
       %tr
         %td
           .label.req=t(:"view.contract.lesson_transfer_contract.transfer_fee") + ":"
