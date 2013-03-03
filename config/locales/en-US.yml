@@ -54,6 +54,7 @@ en-US:
     contract:
       contracts:
         lesson_contract: "Lesson"
+        lesson_transfer_contract: "Transfer"
         membership_contract: "Membership"
         membership_suspend_contract: "Suspend"
         membership_transfer_contract: "Transfer"
@@ -63,6 +64,10 @@ en-US:
         lesson: "Lesson"
         trainer: "Trainer"
         tuition_fee: "Tuition Fee"
+      lesson_transfer_contract:
+        lesson: "Lesson"
+        target: "Target"
+        transfer_fee: "Transfer Fee"
       account: "Account"
       signed_at: "Singed At"
       sign: "Sign"

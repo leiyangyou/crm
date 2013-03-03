@@ -6,6 +6,8 @@ if @contract.signed?
     page['lockers_container'].replace :partial => "accounts/account_lockers", :locals => {:object => @account}
   elsif @contract.contract_type == :lesson
     page['lessons'].replace :partial => "accounts/lessons", :locals => {:object => @account}
+  elsif @contract.contract_type == :lesson_transfer
+    page['lessons'].replace :partial => "accounts/lessons", :locals => {:object => @account}
   end
 else
   page[id].visual_effect :shake, :duration =>0.25, :distance => 6

@@ -1,0 +1,9 @@
+id = dom_id(@participation)
+
+unless params[:cancel].true?
+  page.call "crm.hide_form", :new_lesson
+  page[id].replace_html :partial => "new_lesson_transfer", :locals => {:account => @account, :lesson => @lesson, :participation => @participation, :contract => @contract}
+  page.call "crm.highlight_off", id
+else
+  page[id].replace :partial => "participations/participation", :locals => {:participation => @participation}
+end

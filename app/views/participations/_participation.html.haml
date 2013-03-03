@@ -4,6 +4,8 @@
     - if participation.times <= 0
       = link_to_delete( participation, :url => participation_path(participation))
     - else
+      = link_to_transfer( participation)
+      |
       = link_to_attend( participation)
   .lesson_info
     %span.black= lesson.name

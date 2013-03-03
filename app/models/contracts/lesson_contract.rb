@@ -37,6 +37,7 @@ module Contracts
       participation.times = lesson.times
       participation.trainer = trainer
       participation.assigned_by self.trainer
+      participation.contract_id = self.contract_id
       self.save if participation.save
     end
   end
