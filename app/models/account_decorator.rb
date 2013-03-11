@@ -9,6 +9,11 @@ Account._validators.each do |key, value|
 end
 
 Account.class_eval do
+
+  mount_uploader :avatar, AvatarUploader
+
+  #attr_accessible :avatar_cache
+
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s) OR upper(card_number) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")

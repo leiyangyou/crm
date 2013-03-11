@@ -18,6 +18,7 @@ gem "surveyor"
 gem 'pdfkit'
 gem "markdown", "~> 1.0.0"
 gem "state_machine", "~> 1.1.2"
+gem 'carrierwave', "~> 0.6.2"
 
 if RUBY_PLATFORM =~ /darwin/
   gem 'wkhtmltopdf-binary'

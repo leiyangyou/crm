@@ -12,6 +12,13 @@
           .label.top{ :class => "#{Setting.require_last_names ? 'req' : ''}" } #{t :last_name}:
           = f.text_field :last_name
       %tr
+        %td
+          .label #{t :avatar}:
+          - if @account.avatar?
+            = image_tag(@account.avatar_url)
+          = f.file_field :avatar
+          = f.hidden_field :avatar_cache
+      %tr
         %td{:colspan => 3}
           %table
             %tr

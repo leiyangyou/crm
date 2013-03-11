@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126070430) do
+ActiveRecord::Schema.define(:version => 20130303111525) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20130126070430) do
     t.integer  "lead_id"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "avatar"
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"

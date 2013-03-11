@@ -12,33 +12,16 @@ $container_width: 940px;
   min-height: 10px;
   padding: 15px 5px;
   margin-bottom: 10px;
-  background-color: #F8F8F6;
+  background-color: white;
   border: 1px solid #EDEDED;
   border-bottom: 1px solid #E3E3E3;
 }
-
-@mixin info_list($name_width) {
-  dl {
-    dt, dd{
-      line-height: 30px;
-    }
-    dt {
-      float: left;
-      width: $name_width;
-      overflow: hidden;
-      clear: right;
-      text-align: right;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: bold;
-    }
-    dd {
-      margin-left: $name_width + 10;
-    }
-  }
-}
 body{
   background-color: $background-color;
+}
+.clear {
+  clear: both;
+  height: 0;
 }
 
 #container{
@@ -65,53 +48,49 @@ body{
       color: #e3e3e3;
     }
   }
-  #top {
-    margin-bottom: 5px;
-    ul#recommend-actions {
-      @include border-radius;
-      border: 1px solid #F88C03;
-      list-style: none;
-      margin: 0px;
-      padding: 3px 8px;
-      background-color: #FFE83A;
-      li {
-        font-size: 10px;
-        padding: 3px 0px 3px 5px;
-        border-top: 1px solid #F88C03;
-        color: FF9500;
-      }
-      li.first {
-        border-top: none;
-      }
-    }
-  }
   #content {
-    #left{
+    @include block;
+
+    #avatar-wrapper {
       float: left;
-      width: 400px;
-      #user-info-block {
-        @include block;
-        .avatar {
-          float: left;
-          padding: 0px 10px;
-        }
-        .info {
-          font-size: 15px;
-          margin-left: 150px;
-          min-height: 130px;
-          @include info_list( 50px);
-        }
+      padding: 5px 5px;
+      background-color: white;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+      margin-left: 20px
+    }
+
+    #info {
+      margin-left: 200px;
+      min-height: 150px;
+    }
+
+    #board {
+    }
+
+    #welcome-info {
+      border-bottom: 1px solid #eee;
+      padding: 0px 0px 0px 20px;
+      .name {
+        font-size: 80px;
+        letter-spacing: 10px;
+        margin-top: 10px;
       }
-      #membership-block {
-        @include block;
-        @include info_list( 180px);
+      .gender {
+        margin-left: 40px;
+        color: gray;
+      }
+      .greeting {
+        color: gray;
       }
     }
-    #right {
-      margin-left: 410px;
-      .lesson-block {
-        @include block;
-        @include info_list( 150px);
+
+    ul#notification {
+      margin-top: 30px;
+      padding-left: 20px;
+      li.important {
+        font-size: 20px;
+        color: red;
       }
     }
   }
