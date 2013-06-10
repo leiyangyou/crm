@@ -12,4 +12,10 @@ Lead.class_eval do
 
     [account, contract]
   end
+
+  after_save do
+    unless ["converted", "rejected"].include?(self.status)
+      related_tasks = self.tasks.pending.related_to_user(self.assignee).where("assigned_to != ?", self.assigned_to)
+    end
+  end
 end

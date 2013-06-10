@@ -438,8 +438,8 @@ ActiveRecord::Schema.define(:version => 20130126070430) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "start_date"
-    t.date     "due_date"
+    t.date     "started_on"
+    t.date     "finished_on"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -725,22 +725,26 @@ ActiveRecord::Schema.define(:version => 20130126070430) do
     t.integer  "user_id"
     t.integer  "assigned_to"
     t.integer  "completed_by"
-    t.string   "name",                           :default => "", :null => false
+    t.string   "name",                                :default => "", :null => false
     t.integer  "asset_id"
     t.string   "asset_type"
-    t.string   "priority",         :limit => 32
-    t.string   "category",         :limit => 32
-    t.string   "bucket",           :limit => 32
+    t.string   "priority",              :limit => 32
+    t.string   "category",              :limit => 32
+    t.string   "bucket",                :limit => 32
     t.datetime "due_at"
     t.datetime "completed_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.string   "background_info"
     t.text     "subscribed_users"
+    t.boolean  "related_to_trainer"
+    t.boolean  "related_to_consultant"
   end
 
   add_index "tasks", ["assigned_to"], :name => "index_tasks_on_assigned_to"
+  add_index "tasks", ["related_to_consultant"], :name => "index_tasks_on_related_to_consultant"
+  add_index "tasks", ["related_to_trainer"], :name => "index_tasks_on_related_to_trainer"
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|

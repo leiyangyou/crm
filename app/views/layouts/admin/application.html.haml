@@ -1,4 +1,4 @@
-!!!
+!!!5
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  :lang => :en }
   %head
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
@@ -7,12 +7,22 @@
     = stylesheet_link_tag :application
     = stylesheet_link_tag "overrides"
     = stylesheet_link_tag :print, :media => 'print'
+
+    = stylesheet_link_tag "jscal2/jscal2"
+    = stylesheet_link_tag "jscal2/border-radius"
+    = stylesheet_link_tag "jscal2/reduce-spacing"
+
     = yield :stylesheet_links
     %style= yield :styles
 
     = javascript_include_tag :application
     = yield :javascript_includes
     = hook(:javascript_includes, self)
+
+    = javascript_include_tag "jscal2/jscal2"
+    = javascript_include_tag "jscal2/unicode-letter"
+    = javascript_include_tag "jscal2/lang/en"
+    = javascript_include_tag "jscal2/lang/cn"
 
     %script{:type => "text/javascript"}= yield :javascript
     = csrf_meta_tag
