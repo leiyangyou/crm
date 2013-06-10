@@ -745,7 +745,7 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|
-    t.time     "date"
+    t.date     "date"
     t.integer  "user_id"
     t.integer  "performance"
     t.datetime "created_at",  :null => false
