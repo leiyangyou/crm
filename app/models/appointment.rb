@@ -6,15 +6,16 @@ class Appointment < ActiveRecord::Base
 
   validates_presence_of :date, :started_at, :finished_at
 
-  validates_with AppointmentDecorator::Validators::TimeValidator
+  validates_with AppointmentDecorator::Validators::TimeValidator, :on => :create
 
   state_machine :status, :initial => :normal do
     event :cancel do
       transition :normal => :canceled
     end
 
-    after_transition :to => :canceled do
-      self.daily_schedule.cancel_appointment(self)
+    after_transition :to => :canceled do |appointment|
+      appointment.daily_schedule.cancel_appointment(appointment)
+      appointment.destroy
     end
   end
 

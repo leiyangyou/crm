@@ -44,7 +44,7 @@ class DailySchedule < ActiveRecord::Base
 
   # Dont invoke this directly, use appointment.cancel instead
   def cancel_appointment appointment
-    time_range = TimeRange.new appointment.started_on, appointment.finished_on
+    time_range = TimeRange.new appointment.started_at, appointment.finished_at
     if appointment.daily_schedule_id == self.id
       self.free time_range
       true

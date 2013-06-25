@@ -6,7 +6,7 @@
       %tr
         %td{:colspan =>2}
           .label.top.req=t("model.appointment.date") + ":"
-          = f.date_select :date
+          = f.text_field :date
       %tr
         %td
           .label.req=t("model.appointment.stated_at") + ":"
@@ -22,3 +22,6 @@
     = f.submit t(:create_appointment), :id => :appointment_submit
     or
     = link_to_cancel new_appointment_user_path @user
+:javascript
+  crm.my_date_select_popup("appointment_date");
+

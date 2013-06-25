@@ -8,7 +8,7 @@ class AppointmentsController < ApplicationController
   end
 
   def cancel
-    @appointment = Appointment.new params[:id]
+    @appointment = Appointment.find params[:id]
     @appointment.cancel
   end
 

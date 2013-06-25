@@ -8,4 +8,4 @@
   %span.started_at= appointment.started_at.strftime("%H:%M")
   %span.dash= "-"
   %span.finished_at= appointment.finished_at.strftime("%H:%M")
-  %span.content= appointment.content.truncate(50)
+  %span.content(data-content="#{appointment.content}")= appointment.content.truncate(50)
