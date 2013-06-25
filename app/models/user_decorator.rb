@@ -50,6 +50,10 @@ User.class_eval do
     where("suspended_at is null")
   }
 
+  def primary_roles
+    Set.new(roles) & Set.new([:trainer, :consultant])
+  end
+
   def full_description
     now = Time.now
     "#{full_name}#{' - ' + I18n.t(:not_available) unless available_between?(now, now + 30.minutes)}"
