@@ -11,7 +11,7 @@ class Contract < ActiveRecord::Base
   belongs_to :account
   attr_protected :account_id, :parameters, :signed_at
   sortable :by => ["signed_at DESC", "started_at DESC", "end_at DESC", "created_at DESC"], :default => "created_at DESC"
-  validates_presence_of :contract_id, :finished_on, :started_on
+  validates_presence_of :finished_on, :started_on
   uses_user_permissions
   has_paper_trail
 
@@ -30,7 +30,7 @@ class Contract < ActiveRecord::Base
     end
   end
 
-  before_validation :generate_contract_id, :on =>:create
+  after_validation :generate_contract_id, :on =>:create
   after_validation :generate_content
   after_validation :generate_abstract
 
@@ -78,7 +78,7 @@ class Contract < ActiveRecord::Base
   protected
   def generate_contract_id
     begin
-      contract_id = self.class.generate_contract_id
+      contract_id = sprintf("07d", id);
     end while self.class.find_by_contract_id(contract_id)
     self.contract_id = contract_id
   end
