@@ -97,8 +97,7 @@ AccountsController.class_eval do
 
   def new_survey
     @account = Account.find(params[:id])
-    completed_survey_ids = @account.account_surveys.map(&:survey_id)
-    @surveys = Survey.all.reject{|survey| completed_survey_ids.include?(survey.id)}
+    @surveys = Survey.all
   end
 
   def survey
