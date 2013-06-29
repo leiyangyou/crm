@@ -1,0 +1,11 @@
+= form_for :account_survey, :url => survey_lead_path(@lead), :remote => true do |f|
+  = link_to_close survey_lead_path(@lead)
+  .section
+    %table
+      %tr
+        %td
+          = f.collection_select :survey_id, @surveys, :id, :title
+  .buttonbar
+    = f.submit t(:new), :id => :new_survey_submit
+    or
+    = link_to_cancel survey_lead_path(@lead)

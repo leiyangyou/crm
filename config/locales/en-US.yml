@@ -80,6 +80,8 @@ en-US:
         membership_suspend_contract: 'Membership Suspend Contract'
         lesson_contract: 'Lesson Contract'
         locker_contract: 'Locker Contract'
+    lead:
+      new_survey: "New Survey"
     membership_states:
       state:
         active: "Active"

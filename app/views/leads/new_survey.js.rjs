@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :new_survey
+
+unless params[:cancel].true?
+  page[:new_survey].replace_html :partial => "new_survey", :locals => {:lead => @lead, :account_survey => @account_survey}
+  page.call "crm.set_title", :new_survey, t("view.lead.new_survey")
+else
+  page.call "crm.set_title", :new_survey, t(:surveys)
+end

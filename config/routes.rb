@@ -8,6 +8,13 @@ Til5::Application.routes.draw do
     end
   end
 
+  resources :leads do
+    member do
+      get :survey, :as => :new_survey, :to => "leads#new_survey"
+      post :survey, :as => :survey, :to => "leads#survey"
+    end
+  end
+
   resources :accounts do
     member do
       get :renew

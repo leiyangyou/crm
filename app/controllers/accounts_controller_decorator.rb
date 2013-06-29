@@ -97,15 +97,14 @@ AccountsController.class_eval do
 
   def new_survey
     @account = Account.find(params[:id])
-    completed_survey_ids = @account.account_surveys.map(&:survey_id)
-    @surveys = Survey.all.reject{|survey| completed_survey_ids.include?(survey.id)}
+    @surveys = Survey.all
   end
 
   def survey
     @account = Account.find(params[:id])
     @survey = Survey.find(params[:account_survey][:survey_id])
     @response_set = ResponseSet.create(:survey => @survey )
-    @account_survey = AccountSurvey.create(:survey => @survey, :account => @account, :response_set => @response_set)
+    @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @account, :response_set => @response_set)
   end
 
   def new_locker

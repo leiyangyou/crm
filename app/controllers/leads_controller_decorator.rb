@@ -47,4 +47,16 @@ LeadsController.class_eval do
       end
     end
   end
+
+  def new_survey
+    @lead = Lead.find(params[:id])
+    @surveys = Survey.all
+  end
+
+  def survey
+    @lead = Lead.find(params[:id])
+    @survey = Survey.find(params[:account_survey][:survey_id])
+    @response_set = ResponseSet.create(:survey => @survey )
+    @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @lead, :response_set => @response_set)
+  end
 end
