@@ -19,9 +19,11 @@ User.class_eval do
 
   delegate :rank, :to => :user_rank, :allow_nil => true
 
+  has_many :tasks, :foreign_key => :assigned_to
+
   after_create :initialize_schedule
 
-  validates_uniqueness_of :card_number
+  validates_uniqueness_of :card_number, :allow_nil => true
 
   scope :ranked, lambda { |type|
     includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank_override, 999999) asc')

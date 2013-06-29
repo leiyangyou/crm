@@ -7,9 +7,9 @@ Task.class_eval do
   }
 
   before_save do
-    if self.assignee?
-      self.related_to_trainer =  self.assignee.roles.include?(:trainer)
-      self.related_to_consultant =  self.assignee.roles.include?(:consultant)
+    if (assignee = self.assignee)
+      self.related_to_trainer =  assignee.roles.include?(:trainer)
+      self.related_to_consultant =  assignee.roles.include?(:consultant)
     end
   end
 end

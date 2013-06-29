@@ -456,8 +456,8 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "started_on"
-    t.date     "finished_on"
+    t.date     "start_date"
+    t.date     "due_date"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

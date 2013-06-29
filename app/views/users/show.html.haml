@@ -11,6 +11,10 @@
 
 .list#profile= render "user"
 
+.subtitle Tasks
+.log#tasks
+  = render :partial => "shared/tasks", :locals => {:object => @user}
+
 = render :partial =>"shared/appointments", :locals => {:object => @user, :date => @date || Date.today}
 
 = hook(:show_user_bottom, self, :user => @user)
