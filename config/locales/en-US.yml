@@ -48,6 +48,7 @@ en-US:
   view:
     account:
       new_survey: "New Survey"
+      new_locker: "New Locker"
     account_survey:
       take: "Take"
       view: "View"
@@ -86,6 +87,8 @@ en-US:
         suspended: "Suspended"
         transferred: "Transferred"
         terminated: "Terminated"
+    participation:
+      attend_confirm: "Are you sure?"
     lesson:
       price: "Price"
       times: "Times"
