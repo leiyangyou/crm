@@ -34,6 +34,10 @@ LeadsController.class_eval do
       @account, @contract= @lead.promote(params)
       error_free = @account.errors.empty? && @contract.errors.empty?
       raise ActiveRecord::Rollback unless error_free
+      @lead.account_surveys.each do |account_survey|
+        account_survey.respondent = @account
+        account_survey.save
+      end
     end
 
     respond_with(@lead) do |format|
