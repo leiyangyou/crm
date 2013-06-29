@@ -10,7 +10,7 @@
     Calendar.setup(
       trigger: button_id
       inputField : id
-      show_time : show_time
+      showTime : show_time
       onSelect : ()->@hide()
     )
 )(jQuery);
