@@ -104,7 +104,7 @@ AccountsController.class_eval do
     @account = Account.find(params[:id])
     @survey = Survey.find(params[:account_survey][:survey_id])
     @response_set = ResponseSet.create(:survey => @survey )
-    @account_survey = AccountSurvey.create(:survey => @survey, :account => @account, :response_set => @response_set)
+    @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @account, :response_set => @response_set)
   end
 
   def new_locker

@@ -1,5 +1,6 @@
 Lead.class_eval do
   has_one :account
+  has_many :account_surveys, :as => :respondent
 
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip

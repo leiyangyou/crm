@@ -71,6 +71,8 @@ zh-CN:
         membership_suspend_contract: '会籍暂停合同'
         lesson_contract: '私教课合同'
         locker_contract: '衣柜合同'
+    lead:
+      new_survey: "新建问卷调查"
     membership_states:
       state:
         active: "正常"
