@@ -87,9 +87,7 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"
-  add_index "accounts", ["card_number"], :name => "index_accounts_on_card_number"
   add_index "accounts", ["lead_id"], :name => "index_accounts_on_lead_id"
-  add_index "accounts", ["trainer_id"], :name => "index_accounts_on_trainer_id"
   add_index "accounts", ["user_id", "name", "deleted_at"], :name => "index_accounts_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "activities", :force => true do |t|
@@ -377,27 +375,10 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
     t.integer  "maxlength"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.integer  "pair_id"
-    t.text     "settings"
   end
 
   add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"
   add_index "fields", ["name"], :name => "index_fields_on_name"
-
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "groups_users", :id => false, :force => true do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-  end
-
-  add_index "groups_users", ["group_id", "user_id"], :name => "index_groups_users_on_group_id_and_user_id"
-  add_index "groups_users", ["group_id"], :name => "index_groups_users_on_group_id"
-  add_index "groups_users", ["user_id"], :name => "index_groups_users_on_user_id"
 
   create_table "leads", :force => true do |t|
     t.integer  "user_id"
@@ -456,8 +437,8 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
     t.integer  "locker_id"
     t.integer  "account_id"
     t.string   "contract_id"
-    t.date     "start_date"
-    t.date     "due_date"
+    t.date     "started_on"
+    t.date     "finished_on"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -565,11 +546,9 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
     t.string   "asset_type"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "group_id"
   end
 
   add_index "permissions", ["asset_id", "asset_type"], :name => "index_permissions_on_asset_id_and_asset_type"
-  add_index "permissions", ["group_id"], :name => "index_permissions_on_group_id"
   add_index "permissions", ["user_id"], :name => "index_permissions_on_user_id"
 
   create_table "preferences", :force => true do |t|
@@ -768,7 +747,7 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "user_daily_performances", :force => true do |t|
-    t.time     "date"
+    t.date     "date"
     t.integer  "user_id"
     t.integer  "performance"
     t.datetime "created_at",  :null => false
@@ -860,9 +839,9 @@ ActiveRecord::Schema.define(:version => 20130303111525) do
   end
 
   create_table "versions", :force => true do |t|
-    t.string   "item_type",                     :null => false
-    t.integer  "item_id",                       :null => false
-    t.string   "event",          :limit => 512, :null => false
+    t.string   "item_type",      :null => false
+    t.integer  "item_id",        :null => false
+    t.string   "event",          :null => false
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"
