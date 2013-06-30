@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130629155132) do
+ActiveRecord::Schema.define(:version => 20130630151955) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -87,7 +87,9 @@ ActiveRecord::Schema.define(:version => 20130629155132) do
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"
+  add_index "accounts", ["card_number"], :name => "index_accounts_on_card_number", :unique => true
   add_index "accounts", ["lead_id"], :name => "index_accounts_on_lead_id"
+  add_index "accounts", ["trainer_id"], :name => "index_accounts_on_trainer_id"
   add_index "accounts", ["user_id", "name", "deleted_at"], :name => "index_accounts_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "activities", :force => true do |t|
