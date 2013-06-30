@@ -1,4 +1,5 @@
 LeadsController.class_eval do
+
   def convert
     address = @lead.business_address
 
@@ -34,6 +35,10 @@ LeadsController.class_eval do
       @account, @contract= @lead.promote(params)
       error_free = @account.errors.empty? && @contract.errors.empty?
       raise ActiveRecord::Rollback unless error_free
+      @lead.account_surveys.each do |account_survey|
+        account_survey.respondent = @account
+        account_survey.save
+      end
     end
 
     respond_with(@lead) do |format|
@@ -59,4 +64,5 @@ LeadsController.class_eval do
     @response_set = ResponseSet.create(:survey => @survey )
     @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @lead, :response_set => @response_set)
   end
+
 end

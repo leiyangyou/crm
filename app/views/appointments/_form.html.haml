@@ -17,7 +17,7 @@
       %tr
         %td{:colspan =>2}
           .label.req=t("model.appointment.content") + ":"
-          = f.text_area :content
+          = f.text_area :content, :style => "width: 480px;"
   .buttonbar
     = f.submit t(:create_appointment), :id => :appointment_submit
     or
