@@ -16,7 +16,7 @@ class Membership < ActiveRecord::Base
 
   after_create :create_initialize_state
 
-  state_machine :status, :initial => :expired do
+  state_machine :status, :initial => :pending do
     event :state_transfer do
       transition :active => :transferred
     end
@@ -35,7 +35,6 @@ class Membership < ActiveRecord::Base
 
     after_transition :active => any, :do => :accumulate_membership_duration
 
-
   end
 
   def remaining
@@ -44,7 +43,7 @@ class Membership < ActiveRecord::Base
   end
 
   def can_renew?
-    (self.active? || self.expired?) && !self.current_state.future_state
+    (self.active? || self.expired? || self.pending?) && !self.current_state.future_state
   end
 
   def transfer contract
@@ -204,7 +203,7 @@ class Membership < ActiveRecord::Base
 
   def create_initialize_state
     state = MembershipState.new
-    state.state_type = MembershipState::TYPES::EXPIRED
+    state.state_type = MembershipState::TYPES::PENDING
     state.started_on = Date.today
     self.new_state state
   end

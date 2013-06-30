@@ -25,4 +25,6 @@ Canard::Abilities.for(:trainer) do
   cannot :convert, Lead
   cannot :reject, Lead
   cannot :destroy, Lead
+  cannot :filter_by_assigned_to, Lead
+  cannot :filter_by_assigned_to, Account
 end

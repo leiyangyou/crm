@@ -77,6 +77,10 @@ module Contracts
       contract
     end
 
+    def abstract
+      "#{I18n.t(:membership_type)} #{membership_type_name}"
+    end
+
     protected
     def copy_attributes_from_account
       (self.finished_on ||= (started_on + membership_type.duration.days)) if membership_type && started_on

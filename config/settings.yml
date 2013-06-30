@@ -285,13 +285,11 @@ lead_status:
   - :contacted
   - :converted
   - :rejected
-  - :delayed
 
 account_status:
   - :pending
   - :suspended
   - :active
-  - :delayed
   - :expired
   - :transfered
 
@@ -306,10 +304,16 @@ account_status_color:
   :pending : Silver
   :suspended : Orchid
   :active : Lime
-  :delayed : Salmon
   :expired : OrangeRed
   :transfered : PaleGoldenRod
-  :non_member : Turquoise
+
+membership_state_color:
+  :pending   : Silver
+  :suspended  : Orchid
+  :active : Lime
+  :expired : OrangeRed
+  :transfered  : PaleGoldenRod
+  :terminated : Red
 
 lead_source:
   - :walk_in

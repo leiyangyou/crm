@@ -1,10 +1,11 @@
 .filters#filters
   = render "shared/search"
-  .label #{t :consultant}:
-  = scoped_users_filter(:accounts, User.active.consultants, :assigned_to)
+  - if can?(:filter_by_assigned_to, Account)
+    .label #{t :consultant}:
+    = scoped_users_filter(:accounts, User.active.consultants, :assigned_to)
 
-  .label #{t :trainer}:
-  = scoped_users_filter(:accounts, User.active.trainers, :trainer_id)
+    .label #{t :trainer}:
+    = scoped_users_filter(:accounts, User.active.trainers, :trainer_id)
 
   = hook(:index_account_sidebar_bottom, self)
   - Setting[:account_status].each do |key|
@@ -22,7 +23,5 @@
 
 :javascript
   document.observe('dom:loaded', function () {
-    new Chosen($('accounts_assignee_assigned_to'), { allow_single_deselect: true })
-    new Chosen($('accounts_assignee_trainer_id'), { allow_single_deselect: true })
-
+    crm.init_chosen_fields()
   })

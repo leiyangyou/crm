@@ -4,7 +4,7 @@
   = include_card_widget
 
 .title_tools
-  - if can?(:new, :lead)
+  - if can?(:create, :lead)
     = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead)) << " | "
   - if Setting.advanced_search_enabled
     = link_to_inline(:advanced_search, advanced_search_leads_path, :text => t(:advanced_search)) << " | "

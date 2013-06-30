@@ -81,7 +81,7 @@ LeadsController.class_eval do
 
   protected
   def apply_assigned_to_filters
-    if assignee_params = session[:leads_assignee_filter]
+    if can?(:filter_by_assigned_to, Lead) and assignee_params = session[:leads_assignee_filter]
       unless assignee_params[:assigned_to].blank?
         @leads = @leads.where(:assigned_to => assignee_params[:assigned_to])
       end

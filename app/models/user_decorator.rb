@@ -62,6 +62,10 @@ User.class_eval do
     "#{full_name}#{' - ' + I18n.t(:not_available) unless available_between?(now, now + 30.minutes)}"
   end
 
+  def full_contact
+    "#{full_name} #{'(' + phone + ')' unless phone.blank?}"
+  end
+
   def available_between?(start_time, end_time)
     schedule.schedule_for_today.working_and_available?(DailySchedule::TimeRange.new(start_time, end_time))
   end

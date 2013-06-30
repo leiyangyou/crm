@@ -112,7 +112,7 @@ zh-CN:
         suspended: "暂停"
         transferred: "转让"
         terminated: "终止"
-        expired: "过期"
+        expired: "已过期"
     lesson:
       price: "价格"
       times: "时间"
@@ -191,7 +191,7 @@ zh-CN:
   beijing: "北京"
   china: "中国"
   card_number: "卡号"
-  pending: '暂停'
+  pending: '未激活'
   admin_tab_tags: "标签"
   admin_tab_contract_templates: "合同模板"
   contract_template_small: "合同模版"
@@ -217,7 +217,7 @@ zh-CN:
   to_csv: "导出为csv文件"
   to_rss: "导出为rss文件"
   to_atom: "导出为atom文件"
-  delayed: "继续跟进"
+  delayed: "超过90天未成单"
   suspended: "暂停"
   active: "正常"
   expired: "已过期"
@@ -257,3 +257,5 @@ zh-CN:
   select_task: "选择任务"
   expand_all: "展开"
   collapse_all: "收起"
+  unsigned_contracts: "待签合约"
+  membership_states: "会籍状态记录"

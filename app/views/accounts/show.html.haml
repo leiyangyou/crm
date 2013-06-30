@@ -17,7 +17,8 @@
 
   = render :partial => "lessons", :locals => {:object => @account}
 
-  = render :partial => "account_surveys", :locals => {:object => @account}
+  - if can?(:manage_survey, @account)
+    = render :partial => "account_surveys", :locals => {:object => @account}
 
   #lockers_container
     = render :partial => "account_lockers", :locals => {:object => @account}

@@ -1,7 +1,8 @@
 .filters#filters
   = render "shared/search"
-  .label #{t :consultant}:
-  = scoped_users_filter(:leads, User.active.consultants, :assigned_to)
+  - if can?(:filter_by_assigned_to, Lead)
+    .label #{t :consultant}:
+    = scoped_users_filter(:leads, User.active.consultants, :assigned_to)
 
   - Setting.lead_status.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
@@ -24,5 +25,5 @@
 
 :javascript
   document.observe('dom:loaded', function () {
-    new Chosen($('leads_assignee_assigned_to'), { allow_single_deselect: true })
+    crm.init_chosen_fields()
   })
