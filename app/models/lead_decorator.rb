@@ -31,10 +31,7 @@ Lead.class_eval do
   private
   def transfer_mc_related_stuff_if_necessary
     if self.assigned_to_changed?
-      self.tasks.pending.where(:assigned_to => self.assigned_to_was).each do |task|
-        task.assigned_to = self.assigned_to
-        task.save
-      end
+      self.tasks.pending.where(:assigned_to => self.assigned_to_was).update_all(:assigned_to => self.assigned_to)
     end
   end
 
