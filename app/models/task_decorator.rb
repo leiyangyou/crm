@@ -13,4 +13,9 @@ Task.class_eval do
     end
     true
   end
+
+  def parse_calendar_date
+    DateTime.strptime(self.calendar,
+                      '%Y-%m-%d %H:%M %p').utc
+  end
 end
