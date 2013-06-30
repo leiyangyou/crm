@@ -59,6 +59,8 @@ Account.class_eval do
 
   before_validation :update_name
 
+  after_create :create_tasks_for_ptm
+
   def participate_lesson params
     participation = Participation.new params[:participation]
     participation.account = self

@@ -11,5 +11,6 @@ Task.class_eval do
       self.related_to_trainer =  assignee.roles.include?(:trainer)
       self.related_to_consultant =  assignee.roles.include?(:consultant)
     end
+    true
   end
 end
