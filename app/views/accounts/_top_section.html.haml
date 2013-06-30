@@ -25,14 +25,14 @@
               %td
                 .label #{t :assigned_to}:
                 - if !edit || can?(:update_consultant, @account)
-                  = scoped_users_select(:account, assignable_consultants, :full_description, :assigned_to, :style => "width:160px")
+                  = scoped_users_select(:account, assignable_consultants, :full_description, :assigned_to, {}, :style => "width:160px")
                 - else
                   .value= @account.assignee.full_name
               %td= spacer
               %td
                 .label #{t :trainer}:
                 - if !edit || can?(:update_trainer, @account)
-                  = scoped_users_select(:account, assignable_trainers, :full_description, :trainer_id, :style => "width:160px")
+                  = scoped_users_select(:account, assignable_trainers, :full_description, :trainer_id, {:include_blank => true}, :style => "width:160px")
                 - else
                   .value= @account.trainer.full_name
               %td= spacer
