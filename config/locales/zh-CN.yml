@@ -47,6 +47,10 @@ zh-CN:
                 error:
                   unavailable: "不在 %{working_time}"
                   not_working: "不在工作中 %{time}"
+        contract:
+          attributes:
+            finished_on:
+              :should_after_started_on: "结束时间应该早于开始时间"
         daily_schedule:
           attributes:
             base:
@@ -57,6 +61,11 @@ zh-CN:
             trainer:
               error:
                 no_trainer: "必须指定一个有效的私人教练"
+        locker_rent:
+          attributes:
+            due_date:
+              error:
+                :overdue_when_create: "创建时已经过期"
   view:
     account:
       new_survey: "新建问卷调查"
