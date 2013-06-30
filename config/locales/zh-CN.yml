@@ -20,7 +20,7 @@ zh-CN:
   roles:
     operator: "运营"
     operator_manager: "运营经理"
-    trainer: "教练"
+    trainer: "私人教练"
     trainer_manager: "教练经理"
     general_manager: "店长"
     consultant: '会籍顾问'
@@ -56,7 +56,7 @@ zh-CN:
           attributes:
             trainer:
               error:
-                no_trainer: "必须指定一个有效的教练"
+                no_trainer: "必须指定一个有效的私人教练"
   view:
     account:
       new_survey: "新建问卷调查"
@@ -80,7 +80,7 @@ zh-CN:
         started_on: "开始时间"
         finished_on: "结束时间"
         lesson: "课程名称"
-        trainer: "教练"
+        trainer: "私人教练"
         tuition_fee: "训练费"
       lesson_transfer_contract:
         lesson: "私教课"
@@ -107,7 +107,7 @@ zh-CN:
     lesson:
       price: "价格"
       times: "时间"
-      trainer: "教练"
+      trainer: "私人教练"
     welcome:
       title: "OZone 卡"
       name: "姓名"
@@ -122,7 +122,7 @@ zh-CN:
       days_before_due_date: "保留天数"
       last_visit_time: "上次刷卡时间"
       days_since_last_visit: "距离上次刷卡天数"
-      lesson_trainer: "教练"
+      lesson_trainer: "私人教练"
       lesson_type: "课程类型"
       used_times: "已使用课时"
       surplus_times: "剩余课时"
@@ -177,7 +177,7 @@ zh-CN:
   create_lesson: "创建私教课"
   price: "价格"
   times: "次数"
-  trainer: "教练"
+  trainer: "私人教练"
   not_available: "不在"
   beijing: "北京"
   china: "中国"

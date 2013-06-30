@@ -2,7 +2,7 @@
   %tr
     %th
     - @dates.each do |date|
-      %th #{date.strftime("%a %m/%d")}
+      %th #{l date, format: "%m/%d %a"}
   - @schedules.each do |user, schedules|
     %tr
       %th= link_to "#{user.full_name} #{"(#{user.mobile})" if user.mobile}", url_for(user)

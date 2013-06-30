@@ -326,8 +326,8 @@ en-US:
   conversion_number: "%{value} conversion"
   create_campaign: Create Campaign
   end_date: End date
-  finished_on: completed on %{value}
-  finishes_in: finishes in %{value}
+#  finished_on: completed on %{value}
+  inishes_in: finishes in %{value}
   no_start_date: no start date specified
   number_of_leads: Number of leads
   objectives: Objectives

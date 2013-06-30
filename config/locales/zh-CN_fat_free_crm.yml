@@ -315,7 +315,7 @@ zh-CN:
   conversion_number: "%{value} 转换" 
   create_campaign: 创建营销
   end_date: 结束日期
-  finished_on: 完成于 %{value}
+#  finished_on: 完成于 %{value}
   finishes_in: 用 %{value} 完成
   no_start_date: 未指定开始日期
   number_of_leads: 线索数

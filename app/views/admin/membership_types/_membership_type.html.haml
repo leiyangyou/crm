@@ -4,7 +4,7 @@
     - if membership_type.memberships.count <= 0
       = link_to_delete(membership_type, :url => url_for([:admin, membership_type]))
     - else
-      %span{:style => "color: #777"} Delete
+      %span{:style => "color: #777"} #{t(:delete)}!
   .membership_info
     %span.black= membership_type.name
     %tt
