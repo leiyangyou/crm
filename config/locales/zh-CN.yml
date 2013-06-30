@@ -20,11 +20,11 @@ zh-CN:
   roles:
     operator: "运营"
     operator_manager: "运营经理"
-    trainer: "私人教练"
+    trainer: "教练"
     trainer_manager: "教练经理"
     general_manager: "店长"
-    consultant: '会籍顾问'
-    consultant_manager: '会籍顾问经理'
+    consultant: '顾问'
+    consultant_manager: '顾问经理'
     admin: "系统管理员"
   renew: "续卡"
   preview: "预览"
@@ -79,7 +79,6 @@ zh-CN:
         membership_contract: "会籍合同"
         membership_suspend_contract: "会籍暂停合同"
         membership_transfer_contract: "会籍转让合同"
-        lesson_transfer_contract: "私教课转让合同"
         locker_contract: "租柜合同"
       account: "会员"
       signed_at: "签约时间"
@@ -104,6 +103,7 @@ zh-CN:
         membership_suspend_contract: '会籍暂停合同'
         lesson_contract: '私教课合同'
         locker_contract: '衣柜合同'
+        lesson_transfer_contract: "私教课转让合同"
     lead:
       new_survey: "新建问卷调查"
     membership_states:
