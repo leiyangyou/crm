@@ -1,4 +1,5 @@
 LeadsController.class_eval do
+
   def convert
     address = @lead.business_address
 
@@ -63,4 +64,5 @@ LeadsController.class_eval do
     @response_set = ResponseSet.create(:survey => @survey )
     @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @lead, :response_set => @response_set)
   end
+
 end
