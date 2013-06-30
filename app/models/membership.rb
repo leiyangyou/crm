@@ -35,6 +35,12 @@ class Membership < ActiveRecord::Base
 
     after_transition :active => any, :do => :accumulate_membership_duration
 
+
+  end
+
+  def remaining
+    remaining = self.finished_on - Date.today
+    remaining > 0 ? remaining : 0
   end
 
   def remaining

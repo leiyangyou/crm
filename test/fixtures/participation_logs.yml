@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  participation: 
+  trainer: 
+  lesson: 
+  operator: 
+
+two:
+  participation: 
+  trainer: 
+  lesson: 
+  operator: 

@@ -8,7 +8,7 @@ class ParticipationsController < ApplicationController
   def attend
     @participation = Participation.find(params[:id])
     respond_with(@participation) do
-      unless @participation.attend
+      unless @participation.attend current_user
         flash[:warning] = "No more times is available"
       end
     end

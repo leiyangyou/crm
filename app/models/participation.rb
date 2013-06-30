@@ -28,10 +28,11 @@ class Participation < ActiveRecord::Base
     self.lesson.try(:price){0}
   end
 
-  def attend
+  def attend operator=nil
     if self.times > 0
       self.times -= 1
       self.save
+      ParticipationLog.record(self, operator)
       true
     else
       false
