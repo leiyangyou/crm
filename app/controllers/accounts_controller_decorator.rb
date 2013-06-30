@@ -97,7 +97,7 @@ AccountsController.class_eval do
 
   def filter
     session[:accounts_filter] = params[:states]
-    session[:assigned_to_filter] = params[:accounts]
+    session[:accounts_assignee_filter] = params[:accounts_assignee]
     @accounts = get_accounts(:page => 1)
     apply_assigned_to_filters
     render :index
@@ -140,7 +140,7 @@ AccountsController.class_eval do
   end
 
   def apply_assigned_to_filters
-    if assignee_params = session[:assigned_to_filter]
+    if assignee_params = session[:accounts_assignee_filter]
       unless assignee_params[:assigned_to].blank?
         @accounts = @accounts.where(:assigned_to => assignee_params[:assigned_to])
       end

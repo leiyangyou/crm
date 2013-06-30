@@ -46,21 +46,4 @@ AccountsHelper.class_eval do
     check_box_tag("states[]", state, checked, :id => state, :onclick => onclick)
   end
 
-  def scoped_users_select(asset, users, description_field = :full_description, method = :assigned_to, options = {}, html_options = {})
-    collection_select asset, method, users, :id, description_field, options, html_options
-  end
-
-  def scoped_users_filter(scope, field)
-    assigned_to_filter = session[:assigned_to_filter] || {}
-    onchange = remote_function(
-      :url => {:action => :filter},
-      :with => h(%Q/"accounts[#{field}]="+this.value/),
-      :loading => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
-    scoped_users_select(:account, scope, :full_description, field,
-                        {:include_blank => true, :selected => assigned_to_filter[field]},
-                        :style => "width:160px",
-                        :onchange => onchange)
-  end
 end

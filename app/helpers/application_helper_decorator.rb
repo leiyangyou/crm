@@ -36,4 +36,19 @@ ApplicationHelper.class_eval do
     #{stylesheet_link_tag "widget/card_widget"}
     }.html_safe
   end
+
+
+  def scoped_users_filter(asset, scope, field)
+    assigned_to_filter = session[:"#{asset}_assignee_filter"] || {}
+    onchange = remote_function(
+      :url => {:action => :filter},
+      :with => h(%Q/"#{asset}_assignee[#{field}]="+this.value/),
+      :loading => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    scoped_users_select(:"#{asset}_assignee", scope, :full_description, field,
+                        {:include_blank => true, :selected => assigned_to_filter[field]},
+                        :style => "width:160px",
+                        :onchange => onchange)
+  end
 end

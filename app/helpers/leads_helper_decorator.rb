@@ -23,4 +23,5 @@ LeadsHelper.class_eval do
     )
     check_box_tag("status[]", status, checked, :id => status, :onclick => onclick)
   end
+
 end
