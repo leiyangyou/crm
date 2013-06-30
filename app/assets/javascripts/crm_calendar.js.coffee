@@ -11,6 +11,7 @@
       trigger: button_id
       inputField : id
       showTime : show_time
+      fdow: 1
       onSelect : ()->@hide()
     )
 )(jQuery);

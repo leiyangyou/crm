@@ -3,7 +3,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :template, :class_name => "ScheduleTemplate"
   has_many :daily_schedules
 
-  FIRST_DAY_OF_WEEK = :sunday unless defined? FIRST_DAY_OF_WEEK
+  FIRST_DAY_OF_WEEK = :monday unless defined? FIRST_DAY_OF_WEEK
 
   def schedule_for( date)
     daily_schedule = self.daily_schedules.find_by_date( date)

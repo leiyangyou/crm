@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 MS_IN_A_DAY = 60 * 60 * 24 * 1000
-FIRST_DAY_OF_WEEK = 6
+FIRST_DAY_OF_WEEK = 0
 document.observe("dom:loaded", ()->
   calendar = Calendar.setup({
     cont: 'week-picker'
