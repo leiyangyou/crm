@@ -24,6 +24,7 @@ User.class_eval do
   after_create :initialize_schedule
 
   validates_uniqueness_of :card_number, :allow_nil => true
+  before_validation lambda {|record| record.card_number = nil if record.card_number.blank?}
 
   scope :ranked, lambda { |type|
     includes(:user_rank).where("user_ranks.type = ? or user_ranks.type is null", type).order('COALESCE(user_ranks.rank_override, 999999) asc')

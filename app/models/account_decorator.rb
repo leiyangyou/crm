@@ -24,7 +24,8 @@ Account.class_eval do
 
   validates_presence_of :nationality, :gender, :card_number, :identification, :dob
 
-  validates_uniqueness_of :card_number
+  validates_uniqueness_of :card_number, :allow_nil => true
+  before_validation lambda {|record| record.card_number = nil if record.card_number.blank?}
 
   has_one :membership
 
