@@ -110,6 +110,9 @@ zh-CN:
       stated_at: "开始时间"
       finished_at: "结束时间"
       content: "详情"
+    lead:
+      task:
+        new_lead: "跟进新线索"
   create_contract_type: "创建合同类型"
   contract_types: "合同类型"
   description: "描述"
