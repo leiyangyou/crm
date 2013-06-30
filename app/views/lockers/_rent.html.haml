@@ -13,10 +13,10 @@
           = f.text_field(:contract_id) << %Q{<a href='#' onclick="crm.create_contract('#{ContractType.type_for(LockerRent)}', 'locker_rent_contract_id');">#{t :create_contract}</a>}.html_safe
       %tr
         %td{:colspan =>2}
-          .label.req= t("started_on") + ":"
+          .label.req= t("start_date") + ":"
       %tr
         %td{:colspan =>2}
-          = f.date_select(:started_on)
+          = f.date_select(:started_dat)
       %tr
         %td{:colspan =>2}
           .label.req= t("due_date") + ":"

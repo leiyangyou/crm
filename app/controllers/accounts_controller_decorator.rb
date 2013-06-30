@@ -114,8 +114,9 @@ AccountsController.class_eval do
 
   def create_locker
     @account = Account.find(params[:id])
-    @contract = Contracts::LockerContract.find_or_create_by_account_id_and_signed_at(@account.id, nil)
-    @contract.update_attributes(params[:contracts_locker_contract])
+    @contract = Contracts::LockerContract.find_or_create_by_account_id_and_signed_at(@account.id, nil) do |contract|
+      contract.assign_attributes(params[:contracts_locker_contract])
+    end
     respond_with(@account)
   end
 

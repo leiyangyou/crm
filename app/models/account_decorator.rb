@@ -24,6 +24,8 @@ Account.class_eval do
 
   validates_presence_of :nationality, :gender, :card_number, :identification, :dob
 
+  validates_uniqueness_of :card_number
+
   has_one :membership
 
   has_many :participations

@@ -11,4 +11,4 @@
     = render :partial => 'contracts/contract', :locals => {:contract => contract}
 
   - if object.locker_rents.any?
-    = render :partial => "account_locker", :collection =>object.locker_rents
+    = render :partial => 'accounts/account_locker', :collection =>object.locker_rents

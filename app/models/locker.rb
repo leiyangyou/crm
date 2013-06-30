@@ -19,4 +19,5 @@ class Locker < ActiveRecord::Base
   }
 
   delegate :overdue?, :to => :locker_rent, :allow_nil => true
+
 end

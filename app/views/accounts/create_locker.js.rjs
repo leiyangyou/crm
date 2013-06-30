@@ -1,5 +1,5 @@
 if @contract.valid?
-  page[:lockers_container].replace :partial => "accounts/account_lockers", :locals => {:object => @account}
+  page[:lockers_container].replace_html :partial => "accounts/account_lockers", :locals => {:object => @account}
   page[:lockers_container].visual_effect :highlight, :duration => 1.0
 else
   page[:new_locker].replace :partial => "new_locker", :locals => {:account => @account, :contract =>@contract}

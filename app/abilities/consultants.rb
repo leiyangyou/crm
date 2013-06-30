@@ -24,5 +24,5 @@ Canard::Abilities.for(:consultant) do
   cannot :assign_any_consultant, Lead
   cannot :update_consultant, Lead
   cannot :destroy, Lead
-  cannot :new, Lead
+  can :manage, Lead
 end

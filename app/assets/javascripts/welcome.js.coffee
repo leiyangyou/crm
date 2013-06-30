@@ -20,12 +20,19 @@
                 $('#welcome-info .name').html(account.name);
                 if(avatar = account.avatar && account.avatar.url)
                     $('#avatar img').attr("url", avatar)
-                $('#notification').html('')
+                $notification = $('#notification').html('')
                 if dob = account.dob
                     dob = dob.split("-")
                     today = new Date();
                     if `today.getDate() == dob[2]` && `today.getMonth() + 1 == dob[1]`
-                        $('#notification').append("<li class=\"important\">#{dob[1]}-#{dob[2]} 生日快乐</li>")
+                        $notification.append("<li class=\"important\">#{dob[1]}-#{dob[2]} 生日快乐</li>")
+                if account["transferred?"]
+                    $notification.append("<li class=\"important\">账号已转让</li>")
+                if account["suspended?"]
+                    $notification.append("<li class=\"important\">账号已暂停</li>")
+                if account["expired?"]
+                    $notification.append("<li class=\"important\">账号已过期</li>")
+
 
             return {
                 no_account_found: no_accont_found

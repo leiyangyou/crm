@@ -32,6 +32,7 @@ Til5::Application.routes.draw do
       put :update_membership_state
       get :new_locker
       post :create_locker
+      put :create_locker
     end
     collection do
       get :options, :to => "accounts#options"

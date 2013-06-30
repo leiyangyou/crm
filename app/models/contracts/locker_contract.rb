@@ -25,12 +25,11 @@ module Contracts
       locker = self.locker
       account = self.account
       locker_rent = LockerRent.new
-      binding.pry
-      locker_rent.started_on = self.started_on
-      locker_rent.finished_on = self.finished_on
+      locker_rent.start_date = self.started_on
+      locker_rent.due_date = self.finished_on
       locker_rent.locker = locker
       locker_rent.account = account
-      locker_rent.rent
+      locker.rent
       self.save if locker_rent.save
     end
   end
