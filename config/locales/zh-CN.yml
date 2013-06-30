@@ -10,6 +10,13 @@ zh-CN:
   admin_tab_lessons: "私教课"
   admin_tab_user_ranks: "UPS排班"
   msg_require_manager: "只有经理可以访问这个页面"
+  membership: "会籍"
+  surveys: "问卷调查"
+  consultant: "会籍顾问"
+  account_summary: "账户简介"
+  avatar: "照片"
+  contract: "合同"
+  save_contract: "保存合同"
   roles:
     operator: "运营"
     operator_manager: "运营经理"
@@ -19,8 +26,17 @@ zh-CN:
     consultant: '会籍顾问'
     consultant_manager: '会籍顾问经理'
     admin: "系统管理员"
+  renew: "续卡"
+  preview: "预览"
+  assignment: "分配"
+  transfer: "转让"
+  tags: "标签"
+  select_or_create_tags: "选择或创建标签"
   weekly_schedules: "日程安排从 %{first_day} 到 %{last_day}"
   edit_weekly_schedules: "编辑日程安排从 %{first_day} 到 %{last_day}"
+  lead_account: "关联账户"
+  new_rent: "新租柜合同"
+  account_basic_info_small: "基本信息"
   activerecord:
     errors:
       models:
@@ -44,7 +60,7 @@ zh-CN:
   view:
     account:
       new_survey: "新建问卷调查"
-      new_locker: "租用衣柜"
+      new_locker: "新租柜合同"
     account_survey:
       take: "参加"
       view: "查看"
@@ -52,11 +68,13 @@ zh-CN:
       contracts:
         lesson_contract: "私教课合同"
         membership_contract: "会籍合同"
-        membership_suspend_contract: "暂停"
-        membership_transfer_contract: "转让"
+        membership_suspend_contract: "会籍暂停合同"
+        membership_transfer_contract: "会籍转让合同"
+        lesson_transfer_contract: "私教课转让合同"
+        locker_contract: "租柜合同"
       account: "会员"
-      signed_at: "入会时间"
-      sign: "正式入会"
+      signed_at: "签约时间"
+      sign: "签约"
       edit: "编辑"
       lesson_contract:
         started_on: "开始时间"
@@ -64,6 +82,12 @@ zh-CN:
         lesson: "课程名称"
         trainer: "教练"
         tuition_fee: "训练费"
+      lesson_transfer_contract:
+        lesson: "私教课"
+        target: "目标"
+        transfer_fee: "转让费用"
+      started_on: "开始时间"
+      finished_on: "结束时间"
     contract_templates:
       contracts:
         membership_contract: '会籍合同'
@@ -102,6 +126,13 @@ zh-CN:
       lesson_type: "课程类型"
       used_times: "已使用课时"
       surplus_times: "剩余课时"
+    participation:
+      attend_confirm: "确定要签到吗?"
+    membership:
+      started_on: "开始时间"
+      finished_on: "结束时间"
+  membership_state: "会籍状态"
+  contract_id: "合同号"
   model:
     account:
       task:
@@ -116,6 +147,7 @@ zh-CN:
     lead:
       task:
         new_lead: "跟进新线索"
+  new_lesson: "新建私教课合同"
   create_contract_type: "创建合同类型"
   contract_types: "合同类型"
   description: "描述"
@@ -182,3 +214,34 @@ zh-CN:
   expired: "已过期"
   transfered: "已转让"
   total_accounts: "合计"
+  attend: "签到"
+  appointment: "预约"
+  create_appointment: "新建预约"
+  contracts: "合同"
+  resume: "恢复"
+  save_contract_template: "保存合同摸板"
+  save_lesson: "保存"
+  save_contract_type: "保存"
+  type: "类型"
+  trainer_ranks: "PT排名"
+  consultant_ranks: "MC排名"
+  rent: "租赁"
+  advanced_search: "高级搜索"
+  target_contract_started_on: "目标合同开始时间"
+  due_date: "到期时间"
+  weekly_performance: "每周业绩"
+  rank: "排名"
+  started_on: "开始时间"
+  days: "天数"
+  create_contract: "创建合同"
+  registration_fee: "入会费"
+  transfer_fee: "转让费"
+  deposit: "押金"
+  restore: "恢复"
+  membership_fee: "会员费"
+  source_contract_finished_on: "当前合同结束时间"
+  advance_payment: "预付款"
+  amount_paid: "已付"
+  total_price: "应收"
+  amount_owed: "尚欠"
+  down_payment: "实收"

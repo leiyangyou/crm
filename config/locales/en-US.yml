@@ -10,6 +10,14 @@ en-US:
   admin_tab_lessons: "Lessons"
   admin_tab_user_ranks: "UPS"
   msg_require_manager: "You must be a manager to access this page"
+  membership: "Membership"
+  surveys: "Surveys"
+  consultant: "Consultant"
+  account_summary: "Account Summary"
+  avatar: "Avatar"
+  contract: "Contract"
+  save_contract: "Save Contract"
+
   roles:
     operator: "Operator"
     operator_manager: "Operator Manager"
@@ -21,6 +29,13 @@ en-US:
     admin: "Admin"
   weekly_schedules: "Schedules between %{first_day} and %{last_day}"
   edit_weekly_schedules: "Edit schedules between %{first_day} and %{last_day}"
+  account_basic_info_small: "Basic Info"
+  new_lesson: "New Lesson"
+  transfer: "Transfer"
+  renew: "Renew"
+  preview: "Preview"
+  new_rent: "New Locker"
+
   activerecord:
     errors:
       models:
@@ -56,7 +71,7 @@ en-US:
       contracts:
         lesson_contract: "Lesson"
         lesson_transfer_contract: "Transfer"
-        membership_contract: "Membership"
+        membership_contract: "Membership Contract"
         membership_suspend_contract: "Suspend"
         membership_transfer_contract: "Transfer"
       lesson_contract:
@@ -73,6 +88,7 @@ en-US:
       signed_at: "Singed At"
       sign: "Sign"
       edit: "Edit"
+      started_on: "Starts on"
     contract_templates:
       contracts:
         membership_contract: 'Membership Contract'
@@ -113,6 +129,14 @@ en-US:
       lesson_type: "Lesson Type"
       used_times: "Used Times"
       surplus_times: "Surplus Times"
+
+    membership:
+      started_on: "Starts on"
+      finished_on: "Finishes on"
+  membership_state: "Status"
+  contract_id: "Contract ID"
+  trainer_ranks: "PT Ranks"
+  consultant_ranks: "MC Ranks"
   model:
     account:
       task:
@@ -193,3 +217,26 @@ en-US:
   expired: "Expired"
   transfered: "Transfered"
   total_accounts: "Total"
+  attend: "Attend"
+  advanced_search: "高级搜索"
+  appointment: "Appointment"
+  create_appointment: "New Appointment"
+  contracts: "Contracts"
+  rent: "Rent"
+  started_on: "Starts on"
+  lead_account: "Account"
+  weekly_performance: "Weekly Performance"
+  rank: "Rank"
+  down_payment: "Down payment"
+  amount_owed: "Amount owed"
+  total_price: "Total Price"
+  amount_paid: "Amount paid"
+  advance_payment: "Advance payment"
+  resume: "Resume"
+  save_lesson: "Save Lesson"
+  save_contract_template: "Save Contract Template"
+  save_contract_type: "Save Contract Type"
+  type: "Type"
+  create_contract: "Create Contract"
+  due_date: "Due date"
+  target_contract_started_on: "Target Contract Starts On"
