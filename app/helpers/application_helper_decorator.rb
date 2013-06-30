@@ -51,4 +51,11 @@ ApplicationHelper.class_eval do
                         :style => "width:160px",
                         :onchange => onchange)
   end
+  def jumpbox(current)
+    tabs = [ :accounts, :leads ]
+    current = tabs.first unless tabs.include?(current)
+    tabs.map do |tab|
+      link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''), :item => tab)
+    end.join(" | ").html_safe
+  end
 end
