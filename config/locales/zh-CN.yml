@@ -245,3 +245,4 @@ zh-CN:
   total_price: "应收"
   amount_owed: "尚欠"
   down_payment: "实收"
+  select_task: "选择任务"
