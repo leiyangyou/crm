@@ -24,4 +24,11 @@ LeadsHelper.class_eval do
     check_box_tag("status[]", status, checked, :id => status, :onclick => onclick)
   end
 
+  def link_to_convert(lead)
+    link_to(t(:convert), convert_lead_path(lead),
+            :method => :get,
+            :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_lead');",
+            :remote => true
+    )
+  end
 end
