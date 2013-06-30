@@ -79,6 +79,7 @@ class Contract < ActiveRecord::Base
   def generate_contract_id
     contract_id = sprintf("%07d", id);
     self.contract_id = contract_id
+    self.save
   end
 
   def generate_content
