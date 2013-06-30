@@ -11,7 +11,7 @@
 
 .list#profile= render "user"
 
-.subtitle Tasks
+.subtitle #{t :tasks}
 .log#tasks
   = render :partial => "shared/tasks", :locals => {:object => @user}
 
