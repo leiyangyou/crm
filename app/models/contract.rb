@@ -30,7 +30,7 @@ class Contract < ActiveRecord::Base
     end
   end
 
-  after_validation :generate_contract_id, :on =>:create
+  after_create :generate_contract_id
   after_validation :generate_content
   after_validation :generate_abstract
 
@@ -77,9 +77,7 @@ class Contract < ActiveRecord::Base
 
   protected
   def generate_contract_id
-    begin
-      contract_id = sprintf("07d", id);
-    end while self.class.find_by_contract_id(contract_id)
+    contract_id = sprintf("%07d", id);
     self.contract_id = contract_id
   end
 
