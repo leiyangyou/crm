@@ -72,7 +72,7 @@
 # Default locale is American English.
 #
 #:locale: "en-US"
-:locale: "en-US"
+:locale: "zh-CN"
 
 
 # Settings for outgoing email (SMTP)
@@ -345,6 +345,7 @@ task_category:
   - :follow_up
   - :renew
   - :meeting
+  - :assignment
 
 
 task_category_color:
