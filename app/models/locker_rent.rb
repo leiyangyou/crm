@@ -3,6 +3,8 @@ class LockerRent < ActiveRecord::Base
   belongs_to :account
   attr_accessible :start_date, :due_date, :account_id, :contract_id
 
+  delegate :identifier, :to => :locker
+
   validate :not_overdue_when_create, :on => :create
 
   def overdue?

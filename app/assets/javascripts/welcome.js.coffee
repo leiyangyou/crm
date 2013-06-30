@@ -26,13 +26,18 @@
                     today = new Date();
                     if `today.getDate() == dob[2]` && `today.getMonth() + 1 == dob[1]`
                         $notification.append("<li class=\"important\">#{dob[1]}-#{dob[2]} 生日快乐</li>")
-                if account["transferred?"]
+                if account["active?"]
+                    $notification.append("<li class=\"info\">剩余#{account.remaining}天</li>")
+                else if account["transferred?"]
                     $notification.append("<li class=\"important\">账号已转让</li>")
-                if account["suspended?"]
+                else if account["suspended?"]
                     $notification.append("<li class=\"important\">账号已暂停</li>")
-                if account["expired?"]
+                else if account["expired?"]
                     $notification.append("<li class=\"important\">账号已过期</li>")
-
+                if (locker_rents = account.locker_rents) && locker_rents.length > 0
+                    for locker_rent in locker_rents
+                        if locker_rent["overdue?"]
+                            $notification.append("<li class=\"important\">衣柜'#{locker_rent.identifier}'已经过期</li>")
 
             return {
                 no_account_found: no_accont_found

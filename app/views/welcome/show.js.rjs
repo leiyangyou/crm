@@ -2,5 +2,10 @@ unless @account
   page.call "no_account_found", params[:id]
 else
   page << "update_account(#{@account.to_json(
-      :methods => [:last_visit_time, :active?, :transferred?, :suspended?, :expired?])})"
+      :include => {
+          :locker_rents => {
+              :methods => [:overdue?, :identifier]
+          }
+      },
+      :methods => [:last_visit_time, :remaining, :active?, :transferred?, :suspended?, :expired?])})"
 end
