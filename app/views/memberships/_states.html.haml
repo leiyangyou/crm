@@ -39,10 +39,11 @@
         -#  = "#{membership_state.created_at.to_date}:"
         - case membership_state.state_type
           - when MembershipState::TYPES::ACTIVE
-            %span.membership_type
-              = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
             %span.range
               = "#{membership_state.started_on} - #{membership_state.finished_on}"
+            %span.membership_type
+              | |
+              = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
           - when MembershipState::TYPES::EXPIRED
             %span.range
               = "#{membership_state.started_on}"
@@ -57,6 +58,7 @@
               = link_to account.name, account_path(account)
           - when MembershipState::TYPES::TERMINATED
             = "#{membership_state.reason}"
-        %span.contract
-          - if membership_state.contract_id
+        - if membership_state.contract_id
+          %span.contract
+            | |
             = link_to membership_state.contract_id, contract_path(:id => membership_state.contract_id, :format => 'pdf')

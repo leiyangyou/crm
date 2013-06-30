@@ -18,6 +18,7 @@ Account.class_eval do
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(:m) OR upper(phone) LIKE upper(:s) OR upper(card_number) LIKE upper(:s)', :s => "#{query}%", :m => "%#{query}%")
   }
+
   scope :state, lambda { |filters|
     includes(:membership).where('`memberships`.`status` IN (?)', filters)
   }

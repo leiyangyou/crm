@@ -34,7 +34,7 @@
                 - if !edit || can?(:update_trainer, @account)
                   = scoped_users_select(:account, assignable_trainers, :full_description, :trainer_id, {:include_blank => true}, :style => "width:160px")
                 - else
-                  .value= @account.trainer.full_name
+                  .value= @account.trainer.try(:full_name)
               %td= spacer
               %td
                 .label #{t :rating}:
