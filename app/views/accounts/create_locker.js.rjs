@@ -4,4 +4,6 @@ if @contract.valid?
 else
   page[:new_locker].replace :partial => "new_locker", :locals => {:account => @account, :contract =>@contract}
   page[:new_locker].visual_effect :shake, :duration => 0.25, :distance => 6
+  page.call 'crm.my_date_select_popup', 'contracts_locker_contract_started_on'
+  page.call 'crm.my_date_select_popup', 'contracts_locker_contract_finished_on'
 end

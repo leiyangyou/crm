@@ -3,7 +3,7 @@ if @contract.signed?
   if @contract.contract_type == :membership
     page['memberships'].replace :partial => "memberships/states", :locals => {:object => @account.membership}
   elsif @contract.contract_type == :locker
-    page['lockers_container'].replace :partial => "accounts/account_lockers", :locals => {:object => @account}
+    page['lockers_container'].replace_html :partial => "accounts/account_lockers", :locals => {:object => @account}
   elsif @contract.contract_type == :lesson
     page['lessons'].replace :partial => "accounts/lessons", :locals => {:object => @account}
   elsif @contract.contract_type == :lesson_transfer
