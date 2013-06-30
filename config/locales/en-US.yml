@@ -114,6 +114,9 @@ en-US:
       used_times: "Used Times"
       surplus_times: "Surplus Times"
   model:
+    account:
+      task:
+        assign_pt: "Assign PT"
     locker:
       identity: "Locker Number"
     appointment:

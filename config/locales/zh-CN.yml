@@ -103,6 +103,9 @@ zh-CN:
       used_times: "已使用课时"
       surplus_times: "剩余课时"
   model:
+    account:
+      task:
+        assign_pt: "分配PT"
     locker:
       identity: "衣柜号码"
     appointment:

@@ -87,4 +87,18 @@ Account.class_eval do
   def update_name
     self.name = "#{self.first_name} #{self.last_name}"
   end
+
+  def create_tasks_for_ptm
+    if (manager = User.active.trainer_managers.first)
+      Task.create!(
+          :user_id => manager.id,
+          :assigned_to => manager.id,
+          :name => I18n.t("model.account.task.assign_pt"),
+          :bucket => "due_asap",
+          :due_at => nil,
+          :asset => self,
+          :category => "assignment"
+      )
+    end
+  end
 end
