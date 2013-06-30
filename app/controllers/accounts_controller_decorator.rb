@@ -89,9 +89,17 @@ AccountsController.class_eval do
     @participation.detroy
   end
 
+  def index
+    @accounts = get_accounts(:page => params[:page])
+    apply_assigned_to_filters
+    respond_with(@accounts)
+  end
+
   def filter
     session[:accounts_filter] = params[:states]
+    session[:accounts_assignee_filter] = params[:accounts_assignee]
     @accounts = get_accounts(:page => 1)
+    apply_assigned_to_filters
     render :index
   end
 
@@ -130,5 +138,17 @@ AccountsController.class_eval do
     categorized = @account_state_total.values.sum
     @account_state_total[:all] = Account.my.count
     #@account_state_total[:other] = @account_state_total[:all] - categorized
+  end
+
+  def apply_assigned_to_filters
+    if assignee_params = session[:accounts_assignee_filter]
+      unless assignee_params[:assigned_to].blank?
+        @accounts = @accounts.where(:assigned_to => assignee_params[:assigned_to])
+      end
+
+      unless assignee_params[:trainer_id].blank?
+        @accounts = @accounts.where(:trainer_id => assignee_params[:trainer_id])
+      end
+    end
   end
 end

@@ -65,4 +65,26 @@ LeadsController.class_eval do
     @account_survey = AccountSurvey.create(:survey => @survey, :respondent => @lead, :response_set => @response_set)
   end
 
+  def index
+    @leads = get_leads(:page => params[:page])
+    apply_assigned_to_filters
+    respond_with(@leads)
+  end
+
+  def filter
+    session[:leads_filter] = params[:status]
+    session[:leads_assignee_filter] = params[:leads_assignee]
+    @leads = get_leads(:page => 1) # Start one the first page.
+    apply_assigned_to_filters
+    render :index
+  end
+
+  protected
+  def apply_assigned_to_filters
+    if assignee_params = session[:leads_assignee_filter]
+      unless assignee_params[:assigned_to].blank?
+        @leads = @leads.where(:assigned_to => assignee_params[:assigned_to])
+      end
+    end
+  end
 end

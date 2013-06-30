@@ -1,5 +1,11 @@
 .filters#filters
   = render "shared/search"
+  .label #{t :consultant}:
+  = scoped_users_filter(:accounts, User.active.consultants, :assigned_to)
+
+  .label #{t :trainer}:
+  = scoped_users_filter(:accounts, User.active.trainers, :trainer_id)
+
   = hook(:index_account_sidebar_bottom, self)
   - Setting[:account_status].each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
@@ -13,3 +19,10 @@
       %b= @account_state_total[:all]
     %b #{t :total_accounts}
   = hook(:index_account_sidebar_bottom, self)
+
+:javascript
+  document.observe('dom:loaded', function () {
+    new Chosen($('accounts_assignee_assigned_to'), { allow_single_deselect: true })
+    new Chosen($('accounts_assignee_trainer_id'), { allow_single_deselect: true })
+
+  })
