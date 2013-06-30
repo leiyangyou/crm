@@ -246,3 +246,5 @@ zh-CN:
   amount_owed: "尚欠"
   down_payment: "实收"
   select_task: "选择任务"
+  expand_all: "展开"
+  collapse_all: "收起"
