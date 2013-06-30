@@ -22,8 +22,8 @@ class Admin::ContractTemplatesController < Admin::ApplicationController
   # POST /contract_types/1/contract_templates
   # AJAX
   def create
+    params[:contract_template][:format] = "html"
     @contract_template = ContractTemplate.new(params[:contract_template])
-    @contract_template.contract_type = @contract_type
     respond_with(@contract_template) do |format|
       @contract_template.save
     end

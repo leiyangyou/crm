@@ -8,6 +8,3 @@
       %td
         .label.req= t("template") + ":"
         = f.text_area :template, :id => "contract_template_template"
-      %td
-        .label.req= t("format") + ":"
-        = f.select :format, options_for_select(ContractTemplate::Format::AVAILABLE.map{|e| [e, e]})
