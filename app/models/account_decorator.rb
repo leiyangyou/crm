@@ -45,6 +45,8 @@ Account.class_eval do
 
   delegate :active?, :transferred?, :suspended?, :expired?, :to => :membership
 
+  delegate :remaining, :to => :membership
+
   before_validation do
     if self[:name].empty?
       self[:name] = "#{first_name} #{last_name}"
