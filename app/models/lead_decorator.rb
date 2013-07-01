@@ -8,7 +8,13 @@ Lead.class_eval do
 
   after_create :create_task_for_consultant
 
+  before_save :record_mc_changed_if_necessary
+
   validates_presence_of :assigned_to
+
+  before_save lambda {|record|
+    record.mc_modified_at = Time.now unless record.mc_modified_at
+  }
 
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
@@ -46,6 +52,12 @@ Lead.class_eval do
         :asset => self,
         :category => "follow_up"
       )
+    end
+  end
+
+  def record_mc_changed_if_necessary
+    if self.assigned_to_changed?
+      self.mc_modified_at = Time.now
     end
   end
 end

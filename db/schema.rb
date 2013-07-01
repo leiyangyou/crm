@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130630173221) do
+ActiveRecord::Schema.define(:version => 20130630175122) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -428,9 +428,11 @@ ActiveRecord::Schema.define(:version => 20130630173221) do
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
     t.integer  "gender"
+    t.datetime "mc_modified_at"
   end
 
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"
+  add_index "leads", ["mc_modified_at"], :name => "index_leads_on_mc_modified_at"
   add_index "leads", ["user_id", "last_name", "deleted_at"], :name => "index_leads_on_user_id_and_last_name_and_deleted_at", :unique => true
 
   create_table "lessons", :force => true do |t|
