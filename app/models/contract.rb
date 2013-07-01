@@ -15,7 +15,6 @@ class Contract < ActiveRecord::Base
   uses_user_permissions
   has_paper_trail
 
-  validate :finished_on_not_before_started_on
 
   state_machine :status, :initial => :ready do
     event :sign do
@@ -96,8 +95,4 @@ class Contract < ActiveRecord::Base
   def signed
   end
 
-  private
-  def finished_on_not_before_started_on
-    errors.add(:finished_on, :should_after_started_on) if finished_on < started_on
-  end
 end

@@ -22,9 +22,8 @@ Canard::Abilities.for(:user) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
-  entities = [Account, Campaign, Contact, Lead, Opportunity]
+  entities = [Account, Lead]
 
-  can :create, :all
   can :manage, entities, :access => 'Public'
   can :manage, entities + [Task], :user_id => user.id
   can :manage, entities + [Task], :assigned_to => user.id

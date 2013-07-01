@@ -22,9 +22,20 @@ Canard::Abilities.for(:operator) do
   #
   # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+  can :create, Lead
   can :index, Lead
-  cannot :update_consultant, Lead
+  can :read, Lead
+  can :update, Lead
+  can :filter, Lead
+  can :index, Account
+  can :filter, Account
+  can :show, Account
+  can :update, Account
+  can [:edit, :sign], Contracts::MembershipContract
+  cannot :manage_survey, Lead
+  cannot :manage_survey, Account
   cannot :convert, Lead
   cannot :reject, Lead
   cannot :destroy, Lead
+  cannot :update_consultant, Lead
 end

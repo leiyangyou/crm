@@ -36,29 +36,36 @@
       - else
         = lead.company if lead.company?
         = lead.title if lead.title?
+      - if lead.assigned_to
+        &ndash;
+        #{t :consultant} #{lead.assignee.full_contact}
       - if lead.referred_by?
         &ndash;
-        == #{t :referred_by_small} #{lead.referred_by}
+        #{t :referred_by_small} #{lead.referred_by}
 
-    - unless @current_user.preference[:leads_outline] == "brief"
-      %dt
-        = stars_for(lead)
+
+    %dt
+      = stars_for(lead)
+      |
+      - if can?(:read, lead)
+        #{t :source}
+        #{t lead.source}
         |
-        - if can?(:read, lead)
-          - if lead.email.present?
-            = link_to_email(lead.email)
-            |
-          - if lead.phone.present?
-            == #{t :work_phone_small}:
-            %b= lead.phone
-            |
-          - if lead.mobile.present?
-            == #{t :phone_small}:
-            %b= lead.mobile
-            |
-        = t(:added_ago, time_ago_in_words(lead.created_at))
-      - if lead.tag_list.present?
-        %dt
-          .tags= tags_for_index(lead)
+        - if lead.email.present?
+          = link_to_email(lead.email)
+          |
+        - if lead.phone.present?
+          == #{t :phone}:
+          %b= lead.phone
+          |
+        - if lead.mobile.present?
+          == #{t :mobile}:
+          %b= lead.mobile
+          |
 
-      = hook(:lead_bottom, self, :lead => lead)
+      = t(:added_ago, time_ago_in_words(lead.created_at))
+    - if lead.tag_list.present?
+      %dt
+        .tags= tags_for_index(lead)
+
+    = hook(:lead_bottom, self, :lead => lead)

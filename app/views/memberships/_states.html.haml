@@ -1,3 +1,5 @@
+= styles_for :membership_state
+
 #memberships
   %br
   %div.subtitle_tools
@@ -19,23 +21,29 @@
 
   - current_state = object.current_state
   .list#membership_states
+    %li{:style => 'border-bottom: none'}
+      %small #{t(:unsigned_contracts)}
     - unsigned_contracts = @account.contracts.membership_contracts.unsigned.order("created_at desc")
 
     - unsigned_contracts.each do |contract|
       = render :partial => 'contracts/contract', :locals => {:contract => contract}
 
+    %li{:style => 'border-bottom: none'}
+      %small #{t(:membership_states)}
+
     - object.membership_states.order("started_on desc, created_at desc").each do |membership_state|
       %li{:class =>"membership_state #{membership_state.state_type} #{membership_state == current_state ? "current_state" : "" }"}
-        %span.type.strip
+        %span.type.strip{:class => membership_state.state_type}
           = "#{t("view.membership_states.state.#{membership_state.state_type}")}"
-        %span.created_at
-          = "#{membership_state.created_at.to_date}:"
+        -#%span.created_at
+        -#  = "#{membership_state.created_at.to_date}:"
         - case membership_state.state_type
           - when MembershipState::TYPES::ACTIVE
-            %span.membership_type
-              = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
             %span.range
               = "#{membership_state.started_on} - #{membership_state.finished_on}"
+            %span.membership_type
+              | |
+              = "#{MembershipType.find_by_id(membership_state.type_id).try(:name)}"
           - when MembershipState::TYPES::EXPIRED
             %span.range
               = "#{membership_state.started_on}"
@@ -50,6 +58,7 @@
               = link_to account.name, account_path(account)
           - when MembershipState::TYPES::TERMINATED
             = "#{membership_state.reason}"
-        %span.contract
-          - if membership_state.contract_id
+        - if membership_state.contract_id
+          %span.contract
+            | |
             = link_to membership_state.contract_id, contract_path(:id => membership_state.contract_id, :format => 'pdf')

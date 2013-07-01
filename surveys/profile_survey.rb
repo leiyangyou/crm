@@ -1,5 +1,5 @@
 # encoding: UTF-8
-survey "Health Survey" do
+survey "Profile Survey" do
   section "个人基本信息" do
     q "姓名"
     a :string

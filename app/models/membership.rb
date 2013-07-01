@@ -16,7 +16,7 @@ class Membership < ActiveRecord::Base
 
   after_create :create_initialize_state
 
-  state_machine :status, :initial => :expired do
+  state_machine :status, :initial => :pending do
     event :state_transfer do
       transition :active => :transferred
     end
@@ -43,8 +43,13 @@ class Membership < ActiveRecord::Base
     remaining > 0 ? remaining : 0
   end
 
+  def remaining
+    remaining = self.finished_on - Date.today
+    remaining > 0 ? remaining : 0
+  end
+
   def can_renew?
-    (self.active? || self.expired?) && !self.current_state.future_state
+    (self.active? || self.expired? || self.pending?) && !self.current_state.future_state
   end
 
   def transfer contract
@@ -204,7 +209,7 @@ class Membership < ActiveRecord::Base
 
   def create_initialize_state
     state = MembershipState.new
-    state.state_type = MembershipState::TYPES::EXPIRED
+    state.state_type = MembershipState::TYPES::PENDING
     state.started_on = Date.today
     self.new_state state
   end
@@ -275,12 +280,17 @@ class Membership < ActiveRecord::Base
     preceding_state = current_state.lastest_future_state
     # if the state will not start on the date the preceding state will be finished
     # add an extra expired state between the two states
-    if preceding_state.finished_on < state.started_on
-      expire_state = MembershipState.new
-      expire_state.state_type = MembershipState::TYPES::EXPIRED
-      expire_state.started_on = preceding_state.finished_on
-      expire_state.finished_on = state.started_on
-      preceding_state = self.add_future_state expire_state
+    if preceding_state.finished_on then
+      if preceding_state.finished_on < state.started_on
+        expire_state = MembershipState.new
+        expire_state.state_type = MembershipState::TYPES::EXPIRED
+        expire_state.started_on = preceding_state.finished_on
+        expire_state.finished_on = state.started_on
+        preceding_state = self.add_future_state expire_state
+      end
+    else
+      preceding_state.finished_on = state.started_on
+      preceding_state.save
     end
     state.last_state = preceding_state
     state.save
@@ -334,4 +344,5 @@ class Membership < ActiveRecord::Base
     state.type_id = active_state.type_id
     return active_state, state
   end
+
 end

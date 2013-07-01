@@ -3,10 +3,12 @@
 #confirm{ hidden }
 .title_tools#menu
   - unless %w(converted rejected).include?(@lead.status)
-    = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => t(:convert)) + " | "
-  - unless @lead.status != 'converted'
-    = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => t(:edit)) + " | "
-  - unless %w(converted rejected).include?(@lead.status)
+    = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => t(:edit))
+  - unless %w(converted rejected).include?(@lead.status) or cannot?(:convert, @lead)
+    | |
+    = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => t(:convert))
+  - unless %w(converted rejected).include?(@lead.status) or cannot?(:reject, @lead)
+    | |
     = link_to_function(t(:reject) + '?', confirm_reject(@lead))
   -#= link_to_function(t(:delete) + '?', confirm_delete(@lead))
 .title#title= h(@lead.full_name)
@@ -19,7 +21,8 @@
 
 = hook(:show_lead_bottom, self) do
 
-  = render :partial => "account_surveys", :locals => {:object => @lead}
+  - if can?(:manage_survey, @lead)
+    = render :partial => "account_surveys", :locals => {:object => @lead}
 
   = render :partial => "tasks/tasks", :locals => {:object => @lead}
 

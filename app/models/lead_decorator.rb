@@ -24,6 +24,9 @@ Lead.class_eval do
   def promote params
     account     = Account.create_or_select_for(self, params[:account], params[:users])
     contract = Contracts::MembershipContract.create_for(account, params[:contracts_membership_contract])
+    account_surveys.map do |as|
+      AccountSurvey.create(:survey => as.survey, :respondent => account, :response_set => as.response_set)
+    end
 
     [account, contract]
   end

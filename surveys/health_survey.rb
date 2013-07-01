@@ -1,5 +1,5 @@
 # encoding: UTF-8
-survey "Health Survey 2" do
+survey "Health Survey" do
   section "个人基本信息" do
     label "此表的目的是为了让我们更了解你的身体状况，以便使您的训练更加安全、更有效。我们会维护您的隐私权，绝不会泄露此表的内容"
 

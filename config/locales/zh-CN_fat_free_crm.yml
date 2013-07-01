@@ -454,6 +454,7 @@ zh-CN:
   task_due_in: 期限是 %{value}
   task_due_later: 很快到期
   task_due_now: 现在到期
+  due_now: 现在到期
   task_due_today: 今天到期
   task_from: 从 %{value}
   task_overdue: 晚了，应到期于
@@ -629,3 +630,4 @@ zh-CN:
   # If you need custom format look at 
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: hyphen_ampm
+

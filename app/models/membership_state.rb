@@ -6,6 +6,7 @@ class MembershipState < ActiveRecord::Base
   include Assignable
   module TYPES
     ACTIVE = "active"
+    PENDING = "pending"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
     TRANSFERRED = "transferred"
@@ -22,11 +23,15 @@ class MembershipState < ActiveRecord::Base
   validates_with MembershipStateDecorator::ParametersValidator
 
   serialize :parameters, Hash
+
   type TYPES::ACTIVE do
     parameter :type_id, Integer
   end
 
   type TYPES::EXPIRED do
+  end
+
+  type TYPES::PENDING do
   end
 
   type TYPES::SUSPENDED do

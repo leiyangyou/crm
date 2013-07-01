@@ -105,6 +105,7 @@ en-US:
         membership_suspend_contract: 'Membership Suspend Contract'
         lesson_contract: 'Lesson Contract'
         locker_contract: 'Locker Contract'
+        lesson_transfer_contract: 'Lesson Transfer Contract'
     lead:
       new_survey: "New Survey"
     membership_states:
@@ -250,3 +251,5 @@ en-US:
   due_date: "Due date"
   target_contract_started_on: "Target Contract Starts On"
   select_task: "Select Task"
+  unsigned_contracts: "Unsigned Contracts"
+  membership_states: "Membership State History"

@@ -11,6 +11,7 @@ if params[:cancel].true?     # <----------------- Hide [Convert Lead]
 
 else # <----------------------------------------  Show [Convert Lead] form.
 
+
   if params[:cancel].blank?                       # Called from leads list item...
     if @previous                                  # Hide open [Convert Lead] form if any.
       if @previous.is_a?(Lead)
@@ -30,6 +31,7 @@ else # <----------------------------------------  Show [Convert Lead] form.
     page.call "crm.set_title", :convert_lead, "#{t :convert} #{@lead.full_name}"
   end
 
+  page << "new CardReader('#account_card_number');"
   page.call "crm.init_chosen_fields"
   #page.call "crm.my_date_select_popup", "contracts_membership_contract_started_on"
   #page.call "crm.my_date_select_popup", "contracts_membership_contract_dob"

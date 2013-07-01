@@ -9,6 +9,8 @@ module Contracts
       float :amount_owing
     end
 
+    validate :finished_on_not_before_started_on
+
     def locker
       @locker ||= Locker.find_by_identifier(self.identifier)
     end
@@ -31,6 +33,11 @@ module Contracts
       locker_rent.account = account
       locker.rent
       self.save if locker_rent.save
+    end
+
+    private
+    def finished_on_not_before_started_on
+      errors.add(:finished_on, :should_after_started_on) if finished_on < started_on
     end
   end
 end
