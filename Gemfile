@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -37,6 +37,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem "jquery-ui-rails"
 end
 
 # To use ActiveModel has_secure_password
@@ -56,6 +57,7 @@ end
 
 group :development do
   gem 'pry-rails'
+  gem 'rb-readline', '~> 0.4.2'
 end
 
 gem 'serializable_attributes', :path => "vendor/gems/serializable_attributes-1.1.1"

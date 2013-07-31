@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130630151955) do
+ActiveRecord::Schema.define(:version => 20130630173221) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -525,6 +525,20 @@ ActiveRecord::Schema.define(:version => 20130630151955) do
 
   add_index "opportunities", ["assigned_to"], :name => "index_opportunities_on_assigned_to"
   add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "id_name_deleted", :unique => true
+
+  create_table "participation_logs", :force => true do |t|
+    t.integer  "participation_id"
+    t.integer  "trainer_id"
+    t.integer  "lesson_id"
+    t.integer  "operator_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "participation_logs", ["lesson_id"], :name => "index_participation_logs_on_lesson_id"
+  add_index "participation_logs", ["operator_id"], :name => "index_participation_logs_on_operator_id"
+  add_index "participation_logs", ["participation_id"], :name => "index_participation_logs_on_participation_id"
+  add_index "participation_logs", ["trainer_id"], :name => "index_participation_logs_on_trainer_id"
 
   create_table "participations", :force => true do |t|
     t.integer  "account_id"
