@@ -60,4 +60,6 @@ group :development do
   gem 'rb-readline', '~> 0.4.2'
 end
 
+gem 'thin'
+
 gem 'serializable_attributes', :path => "vendor/gems/serializable_attributes-1.1.1"
